@@ -24,3 +24,19 @@ h1 {
     margin-bottom: 20px;
     color: #333;
 }
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.main-nav a {
+    color: #336699;
+    text-decoration: none;
+}
+
+/* Add styles for your own feature below this line, with a comment
+   header like "/* --- Your Feature (SSAP-#) --- */" so it's clear
+   which styles belong to which feature. */
