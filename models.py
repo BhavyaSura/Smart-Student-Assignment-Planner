@@ -9,3 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 # adding classes at the same time is unlikely to cause conflicts --
 # just try to add your class at the bottom, after everyone else's.
 db = SQLAlchemy()
+
+
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
