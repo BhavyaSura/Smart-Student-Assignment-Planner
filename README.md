@@ -4,10 +4,19 @@ Minimal Flask starter based on the Flask Todo App structure reviewed by the team
 
 ## Run locally
 
-1. Create and activate a Python virtual environment.
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run: `python app.py`
-4. Open http://127.0.0.1:5000/
+1. Create a virtual environment: `python -m venv .venv`
+2. Activate it:
+   - Windows: `.venv\Scripts\Activate.ps1`
+   - Mac/Linux: `source .venv/bin/activate`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Run: `python app.py`
+5. Open http://127.0.0.1:5000/
+
+By default the app runs with debug mode off, which is the safer
+setting. While you're actively coding and want to see detailed error
+pages, turn it on for that terminal session only:
+- Windows: `$env:FLASK_DEBUG="True"`
+- Mac/Linux: `export FLASK_DEBUG=True`
 
 ## Upstream Source and License
 

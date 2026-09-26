@@ -9,6 +9,14 @@
 <body>
     <div class="container">
         <h1>Smart Student Assignment Planner</h1>
+        <nav class="main-nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <!-- Add your feature's nav link here as part of your own
+                 pull request, e.g.:
+                 <a href="{{ url_for('courses.courses') }}">Courses</a>
+                 Only add the line for YOUR feature, so two people
+                 adding links at the same time don't collide. -->
+        </nav>
         {% block content %}{% endblock %}
     </div>
 </body>
