@@ -1,0 +1,36 @@
+<!-- SSAP-5 - Course Feature -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Courses</h2>
+
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
+
+<form action="{{ url_for('courses.add_course') }}" method="POST" class="course-form">
+    <label for="name">Course name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="code">Course code</label>
+    <input type="text" id="code" name="code" placeholder="e.g. CSCI 3300">
+
+    <label for="instructor">Instructor</label>
+    <input type="text" id="instructor" name="instructor">
+
+    <button type="submit">Add Course</button>
+</form>
+
+<ul class="course-list">
+    {% for course in courses %}
+        <li>
+            <strong>{{ course.name }}</strong>
+            {% if course.code %} ({{ course.code }}){% endif %}
+            {% if course.instructor %} — {{ course.instructor }}{% endif %}
+        </li>
+    {% else %}
+        <li>No courses added yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

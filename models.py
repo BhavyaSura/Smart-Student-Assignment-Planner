@@ -17,3 +17,13 @@ class Assignment(db.Model):
     priority = db.Column(db.String(20), nullable=False)
     estimated_time = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(30), nullable=False, default="Not Started")
+
+# SSAP-5 - Course Feature
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    code = db.Column(db.String(20))
+    instructor = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<Course {self.name}>'

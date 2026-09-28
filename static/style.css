@@ -40,3 +40,41 @@ h1 {
 /* Add styles for your own feature below this line, with a comment
    header like "/* --- Your Feature (SSAP-#) --- */" so it's clear
    which styles belong to which feature. */
+
+   /* --- Courses Feature (SSAP-5) --- */
+
+.error-message {
+    color: #b00020;
+    margin-bottom: 10px;
+}
+
+.course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.course-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.course-form button {
+    padding: 8px;
+    background-color: #336699;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.course-list {
+    list-style: none;
+}
+
+.course-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}

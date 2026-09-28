@@ -3,21 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Smart Student Assignment Planner</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 </head>
+
 <body>
+
     <div class="container">
+
         <h1>Smart Student Assignment Planner</h1>
+
         <nav class="main-nav">
             <a href="{{ url_for('index') }}">Home</a>
-            <!-- Add your feature's nav link here as part of your own
-                 pull request, e.g.:
-                 <a href="{{ url_for('courses.courses') }}">Courses</a>
-                 Only add the line for YOUR feature, so two people
-                 adding links at the same time don't collide. -->
+            <a href="{{ url_for('courses.courses') }}">Courses</a>
+
+            <a href="{{ url_for('assignments.add_assignment') }}">
+                Add New Assignment
+            </a>
         </nav>
-        {% block content %}{% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
     </div>
+
 </body>
 </html>
