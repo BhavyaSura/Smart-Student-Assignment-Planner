@@ -20,3 +20,7 @@ class Course(db.Model):
 
     def __repr__(self):
         return f'<Course {self.name}>'
+
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
