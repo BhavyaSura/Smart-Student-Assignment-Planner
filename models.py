@@ -10,6 +10,16 @@ from flask_sqlalchemy import SQLAlchemy
 # just try to add your class at the bottom, after everyone else's.
 db = SQLAlchemy()
 
+# SSAP-5 - Course Feature
+class Course(db.Model):
+    # Stores the courses added by the user.
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    code = db.Column(db.String(20))
+    instructor = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<Course {self.name}>'
 
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
