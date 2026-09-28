@@ -1,4 +1,4 @@
-# Smart Student Assignment Planner — starter scaffold
+# Smart Student Assignment Planner
 
 Minimal Flask starter based on the Flask Todo App structure reviewed by the team. This starter provides only a home page and SQLAlchemy initialization. No planner backlog feature is implemented yet.
 
