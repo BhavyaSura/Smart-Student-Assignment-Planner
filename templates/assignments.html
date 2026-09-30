@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assignments</title>
+    <title>Upcoming Assignments</title>
 </head>
 <body>
 
     <h1>Upcoming Assignments</h1>
-    
-    <h2>Add New Assignment</h2>
 
-<form method="POST" action="{{ url_for('assignments.add_assignment') }}">
-
-    <label>Assignment Name:</label>
-    <input type="text" name="name" required>
-    <br><br>
-
-    <label>Course:</label>
-    <input type="text" name="course" required>
-    <br><br>
-
-    <label>Due Date:</label>
-    <input type="date" name="due_date" required>
-    <br><br>
-
-    <label>Priority:</label>
-    <select name="priority" required>
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-    </select>
-    <br><br>
-
-    <label>Estimated Completion Time:</label>
-    <input type="text" name="estimated_time" placeholder="Example: 2 hours" required>
-    <br><br>
-
-    <button type="submit">Add Assignment</button>
-
-</form>
-
-<hr>
     {% if assignments %}
+
         {% for assignment in assignments %}
+
             <div>
-                <h3>{{ assignment.name }}</h3>
-                <p>Course: {{ assignment.course }}</p>
-                <p>Due Date: {{ assignment.due_date }}</p>
-                <p>Priority: {{ assignment.priority }}</p>
-                <p>Estimated Time: {{ assignment.estimated_time }}</p>
-                <p>Status: {{ assignment.status }}</p>
+                <h2>{{ assignment.name }}</h2>
+
+                <p>
+                    <strong>Course:</strong>
+                    {{ assignment.course }}
+                </p>
+
+                <p>
+                    <strong>Due Date:</strong>
+                    {{ assignment.due_date }}
+                </p>
+
+                <p>
+                    <strong>Priority:</strong>
+                    {{ assignment.priority }}
+                </p>
+
+                <p>
+                    <strong>Estimated Completion Time:</strong>
+                    {{ assignment.estimated_time }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    {{ assignment.status }}
+                </p>
             </div>
+
             <hr>
+
         {% endfor %}
+
     {% else %}
-        <p>No assignments found.</p>
+
+        <p>No upcoming assignments.</p>
+
     {% endif %}
 
 </body>
