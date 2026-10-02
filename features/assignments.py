@@ -13,13 +13,14 @@ def add_assignment():
 
         if not title:
             return render_template(
-            'add_assignment.html',
-            error='Please enter an assignment name.'
-        )
-            assignment = Assignment(title=title)
-            db.session.add(assignment)
-            db.session.commit()
+                'add_assignment.html',
+                error='Please enter an assignment name.'
+            )
 
-            return redirect(url_for('index'))
+        assignment = Assignment(title=title)
+        db.session.add(assignment)
+        db.session.commit()
+
+        return redirect(url_for('index'))
 
     return render_template('add_assignment.html')
