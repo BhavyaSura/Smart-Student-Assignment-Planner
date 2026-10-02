@@ -10,7 +10,7 @@
 <h2>{{ assignment.title }}</h2>
 <p>
     <strong>Course:</strong>
-{{ assignment.course or "Not recorded" }}
+{{ assignment.course.name if assignment.course else "Not recorded" }}
 </p>
 
 <p>
