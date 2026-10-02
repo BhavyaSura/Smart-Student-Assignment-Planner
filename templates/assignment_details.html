@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Record Assignment Details</h2>
+<p>
+    <strong>Assignment:</strong>
+    {{ assignment.title }}
+</p>
+<form method="POST">
+
+    <label for="course">Course:</label>
+    <input
+        type="text"
+        id="course"
+        name="course"
+        value="{{ assignment.course or '' }}"
+        required
+    >
+
+    <br><br>
+
+    <label for="due_date">Due Date:</label>
+    <input
+        type="date"
+        id="due_date"
+        name="due_date"
+        value="{{ assignment.due_date or '' }}"
+        required
+    >
+
+    <br><br>
+
+    <label for="priority">Priority:</label>
+    <select id="priority" name="priority" required>
+
+        <option value="Low"
+            {% if assignment.priority == "Low" %}selected{% endif %}>
+            Low
+        </option>
+
+        <option value="Medium"
+            {% if assignment.priority == "Medium" %}selected{% endif %}>
+            Medium
+        </option>
+
+        <option value="High"
+            {% if assignment.priority == "High" %}selected{% endif %}>
+            High
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label for="estimated_time">
+        Estimated Completion Time:
+    </label>
+
+    <input
+        type="text"
+        id="estimated_time"
+        name="estimated_time"
+        value="{{ assignment.estimated_time or '' }}"
+        placeholder="Example: 2 hours"
+        required
+    >
+
+    <br><br>
+
+    <label for="status">Status:</label>
+
+    <select id="status" name="status" required>
+
+        <option value="Not Started"
+            {% if assignment.status == "Not Started" %}selected{% endif %}>
+            Not Started
+        </option>
+
+        <option value="In Progress"
+            {% if assignment.status == "In Progress" %}selected{% endif %}>
+            In Progress
+        </option>
+
+        <option value="Completed"
+            {% if assignment.status == "Completed" %}selected{% endif %}>
+            Completed
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Save Assignment Details
+    </button>
+
+</form>
+
+{% endblock %}
