@@ -25,7 +25,10 @@
             <a href="{{ url_for('assignments.add_assignment') }}">
                 Add New Assignment
             </a>
-        </nav>
+            <a href="{{ url_for('upcoming_assignments.upcoming_assignments') }}">
+                Upcoming Assignments
+                </a>
+            </nav>
 
         {% block content %}
         {% endblock %}
