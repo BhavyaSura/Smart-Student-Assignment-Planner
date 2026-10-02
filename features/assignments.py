@@ -9,9 +9,13 @@ assignments_bp = Blueprint('assignments', __name__)
 @assignments_bp.route('/add-assignment', methods=['GET', 'POST'])
 def add_assignment():
     if request.method == 'POST':
-        title = request.form['title'].strip()
+        title = request.form.get('title', ").strip()
 
-        if title:
+        if not title:
+            return render_template(
+            'add_assignment.html',
+            error='Please enter an assignment name.'
+        )
             assignment = Assignment(title=title)
             db.session.add(assignment)
             db.session.commit()
