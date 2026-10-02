@@ -9,7 +9,7 @@ assignments_bp = Blueprint('assignments', __name__)
 @assignments_bp.route('/add-assignment', methods=['GET', 'POST'])
 def add_assignment():
     if request.method == 'POST':
-        title = request.form.get('title', ").strip()
+        title = request.form.get('title', '').strip()
 
         if not title:
             return render_template(
