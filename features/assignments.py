@@ -13,8 +13,8 @@ def add_assignment():
 
         if not title:
             return render_template(
-            'add_assignment.html',
-            error='Please enter an assignment name.'
+                'add_assignment.html',
+                error='Please enter an assignment name.'
         )
             assignment = Assignment(title=title)
             db.session.add(assignment)
