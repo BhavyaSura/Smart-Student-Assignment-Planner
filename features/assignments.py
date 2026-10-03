@@ -15,11 +15,13 @@ def add_assignment():
             return render_template(
                 'add_assignment.html',
                 error='Please enter an assignment name.'
-        )
-            assignment = Assignment(title=title)
-            db.session.add(assignment)
-            db.session.commit()
+            )
 
-            return redirect(url_for('index'))
+        assignment = Assignment(title=title)
+        db.session.add(assignment)
+        db.session.commit()
+
+        # Send them to the list so they can actually see what they added.
+        return redirect(url_for('upcoming_assignments.upcoming_assignments'))
 
     return render_template('add_assignment.html')
