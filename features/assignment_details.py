@@ -33,7 +33,10 @@ def assignment_details(assignment_id):
 
         # Look up the actual Course row by its ID, so the assignment
         # links to it directly instead of copying its name as text.
-        course = Course.query.get(course_id)
+        course = Course.query.filter_by(
+            id=course_id,
+            user_id=session['user_id']
+        ).first()
         if course is None:
             return render_template(
                 'assignment_details.html',
