@@ -6,8 +6,6 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from models import db, Course
 
 # This creates a small, separate group of web pages just for courses.
-# Keeping it separate means your teammates can add their own features
-# in their own files without touching this one.
 courses_bp = Blueprint('courses', __name__)
 
 
@@ -22,7 +20,6 @@ def courses():
 @courses_bp.route('/courses/add', methods=['POST'])
 def add_course():
     # This runs when someone submits the "Add Course" form.
-    # request.form.get(...) reads what the person typed into each box.
     name = request.form.get('name')
     code = request.form.get('code')
     instructor = request.form.get('instructor')
@@ -40,7 +37,7 @@ def add_course():
     # Save the new course to the database.
     new_course = Course(name=name, code=code, instructor=instructor)
     db.session.add(new_course)   # put the new course in line to be saved
-    db.session.commit()          # actually save it to the database
+    db.session.commit()          
 
     # Send the person back to the courses page so they can see it added.
     return redirect(url_for('courses.courses'))

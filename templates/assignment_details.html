@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Record Assignment Details</h2>
+<p>
+    <strong>Assignment:</strong>
+    {{ assignment.title }}
+</p>
+
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+
+    <label for="course">Course:</label>
+    <select id="course" name="course_id" required>
+        <option value="" {% if not assignment.course_id %}selected{% endif %} disabled>
+            {% if courses %}Select a course{% else %}No courses added yet{% endif %}
+        </option>
+        {% for course in courses %}
+        <option value="{{ course.id }}"
+            {% if assignment.course_id == course.id %}selected{% endif %}>
+            {{ course.name }}{% if course.code %} ({{ course.code }}){% endif %}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label for="due_date">Due Date:</label>
+    <input
+        type="date"
+        id="due_date"
+        name="due_date"
+        value="{{ assignment.due_date or '' }}"
+        required
+    >
+
+    <label for="priority">Priority:</label>
+    <select id="priority" name="priority" required>
+        <option value="Low"
+            {% if assignment.priority == "Low" %}selected{% endif %}>Low</option>
+        <option value="Medium"
+            {% if assignment.priority == "Medium" %}selected{% endif %}>Medium</option>
+        <option value="High"
+            {% if assignment.priority == "High" %}selected{% endif %}>High</option>
+    </select>
+
+    <label for="estimated_time">Estimated Completion Time:</label>
+    <input
+        type="text"
+        id="estimated_time"
+        name="estimated_time"
+        value="{{ assignment.estimated_time or '' }}"
+        placeholder="Example: 2 hours"
+        required
+    >
+
+    <label for="status">Status:</label>
+    <select id="status" name="status" required>
+        <option value="Not Started"
+            {% if assignment.status == "Not Started" %}selected{% endif %}>Not Started</option>
+        <option value="In Progress"
+            {% if assignment.status == "In Progress" %}selected{% endif %}>In Progress</option>
+        <option value="Completed"
+            {% if assignment.status == "Completed" %}selected{% endif %}>Completed</option>
+    </select>
+
+    <button type="submit">Save Assignment Details</button>
+
+</form>
+
+{% endblock %}

@@ -1,6 +1,13 @@
 # Smart Student Assignment Planner
 
-Minimal Flask starter based on the Flask Todo App structure reviewed by the team. This starter provides only a home page and SQLAlchemy initialization. No planner backlog feature is implemented yet.
+Flask app for planning courses and assignments, based on the Flask Todo App structure reviewed by the team.
+
+## Features implemented so far
+- Add and view courses (SSAP-5)
+- Add a new assignment (SSAP-2)
+
+New features go in their own file inside `features/` -- see
+HOW_TO_ADD_A_FEATURE.md for how to add one.
 
 ## Run locally
 
