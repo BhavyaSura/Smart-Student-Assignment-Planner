@@ -81,7 +81,6 @@ def login():
         # Start a fresh session, then remember who just signed in.
         session.clear()
         session['user_id'] = user.id
-        print("LOGIN REDIRECT: HOME —", __file__)
         return redirect(url_for('index'))
 
     return render_template('login.html')
