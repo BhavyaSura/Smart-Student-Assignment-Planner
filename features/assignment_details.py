@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from models import db, Assignment, Course
 
 assignment_details_bp = Blueprint(
@@ -10,10 +10,11 @@ assignment_details_bp = Blueprint(
 
 @assignment_details_bp.route('/<int:assignment_id>', methods=['GET', 'POST'])
 def assignment_details(assignment_id):
-    assignment = Assignment.query.get_or_404(assignment_id)
+    assignment = Assignment.query.filter_by(id=assignment_id, 
+                                            user_id=session['user_id']).first_or_404()
     # List of existing courses, so the student picks one instead of
     # typing a course name that might not match anything in Courses.
-    courses = Course.query.all()
+    courses = Course.query.filter_by(user_id=session['user_id']).all()
 
     if request.method == 'POST':
         course_id = request.form.get('course_id', '').strip()

@@ -1,87 +1,344 @@
+/* Use the same spacing rules throughout the app. */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
 body {
-    background-color: aliceblue;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #17213d;
+    background: #f5f6fc;
+    padding: 32px 20px;
+    line-height: 1.5;
 }
 
+/* Keep older pages styled if they use this container. */
 .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1100px;
+    margin: 30px auto;
+    background: white;
+    padding: 40px;
+    border: 1px solid #e5e8f2;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(30, 45, 90, 0.06);
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+    margin-bottom: 24px;
+    color: #111936;
+    font-size: 30px;
 }
 
+h2 {
+    color: #111936;
+    margin-bottom: 12px;
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+a {
+    color: #3454db;
+}
+
+/* Style pages that still use the top navigation. */
 .main-nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 32px;
 }
 
 .main-nav a {
-    color: #336699;
+    display: inline-block;
+    padding: 11px 18px;
+    background: #4563ed;
+    color: white;
     text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
 }
 
-.error-message {
-    color: #b00020;
-    margin-bottom: 10px;
+.main-nav a:hover {
+    background: #324bc5;
 }
 
-/* --- Shared form styling --- */
-/* This applies to every <form> on every page automatically -- courses,
-   assignments, assignment details, anything added later. Nobody needs
-   to remember a special class name for their inputs to match. */
+/* Show a clear outline when using the keyboard. */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid #8798ff;
+    outline-offset: 3px;
+}
 
-form {
+/* Put the sidebar beside the planner pages. */
+.planner-layout {
+    display: flex;
+    max-width: 1200px;
+    min-height: 650px;
+    margin: 30px auto;
+    background: white;
+    border: 1px solid #e5e8f2;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(30, 45, 90, 0.06);
+}
+
+.sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    padding: 30px 20px;
+    background: #f8f9fe;
+    border-right: 1px solid #e5e8f2;
+}
+
+.brand {
+    text-align: left;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 32px;
+}
+
+.sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
-form label {
+.sidebar-nav a {
+    display: block;
+    padding: 12px 16px;
+    color: #35415e;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.sidebar-nav a:hover {
+    background: #eeefff;
+    color: #3454db;
+}
+
+/* Highlight the page the student is viewing. */
+.sidebar-nav a.active {
+    background: #e5e7ff;
+    color: #2948d6;
     font-weight: bold;
 }
 
-form input[type="text"],
-form input[type="date"],
-form select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 1rem;
+/* Give each planner page room for its content. */
+.page-content {
+    flex: 1;
+    min-width: 0;
+    padding: 40px;
+}
+
+/* Center the welcome message on Home. */
+.welcome {
+    text-align: center;
+    padding: 60px 24px;
+    background: #f0eeff;
+    border-radius: 14px;
+}
+
+.welcome h2 {
+    font-size: 28px;
+    margin-bottom: 14px;
+}
+
+.welcome p {
+    color: #596580;
+}
+
+/* Put the planner name beside the account form. */
+.account-layout {
+    display: flex;
+    max-width: 900px;
+    min-height: 560px;
+    margin: 40px auto;
+    background: white;
+    border: 1px solid #e5e8f2;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(30, 45, 90, 0.06);
+}
+
+.account-brand {
+    width: 40%;
+    flex-shrink: 0;
+    padding: 60px 30px;
+    background: #eae8ff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.brand-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.account-brand h1 {
+    font-size: 38px;
+    line-height: 1.2;
+}
+
+.account-brand p {
+    color: #596580;
+    font-size: 18px;
+}
+
+.account-layout .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px;
+}
+
+/* Show success and error messages clearly. */
+.success-message,
+.error-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.success-message {
+    color: #176343;
+    background: #e8f7ef;
+}
+
+.error-message {
+    color: #a82440;
+    background: #fff0f3;
+}
+
+/* Use the same form style on every page. */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+form label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+form input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+form select,
+form textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #dce1ee;
+    border-radius: 8px;
+    background: white;
+    color: #17213d;
+    font: inherit;
+}
+
+form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: 2px solid #4563ed;
+    outline-offset: 2px;
 }
 
 form button {
-    padding: 8px;
-    background-color: #336699;
+    padding: 12px 18px;
+    background: #4563ed;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 600;
     cursor: pointer;
 }
 
+form button:hover {
+    background: #324bc5;
+}
+
+/* Show each course in its own card. */
 .course-list {
     list-style: none;
 }
 
 .course-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    padding: 16px;
+    margin-bottom: 10px;
+    background: #f8f9fe;
+    border: 1px solid #e5e8f2;
+    border-radius: 10px;
+}
+
+/* Stack the sections on smaller screens. */
+@media (max-width: 700px) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .container {
+        margin: 12px auto;
+        padding: 24px 18px;
+    }
+
+    .planner-layout,
+    .account-layout {
+        flex-direction: column;
+        margin: 12px auto;
+        min-height: auto;
+    }
+
+    .sidebar,
+    .account-brand {
+        width: 100%;
+        padding: 24px;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e5e8f2;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .brand {
+        margin-bottom: 20px;
+    }
+
+    .page-content,
+    .account-layout .page-content {
+        padding: 28px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .account-brand h1 {
+        font-size: 30px;
+    }
+
+    .welcome {
+        padding: 36px 16px;
+    }
+
+    .welcome h2 {
+        font-size: 23px;
+    }
 }
