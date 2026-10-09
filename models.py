@@ -3,6 +3,9 @@ db = SQLAlchemy()
 # SSAP-5 - Course Feature
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,
+                         db.ForeignKey('user.id'),
+                         nullable=False)
     name = db.Column(db.String(100), nullable=False)
     code = db.Column(db.String(20))
     instructor = db.Column(db.String(100))
@@ -11,6 +14,9 @@ class Course(db.Model):
 # Assignment Feature
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,
+                         db.ForeignKey('user.id'),
+                         nullable=False)
     # Used by the Add Assignment feature
     title = db.Column(db.String(200), nullable=False)
     # Assignment details
@@ -29,3 +35,15 @@ class Assignment(db.Model):
         nullable=False,
         default="Not Started"
     )
+
+# SSAP-16 / SSAP-15 - Account Feature
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # unique=True means two accounts can't use the same email.
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    # We never save the real password -- only a scrambled version
+    # (a "hash") that can't be turned back into the original.
+    password_hash = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.email}>'

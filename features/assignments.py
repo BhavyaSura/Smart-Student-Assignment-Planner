@@ -1,5 +1,5 @@
 # Miczi SSAP-2 add_new_assignments
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,session
 from models import db, Assignment
 
 
@@ -17,7 +17,7 @@ def add_assignment():
                 error='Please enter an assignment name.'
             )
 
-        assignment = Assignment(title=title)
+        assignment = Assignment(title=title, user_id=session['user_id'])
         db.session.add(assignment)
         db.session.commit()
 

@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 from models import db, Assignment
 
 upcoming_assignments_bp = Blueprint(
@@ -16,7 +16,7 @@ def upcoming_assignments():
     # "Upcoming" = due today or later, OR no due date recorded yet
     # (so a brand-new assignment doesn't vanish before its details
     # are filled in), AND not already marked Completed.
-    assignments = Assignment.query.filter(
+    assignments = Assignment.query.filter_by(user_id=session['user_id']).filter(
         db.or_(
             Assignment.due_date == None,
             Assignment.due_date == '',

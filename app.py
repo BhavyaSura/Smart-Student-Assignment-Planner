@@ -5,6 +5,10 @@ import importlib
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planner.db'
+# Flask uses this secret to protect the "you are signed in" cookie so
+# nobody can fake it. For real use, set your own with the SECRET_KEY
+# environment variable. The fallback below is only for local testing.
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-only-change-me')
 
 db.init_app(app)  # connect the database to this app
 

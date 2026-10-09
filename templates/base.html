@@ -13,27 +13,67 @@
 </head>
 
 <body>
+    <!-- Choose the layout based on whether the student is signed in. -->
+    {% if session.get('user_id') %}
+    <div class="planner-layout">
+        <aside class="sidebar">
+            <h1 class="brand">Student<br>Planner</h1>
 
-    <div class="container">
-
-        <h1>Smart Student Assignment Planner</h1>
-
-        <nav class="main-nav">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('courses.courses') }}">Courses</a>
-
-            <a href="{{ url_for('assignments.add_assignment') }}">
-                Add New Assignment
-            </a>
-            <a href="{{ url_for('upcoming_assignments.upcoming_assignments') }}">
-                Upcoming Assignments
+            <nav class="sidebar-nav" aria-label="Planner navigation">
+                <a href="{{ url_for('index') }}"
+                   {% if request.endpoint == 'index' %}
+                   class="active" aria-current="page"
+                   {% endif %}>
+                    Home
                 </a>
+
+                <a href="{{ url_for('courses.courses') }}"
+                   {% if request.blueprint == 'courses' %}
+                   class="active" aria-current="page"
+                   {% endif %}>
+                    Courses
+                </a>
+
+                <a href="{{ url_for('assignments.add_assignment') }}"
+                   {% if request.endpoint == 'assignments.add_assignment' %}
+                   class="active" aria-current="page"
+                   {% endif %}>
+                    Add New Assignment
+                </a>
+
+                <a href="{{ url_for('upcoming_assignments.upcoming_assignments') }}"
+                   {% if request.blueprint == 'upcoming_assignments' %}
+                   class="active" aria-current="page"
+                   {% endif %}>
+                    Upcoming Assignments
+                </a>
+
+                <a href="{{ url_for('delete_assignments.delete_assignments') }}"
+                   {% if request.blueprint == 'delete_assignments' %}
+                   class="active" aria-current="page"
+                   {% endif %}>
+                    Delete Assignments
+                </a>
+                
+                <a href="{{ url_for('auth.logout') }}">Sign Out</a>
+                
             </nav>
+        </aside>
+    {% else %}
+    <div class="account-layout">
+        <!-- Show the planner name next to the account form. -->
+        <aside class="account-brand">
+            <span class="brand-icon" aria-hidden="true">🎓</span>
+            <h1>Student<br>Planner</h1>
+            <p>Plan smarter.<br>Stress less.<br>Achieve more.</p>
+        </aside>
+    {% endif %}
 
-        {% block content %}
-        {% endblock %}
-
+        <!-- Each page puts its own content here. -->
+        <main class="page-content">
+            {% block content %}
+            {% endblock %}
+        </main>
     </div>
-
 </body>
 </html>
