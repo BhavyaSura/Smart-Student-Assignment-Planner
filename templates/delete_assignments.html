@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Delete Assignments</h2>
+
+{% if assignments %}
+
+    {% for assignment in assignments %}
+
+        <div>
+            <span>{{ assignment.title }}</span>
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'delete_assignments.delete_assignment',
+                    assignment_id=assignment.id
+                ) }}"
+            >
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No assignments found.</p>
+
+{% endif %}
+
+{% endblock %}
