@@ -2,48 +2,61 @@
 
 {% block content %}
 
-<h1>Upcoming Assignments</h1>
+<h2>Upcoming Assignments</h2>
 
 {% if assignments %}
-{% for assignment in assignments %}
-<div class="assignment">
-<h2>{{ assignment.title }}</h2>
-<p>
-    <strong>Course:</strong>
-{{ assignment.course.name if assignment.course else "Not recorded" }}
-</p>
 
-<p>
-<strong>Due Date:</strong>
-{{ assignment.due_date or "Not recorded" }}
-</p>
-<p>
-<strong>Priority:</strong>
-{{ assignment.priority or "Not recorded" }}
-</p>
+    {% for assignment in assignments %}
 
-<p>
-<strong>Estimated Completion Time:</strong>
-{{ assignment.estimated_time or "Not recorded" }}
-</p>
+        <div class="assignment-item">
 
-<p>
-<strong>Status:</strong>
-{{ assignment.status or "Not Started" }}
-</p>
+            <h3>{{ assignment.title }}</h3>
 
-<a href="{{ url_for(
-'assignment_details.assignment_details',
-assignment_id=assignment.id
-) }}">
-Record / Edit Details
-</a>
-</div>
-<hr>
-{% endfor %}
+            <p>
+                <strong>Course:</strong>
+                {% if assignment.course %}
+                    {{ assignment.course.name }}
+                {% else %}
+                    No course
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Due Date:</strong>
+                {{ assignment.due_date }}
+            </p>
+
+            <p>
+                <strong>Priority:</strong>
+                {{ assignment.priority }}
+            </p>
+
+            <p>
+                <strong>Estimated Completion Time:</strong>
+                {{ assignment.estimated_time }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ assignment.status }}
+            </p>
+
+            <a href="{{ url_for(
+                'assignment_details.assignment_details',
+                assignment_id=assignment.id
+            ) }}">
+                Edit Assignment
+            </a>
+
+            <hr>
+
+        </div>
+
+    {% endfor %}
 
 {% else %}
-<p>No upcoming assignments.</p>
+
+    <p>No upcoming assignments.</p>
 
 {% endif %}
 
