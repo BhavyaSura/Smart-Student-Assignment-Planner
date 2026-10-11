@@ -17,28 +17,44 @@
                 {% if assignment.course %}
                     {{ assignment.course.name }}
                 {% else %}
-                    No course
+                    Not recorded
                 {% endif %}
             </p>
 
             <p>
                 <strong>Due Date:</strong>
-                {{ assignment.due_date }}
+                {% if assignment.due_date %}
+                    {{ assignment.due_date }}
+                {% else %}
+                    Not recorded
+                {% endif %}
             </p>
 
             <p>
                 <strong>Priority:</strong>
-                {{ assignment.priority }}
+                {% if assignment.priority %}
+                    {{ assignment.priority }}
+                {% else %}
+                    Not recorded
+                {% endif %}
             </p>
 
             <p>
                 <strong>Estimated Completion Time:</strong>
-                {{ assignment.estimated_time }}
+                {% if assignment.estimated_time %}
+                    {{ assignment.estimated_time }}
+                {% else %}
+                    Not recorded
+                {% endif %}
             </p>
 
             <p>
                 <strong>Status:</strong>
-                {{ assignment.status }}
+                {% if assignment.status %}
+                    {{ assignment.status }}
+                {% else %}
+                    Not Started
+                {% endif %}
             </p>
 
             <a href="{{ url_for(
