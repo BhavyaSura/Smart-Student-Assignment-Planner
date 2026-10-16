@@ -20,9 +20,10 @@ def courses():
 @courses_bp.route('/courses/add', methods=['POST'])
 def add_course():
     # This runs when someone submits the "Add Course" form.
-    name = request.form.get('name')
-    code = request.form.get('code')
-    instructor = request.form.get('instructor')
+    # .strip() removes extra spaces, so a name of only spaces counts as empty.
+    name = request.form.get('name', '').strip()
+    code = request.form.get('code', '').strip()
+    instructor = request.form.get('instructor', '').strip()
 
     # If they didn't type a course name, don't save anything.
     # Instead, show the page again with a message telling them why.
