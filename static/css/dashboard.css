@@ -1,0 +1,109 @@
+/* ------------------------------------------------------------------
+   dashboard.css -- styles that ONLY the Dashboard page uses.
+   Loaded by templates/dashboard/home.html.
+   ------------------------------------------------------------------ */
+
+/* The page: a wide column on the left, a narrow column on the right
+   (the mini calendar and the upcoming list). */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.dashboard-main,
+.dashboard-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* The last box in each column grows to fill the rest of the window, so
+   the whole dashboard fits on one screen without scrolling. */
+.dashboard-main > section:last-child,
+.dashboard-side > section:last-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-main > section:last-child .placeholder,
+.dashboard-side > section:last-child .placeholder {
+    flex: 1;
+}
+
+@media (min-width: 701px) {
+    .dashboard-layout {
+        min-height: calc(100vh - 64px);
+    }
+}
+
+/* A title above a dashboard section (like "Courses"). */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Rows of boxes: the four summary cards and the four course cards. */
+.summary-row,
+.card-ribbon {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+/* ----- Sizes for the dashed boxes on the dashboard ----- */
+/* A summary card, and the greeting. */
+.placeholder-short {
+    min-height: 76px;
+    padding: 12px;
+}
+
+.placeholder-short .placeholder-title {
+    font-size: 14px;
+}
+
+/* Left-aligned text, for the greeting. */
+.placeholder-left {
+    align-items: flex-start;
+    text-align: left;
+}
+
+/* One course card. */
+.placeholder-card {
+    min-height: 110px;
+    padding: 12px;
+}
+
+/* The weekly schedule. */
+.placeholder-wide {
+    min-height: 140px;
+}
+
+/* The small calendar. */
+.placeholder-calendar {
+    min-height: 200px;
+}
+
+/* ----- Very narrow windows: one column ----- */
+@media (max-width: 700px) {
+    .dashboard-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .summary-row,
+    .card-ribbon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

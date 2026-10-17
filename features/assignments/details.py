@@ -1,14 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+"""
+features/assignments/details.py -- Assignments: the page that shows and edits ONE assignment.
+"""
+from flask import render_template, request, redirect, url_for, session
 from models import db, Assignment, Course
+from . import assignments_bp
 
-assignment_details_bp = Blueprint(
-    'assignment_details',
-    __name__,
-    url_prefix='/assignment-details'
+
+@assignments_bp.route(
+    '/assignment-details/<int:assignment_id>',
+    methods=['GET', 'POST']
 )
-
-
-@assignment_details_bp.route('/<int:assignment_id>', methods=['GET', 'POST'])
 def assignment_details(assignment_id):
 
     assignment = Assignment.query.filter_by(
@@ -38,7 +39,7 @@ def assignment_details(assignment_id):
             and status
         ):
             return render_template(
-                'assignment_details.html',
+                'assignments/details.html',
                 assignment=assignment,
                 courses=courses,
                 error='Please fill out every field.'
@@ -51,7 +52,7 @@ def assignment_details(assignment_id):
 
         if course is None:
             return render_template(
-                'assignment_details.html',
+                'assignments/details.html',
                 assignment=assignment,
                 courses=courses,
                 error='Please choose a valid course.'
@@ -67,11 +68,11 @@ def assignment_details(assignment_id):
         db.session.commit()
 
         return redirect(
-            url_for('upcoming_assignments.upcoming_assignments')
+            url_for('assignments.upcoming_assignments')
         )
 
     return render_template(
-        'assignment_details.html',
+        'assignments/details.html',
         assignment=assignment,
         courses=courses
     )

@@ -1,20 +1,26 @@
+"""
+features/courses/routes.py -- Courses: the page of course squares, plus the form that adds a course.
+"""
 # SSAP-5 - Course Feature
 # Allows users to view and add courses to the planner.
 
-
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, session
 from models import db, Course
-
-# This creates a small, separate group of web pages just for courses.
-courses_bp = Blueprint('courses', __name__)
+from . import courses_bp
 
 
 @courses_bp.route('/courses')
 def courses():
-    # Get every course that has been saved in the database so far.
+    # Get every course this student has saved so far.
     all_courses = Course.query.filter_by(user_id=session['user_id']).all()
-    # Show the courses.html page and hand it the list of courses.
-    return render_template('courses.html', courses=all_courses)
+    # Show the courses page and hand it the list of courses.
+    return render_template('courses/courses.html', courses=all_courses)
+
+
+@courses_bp.route('/courses/new')
+def new_course():
+    # The "Add a course" square on the courses page leads here.
+    return render_template('courses/add.html')
 
 
 @courses_bp.route('/courses/add', methods=['POST'])
@@ -26,13 +32,14 @@ def add_course():
     instructor = request.form.get('instructor', '').strip()
 
     # If they didn't type a course name, don't save anything.
-    # Instead, show the page again with a message telling them why.
+    # Instead, show the form again with a message telling them why,
+    # and keep what they already typed.
     if not name:
-        all_courses = Course.query.filter_by(user_id=session['user_id']).all()
         return render_template(
-            'courses.html',
-            courses=all_courses,
-            error='Please enter a course name.'
+            'courses/add.html',
+            error='Please enter a course name.',
+            code=code,
+            instructor=instructor
         )
 
     # Save the new course to the database.
@@ -40,7 +47,7 @@ def add_course():
                         user_id=session['user_id']
                         )
     db.session.add(new_course)   # put the new course in line to be saved
-    db.session.commit()          
+    db.session.commit()
 
     # Send the person back to the courses page so they can see it added.
     return redirect(url_for('courses.courses'))

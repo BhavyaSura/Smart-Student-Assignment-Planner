@@ -1,5 +1,21 @@
+"""
+models.py -- the database tables shared by the whole app.
+
+Each class below becomes one table. A class is a table, and each
+"db.Column" line is one column in it.
+
+TO KEEP MERGES EASY:
+  * Do not rearrange or reformat the classes that are already here.
+  * If you are adding a NEW table for your feature, put it in your own
+    file, features/<your_feature>/models.py, and import it in your
+    feature's __init__.py. That way you never touch this file.
+    (It must use the same "db": from models import db)
+  * Only edit a class here if you are changing that exact table.
+"""
 from flask_sqlalchemy import SQLAlchemy
+# "db" is the one database connection every feature shares.
 db = SQLAlchemy()
+
 # SSAP-5 - Course Feature
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)

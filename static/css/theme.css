@@ -1,0 +1,67 @@
+/* ------------------------------------------------------------------
+   theme.css -- the colors and basic text style for the WHOLE app.
+
+   Every color in the app comes from the list below. To change how the
+   app looks, change a value here -- nothing else needs editing.
+   Feature CSS files should use these names too, like
+   color: var(--text);
+   ------------------------------------------------------------------ */
+:root {
+    --text: #202124;          /* main text */
+    --text-muted: #5f6368;    /* smaller, quieter text */
+    --page-bg: #f8f9fa;       /* page background */
+    --surface: #ffffff;       /* cards, sidebar, form fields */
+    --border: #dadce0;        /* thin lines around things */
+    --accent: #1a73e8;        /* buttons and links */
+    --accent-dark: #1557b0;   /* buttons when hovered */
+    --accent-light: #e8f0fe;  /* highlight behind the active menu link */
+    --accent-text: #1967d2;   /* text on the light highlight */
+    --hover: #f1f3f4;         /* light gray when hovering a link */
+    --success-bg: #e6f4ea;
+    --success-text: #137333;
+    --error-bg: #fce8e6;
+    --error-text: #c5221f;
+    --radius: 8px;            /* how round the corners are */
+}
+
+/* Start every element with no extra spacing, so pages look the same
+   in every browser. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: var(--page-bg);
+    line-height: 1.5;
+}
+
+h1 {
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+h2 {
+    margin-bottom: 12px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+a {
+    color: var(--accent);
+}
+
+/* Show a clear outline when using the keyboard. */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}

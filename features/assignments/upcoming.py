@@ -1,15 +1,14 @@
+"""
+features/assignments/upcoming.py -- Assignments: the "Upcoming Assignments" list. This is the home page
+of the Assignments feature.
+"""
 from datetime import date
-from flask import Blueprint, render_template, session
+from flask import render_template, session
 from models import db, Assignment
-
-upcoming_assignments_bp = Blueprint(
-    'upcoming_assignments',
-    __name__,
-    url_prefix='/upcoming-assignments'
-)
+from . import assignments_bp
 
 
-@upcoming_assignments_bp.route('/')
+@assignments_bp.route('/upcoming-assignments/')
 def upcoming_assignments():
     today = date.today().isoformat()  # e.g. "2026-10-02"
 
@@ -26,6 +25,6 @@ def upcoming_assignments():
     ).order_by(Assignment.due_date.asc()).all()
 
     return render_template(
-        'assignments.html',
+        'assignments/upcoming.html',
         assignments=assignments
     )

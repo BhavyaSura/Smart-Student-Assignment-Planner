@@ -1,13 +1,13 @@
-from flask import (
-    Blueprint, render_template, redirect, url_for, session
-)
+"""
+features/assignments/delete.py -- Assignments: the page that lists assignments and deletes the one
+the student picks.
+"""
+from flask import render_template, redirect, url_for, session
 from models import db, Assignment
+from . import assignments_bp
 
 
-delete_assignments_bp = Blueprint('delete_assignments', __name__)
-
-
-@delete_assignments_bp.route('/delete-assignments')
+@assignments_bp.route('/delete-assignments')
 def delete_assignments():
     # Show only the signed-in student's assignments.
     assignments = Assignment.query.filter_by(
@@ -15,12 +15,12 @@ def delete_assignments():
     ).all()
 
     return render_template(
-        'delete_assignments.html',
+        'assignments/delete.html',
         assignments=assignments
     )
 
 
-@delete_assignments_bp.route(
+@assignments_bp.route(
     '/delete-assignment/<int:assignment_id>',
     methods=['POST']
 )
@@ -35,5 +35,5 @@ def delete_assignment(assignment_id):
     db.session.commit()
 
     return redirect(
-        url_for('delete_assignments.delete_assignments')
+        url_for('assignments.delete_assignments')
     )

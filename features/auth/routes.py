@@ -1,13 +1,16 @@
+"""
+features/auth/routes.py -- Account pages: create account, sign in, sign out. Also holds the
+rule that sends signed-out visitors to the sign-in page.
+"""
 import re
 from flask import (
-    Blueprint, render_template, request, redirect, url_for, session, flash
+    render_template, request, redirect, url_for, session, flash
 )
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User
 
-# All the account pages (create account, sign in, sign out) live here.
-auth_bp = Blueprint('auth', __name__)
+from . import auth_bp
 
 # A simple check that an email looks like name@something.com
 EMAIL_PATTERN = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
@@ -36,7 +39,7 @@ def register():
             error = 'That email is already registered.'
 
         if error:
-            return render_template('register.html', error=error, email=email)
+            return render_template('auth/register.html', error=error, email=email)
 
         # Save only the scrambled version of the password, never the real one.
         user = User(
@@ -50,7 +53,7 @@ def register():
             # Rare case: someone registered this email a split second ago.
             db.session.rollback()
             return render_template(
-                'register.html',
+                'auth/register.html',
                 error='That email is already registered.',
                 email=email
             )
@@ -58,7 +61,7 @@ def register():
         flash('Account created! Please sign in.')
         return redirect(url_for('auth.login'))
 
-    return render_template('register.html')
+    return render_template('auth/register.html')
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -73,7 +76,7 @@ def login():
         # can use this page to find out which emails have accounts.
         if user is None or not check_password_hash(user.password_hash, password):
             return render_template(
-                'login.html',
+                'auth/login.html',
                 error='Incorrect email or password.',
                 email=email
             )
@@ -81,9 +84,9 @@ def login():
         # Start a fresh session, then remember who just signed in.
         session.clear()
         session['user_id'] = user.id
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard.index'))
 
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 
 @auth_bp.route('/logout')
