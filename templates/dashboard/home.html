@@ -1,0 +1,32 @@
+{#
+  templates/dashboard/home.html -- Dashboard: the page layout. It only places the boxes. Each box is
+  its own file in this folder (the ones starting with an underscore).
+#}
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Dashed boxes are features we are still building. Each box below
+     lives in its own file, so each person only edits their own file.
+     To build a box, open its file and replace the dashed placeholder.
+     (The "suggested_" file names are only suggestions. Rename a file if
+     you like, then update its include line below.) -->
+<div class="dashboard-layout">
+    <!-- Wide column on the left -->
+    <div class="dashboard-main">
+        {% include "dashboard/suggested_greeting.html" %}
+        {% include "dashboard/suggested_summary_cards.html" %}
+        {% include "dashboard/suggested_course_cards.html" %}
+        {% include "dashboard/suggested_schedule.html" %}
+    </div>
+
+    <!-- Narrow column on the right -->
+    <div class="dashboard-side">
+        {% include "dashboard/suggested_mini_calendar.html" %}
+        {% include "dashboard/suggested_upcoming_preview.html" %}
+    </div>
+</div>
+{% endblock %}
