@@ -1,5 +1,6 @@
-from flask import Flask, render_template, Blueprint
-from models import db
+from flask import Flask, render_template, Blueprint, session
+from models import db, Assignment
+from datetime import date, timedelta
 import os
 import importlib
 
@@ -32,7 +33,22 @@ for filename in os.listdir(features_dir):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # --- SSAP-13: Find assignments due within the next 3 days ---
+    today = date.today().isoformat()
+    due_soon_limit = (date.today() + timedelta(days=3)).isoformat()
+
+    due_soon = []
+
+    if session.get('user_id'):
+        due_soon = Assignment.query.filter_by(
+            user_id=session['user_id']
+        ).filter(
+            Assignment.due_date >= today,
+            Assignment.due_date <= due_soon_limit,
+            Assignment.status != 'Completed'
+        ).order_by(Assignment.due_date.asc()).all()
+
+    return render_template('index.html', due_soon=due_soon)
 
 
 if __name__ == '__main__':
@@ -41,6 +57,6 @@ if __name__ == '__main__':
     # it would let anyone run code through the browser. This line checks
     # for a setting called FLASK_DEBUG. If it isn't set, debug stays off,
     # so you have to turn it on on purpose while coding, e.g. in the
-    # terminal: (Windows) $env:FLASK_DEBUG="True"  or (Mac/Linux) export FLASK_DEBUG=True
+    # terminal: (Windows) $env:FLASK_DEBUG="True"  or in the terminal: export FLASK_DEBUG=True
     debug_mode = os.environ.get('FLASK_DEBUG', 'False') == 'True'
     app.run(debug=debug_mode)

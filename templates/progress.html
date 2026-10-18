@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Assignment Progress Overview</h1>
+
+<div class="progress-summary">
+<div class="progress-card">
+<h3>Not Started</h3>
+<p>{{ not_started }}</p>
+</div>
+
+<div class="progress-card">
+<h3>In Progress</h3>
+<p>{{ in_progress }}</p>
+</div>
+<div class="progress-card">
+<h3>Completed</h3>
+<p>{{ completed }}</p>
+</div>
+
+</div>
+
+<div class="overall-progress">
+
+<h2>Overall Completion</h2>
+<p>
+<strong>{{ completion_percentage }}%</strong>
+completed
+</p>
+<div
+class="progress-bar-container"
+role="progressbar"
+aria-label="Overall assignment completion"
+aria-valuenow="{{ completion_percentage }}"
+aria-valuemin="0"
+aria-valuemax="100"
+>
+<div
+class="progress-bar-fill"
+style="width: {{ completion_percentage }}%;"
+></div>
+</div>
+
+<p>
+{{ completed }} of {{ total_assignments }} assignments completed
+</p>
+
+</div>
+
+{% if total_assignments == 0 %}
+<p>You haven't added any assignments yet.</p>
+{% endif %}
+
+<a href="{{ url_for('upcoming_assignments.upcoming_assignments') }}">
+View Upcoming Assignments
+</a>
+
+{% endblock %}

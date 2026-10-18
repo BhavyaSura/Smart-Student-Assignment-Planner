@@ -3,6 +3,19 @@
 {% block content %}
 
 <h2>Upcoming Assignments</h2>
+{% if due_soon %}
+    <div class="due-soon-alert">
+        <h3>⚠️ Due Soon</h3>
+        <ul>
+            {% for assignment in due_soon %}
+                <li>
+                    <strong>{{ assignment.title }}</strong>
+                    — Due {{ assignment.due_date }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 
 {% if assignments %}
 
