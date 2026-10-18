@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 from models import Assignment
 progress_bp = Blueprint(
     'progress',
@@ -8,7 +8,9 @@ progress_bp = Blueprint(
 @progress_bp.route('/')
 def assignment_progress():
     # Get all assignments from the database.
-    assignments = Assignment.query.all()
+    assignments = Assignment.query.filter_by(
+    user_id=session['user_id']
+).all()
 
     # Count assignments by status.
     total_assignments = len(assignments)
