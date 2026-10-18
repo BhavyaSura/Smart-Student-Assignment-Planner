@@ -27,7 +27,15 @@ change app.py.
    a grade), add a new class to `models.py`, the same way `Course` is
    written there. Each class becomes its own table in the database.
 
-5. Run the app with `python app.py` and open your new page in the
+5. Every page needs a signed-in student, and each student only sees
+   their own data. So:
+   - Give your model a `user_id` column, like `Course` has.
+   - When you save something, include `user_id=session['user_id']`.
+   - When you read something, filter by it:
+     `Course.query.filter_by(user_id=session['user_id'])`
+   (Remember to import `session` from flask.)
+
+6. Run the app with `python app.py` and open your new page in the
    browser to make sure it works.
 
 That's it. You never touched app.py, so your file won't clash with
