@@ -1,0 +1,51 @@
+/* ------------------------------------------------------------------
+   courses.css -- styles that ONLY the Courses page uses.
+   Loaded by templates/courses/courses.html.
+   ------------------------------------------------------------------ */
+
+/* The grid of course squares. */
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 160px);
+    gap: 16px;
+}
+
+/* One square. */
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 160px;
+    height: 160px;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+/* The dashed "Add a course" square. */
+.tile-add {
+    border: 2px dashed var(--accent);
+    background: var(--surface);
+    color: var(--accent-text);
+}
+
+.tile-add:hover {
+    background: var(--accent-light);
+}
+
+.tile-plus {
+    font-size: 36px;
+    line-height: 1;
+}
+
+/* A saved course: a small square with just its name. */
+.course-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+}

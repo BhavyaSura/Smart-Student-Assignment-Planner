@@ -1,0 +1,27 @@
+{#
+  templates/courses/add.html -- Courses: the "Add a course" form.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Add a Course</h2>
+
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
+
+<form action="{{ url_for('courses.add_course') }}" method="POST" class="course-form">
+    <label for="name">Course name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="code">Course code</label>
+    <input type="text" id="code" name="code" placeholder="e.g. CSCI 3300" value="{{ code or '' }}">
+
+    <label for="instructor">Instructor</label>
+    <input type="text" id="instructor" name="instructor" value="{{ instructor or '' }}">
+
+    <button type="submit">Add Course</button>
+</form>
+
+<p><a href="{{ url_for('courses.courses') }}">Back to My Courses</a></p>
+{% endblock %}
