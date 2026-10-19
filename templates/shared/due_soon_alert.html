@@ -1,0 +1,20 @@
+{#
+  templates/shared/due_soon_alert.html -- the "Due Soon" warning box
+  (SSAP-13, built by Bhavya). It lists assignments due within the next
+  3 days. Two pages include it: the Dashboard and the Upcoming
+  Assignments page. Each page passes in a list called "due_soon", and
+  nothing is drawn when the list is empty.
+#}
+{% if due_soon %}
+<div class="due-soon-alert">
+    <h3>⚠️ Due Soon</h3>
+    <ul>
+        {% for assignment in due_soon %}
+        <li>
+            <strong>{{ assignment.title }}</strong>
+            — Due {{ assignment.due_date }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

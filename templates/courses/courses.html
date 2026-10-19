@@ -1,0 +1,28 @@
+{#
+  templates/courses/courses.html -- Courses: the home page. A grid of
+  course squares, starting with the dashed "Add a course" square.
+  (SSAP-5 - Course Feature)
+#}
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>My Courses</h2>
+
+<div class="tile-grid">
+    <!-- The dashed square opens the form for adding a course. -->
+    <a class="tile tile-add" href="{{ url_for('courses.new_course') }}">
+        <span class="tile-plus" aria-hidden="true">+</span>
+        Add a course
+    </a>
+
+    <!-- Each saved course is a small square with just its name.
+         (SSAP-10 will add progress and more details later.) -->
+    {% for course in courses %}
+        <div class="tile course-tile">{{ course.name }}</div>
+    {% endfor %}
+</div>
+{% endblock %}

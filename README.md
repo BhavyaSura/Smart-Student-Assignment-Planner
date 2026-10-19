@@ -11,7 +11,40 @@ Flask app for planning courses and assignments, based on the Flask Todo App stru
 - Delete assignments
 - Each student only sees their own courses and assignments
 
-New features go in their own file inside `features/` -- see
+## How the code is organized
+
+Every feature has its own folder, and each button in the left menu is
+the home page of one feature:
+
+```
+features/
+  dashboard/     Dashboard (boxes for features still being built)
+  courses/       Courses (an "Add a course" square plus one square per course)
+  assignments/   Assignments (upcoming, add, edit, delete)
+  calendar/      Calendar (empty for now)
+  progress/      Progress overview (counts by status and a completion bar)
+  auth/          Create account, sign in, sign out
+templates/
+  base.html      the page frame (the side menu is built from each feature's NAV)
+  one folder per feature, with that feature's pages
+static/css/
+  theme.css      colors and fonts (change a color here to restyle the app)
+  layout.css     sidebar and page frame
+  components.css forms, buttons, the dashed "coming soon" box
+  dashboard.css  styles only the Dashboard uses
+  courses.css    styles only the Courses page uses
+  progress.css   styles only the Progress page uses
+models.py        shared database tables
+app.py           starts the app and turns on every feature by itself
+```
+
+Each folder has a short README that says what its files are for.
+
+Files that start with `suggested_` (the dashboard boxes) are starter files
+with a *suggested* name. Teammates can rename them freely; see
+HOW_TO_ADD_A_FEATURE.md.
+
+New features go in their own folder inside `features/` -- see
 HOW_TO_ADD_A_FEATURE.md for how to add one.
 
 ## Run locally
