@@ -1,27 +1,24 @@
-{# SSAP-10 (Jiovany): replace the four dashed boxes with a row of course
-   cards. The courses come from the Courses page. The data comes from
-   suggested_course_cards() in features/dashboard/suggested_course_cards.py #}
+{# SSAP-10 (Jiovany): a row of course cards on the dashboard.
+   The data comes from suggested_course_cards() in
+   features/dashboard/suggested_course_cards.py. Each card is drawn by
+   templates/courses/course_card.html, the same file the Courses page uses. #}
 <section>
     <div class="section-header">
         <h3 class="section-title">Courses</h3>
+        <a href="{{ url_for('courses.courses') }}">View all{% if course_cards.total > 0 %} ({{ course_cards.total }}){% endif %}</a>
     </div>
 
-    <div class="card-ribbon">
-        <div class="placeholder placeholder-card">
-            <span class="placeholder-title">Course card</span>
-            <span class="placeholder-note">SSAP-10</span>
+    {% if course_cards.cards %}
+        <div class="card-ribbon">
+            {% for card in course_cards.cards %}
+                {% include "courses/course_card.html" %}
+            {% endfor %}
         </div>
-        <div class="placeholder placeholder-card">
-            <span class="placeholder-title">Course card</span>
-            <span class="placeholder-note">SSAP-10</span>
-        </div>
-        <div class="placeholder placeholder-card">
-            <span class="placeholder-title">Course card</span>
-            <span class="placeholder-note">SSAP-10</span>
-        </div>
-        <div class="placeholder placeholder-card">
-            <span class="placeholder-title">Course card</span>
-            <span class="placeholder-note">SSAP-10</span>
-        </div>
-    </div>
+    {% else %}
+        <!-- Empty state: the student has no courses yet. -->
+        <a class="placeholder placeholder-card" href="{{ url_for('courses.new_course') }}">
+            <span class="placeholder-title">No courses yet</span>
+            <span class="placeholder-note">Add your first course</span>
+        </a>
+    {% endif %}
 </section>

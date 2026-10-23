@@ -1,0 +1,44 @@
+{#
+  templates/courses/course_card.html -- Courses: ONE course card. (SSAP-10)
+
+  Used by the Courses page and the Dashboard, so the cards look the same
+  in both places. Include it inside a loop that has a variable named
+  "card" (made by course_cards() in features/courses/progress.py):
+
+      {% for card in cards %}
+          {% include "courses/course_card.html" %}
+      {% endfor %}
+#}
+<a class="course-card course-theme-{{ card.art }}"
+   href="{{ url_for('courses.course_details', course_id=card.course.id) }}">
+    <!-- The cover image on top. course-theme-0 to course-theme-5 (in
+         components.css) pick which image and progress color it uses. -->
+    <span class="course-card-cover" aria-hidden="true"></span>
+
+    <span class="course-card-body">
+        <span class="course-card-name">{{ card.course.name }}</span>
+
+        {% if card.course.code %}
+            <span class="course-card-code">{{ card.course.code }}</span>
+        {% endif %}
+
+        <!-- The progress bar sits at the bottom of the card. -->
+        <span class="course-card-progress">
+            <span class="course-bar"
+                  role="progressbar"
+                  aria-label="{{ card.course.name }} completion"
+                  aria-valuenow="{{ card.progress.percent }}"
+                  aria-valuemin="0"
+                  aria-valuemax="100">
+                <span class="course-bar-fill" style="width: {{ card.progress.percent }}%;"></span>
+            </span>
+            <span class="course-card-count">
+                {% if card.progress.total == 0 %}
+                    No assignments yet
+                {% else %}
+                    {{ card.progress.percent }}% completed
+                {% endif %}
+            </span>
+        </span>
+    </span>
+</a>
