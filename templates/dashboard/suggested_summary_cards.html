@@ -1,21 +1,27 @@
-{# SSAP-20 (Miczi): replace these dashed boxes with the four summary
-   cards. The numbers come from suggested_summary_cards() in
-   features/dashboard/suggested_summary_cards.py #}
+{# SSAP-20 - Dashboard Assignment Summary Cards #}
+
 <div class="summary-row">
-    <div class="placeholder placeholder-short">
-        <span class="placeholder-title">Total assignments</span>
-        <span class="placeholder-note">SSAP-20</span>
+
+    <div class="summary-card">
+        <span class="summary-label">Total Assignments</span>
+        <span class="summary-number">{{ summary_cards.total }}</span>
     </div>
-    <div class="placeholder placeholder-short">
-        <span class="placeholder-title">Completed</span>
-        <span class="placeholder-note">SSAP-20</span>
+
+    <div class="summary-card">
+        <span class="summary-label">Completed</span>
+        <span class="summary-number">{{ summary_cards.completed }}</span>
     </div>
-    <div class="placeholder placeholder-short">
-        <span class="placeholder-title">Due within 7 days</span>
-        <span class="placeholder-note">SSAP-20</span>
+
+    <div class="summary-card">
+        <span class="summary-label">Due Within 7 Days</span>
+        <span class="summary-number">
+            {{ summary_cards.due_within_7_days }}
+        </span>
     </div>
-    <div class="placeholder placeholder-short">
-        <span class="placeholder-title">Overdue</span>
-        <span class="placeholder-note">SSAP-20</span>
+
+    <div class="summary-card">
+        <span class="summary-label">Overdue</span>
+        <span class="summary-number">{{ summary_cards.overdue }}</span>
     </div>
+
 </div>

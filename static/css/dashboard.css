@@ -107,3 +107,28 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+/* SSAP-20 - Dashboard Assignment Summary Cards */
+
+.summary-card {
+    min-height: 90px;
+    padding: 16px;
+    border: 1px solid #d9dce6;
+    border-radius: 12px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.summary-label {
+    font-size: 14px;
+    color: #5f6368;
+    font-weight: 500;
+}
+
+.summary-number {
+    font-size: 26px;
+    font-weight: 700;
+}

@@ -1,8 +1,49 @@
-# SSAP-20 (Miczi): the four summary cards on the dashboard.
+from datetime import datetime, timedelta
+
+from models import Assignment
 
 
 def suggested_summary_cards(user_id):
-    # Not built yet. When it is, return the four counts here (total,
-    # completed, due within 7 days, overdue) for this student, then show
-    # them in templates/dashboard/suggested_summary_cards.html.
-    return None
+    today = datetime.now().date()
+    seven_days_from_now = today + timedelta(days=7)
+
+    assignments = Assignment.query.filter_by(user_id=user_id).all()
+
+    total_assignments = len(assignments)
+    completed = 0
+    due_within_7_days = 0
+    overdue = 0
+
+    for assignment in assignments:
+        if assignment.status == "Completed":
+            completed += 1
+
+        if not assignment.due_date:
+            continue
+
+        try:
+            due_date = datetime.strptime(
+                assignment.due_date,
+                "%Y-%m-%d"
+            ).date()
+        except ValueError:
+            continue
+
+        if (
+            assignment.status != "Completed"
+            and today <= due_date <= seven_days_from_now
+        ):
+            due_within_7_days += 1
+
+        if (
+            assignment.status != "Completed"
+            and due_date < today
+        ):
+            overdue += 1
+
+    return {
+        "total": total_assignments,
+        "completed": completed,
+        "due_within_7_days": due_within_7_days,
+        "overdue": overdue
+    }
