@@ -3,13 +3,6 @@
    Loaded by templates/courses/courses.html.
    ------------------------------------------------------------------ */
 
-/* The grid of course squares. */
-.tile-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 160px);
-    gap: 16px;
-}
-
 /* One square. */
 .tile {
     display: flex;
@@ -43,9 +36,98 @@
     line-height: 1;
 }
 
-/* A saved course: a small square with just its name. */
-.course-tile {
-    background: var(--surface);
+/* ----- SSAP-10 ----- */
+/* The gallery of course cards. Each column is at least 220px wide and
+   they stretch to fill the row. */
+.course-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* The dashed "Add a course" card in the gallery. */
+.course-gallery .tile-add {
+    width: auto;
+    height: auto;
+    min-height: 220px;
+}
+
+.courses-empty {
+    color: var(--text-muted);
+}
+
+/* ----- Course details page ----- */
+/* The box at the top with the course's art, name, and progress. */
+.course-header {
+    margin-bottom: 20px;
+    overflow: hidden;
     border: 1px solid var(--border);
-    color: var(--text);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+/* A wide version of the card's cover image. */
+.course-header-cover {
+    height: 160px;
+    background: var(--course-cover) center / cover;
+}
+
+.course-header-body {
+    padding: 20px;
+}
+
+.course-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    color: var(--text-muted);
+}
+
+/* A taller progress bar for the details page. */
+.course-bar-large {
+    height: 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.course-section-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* The list of this course's assignments. */
+.course-assignments {
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.course-assignment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.course-assignment:last-child {
+    border-bottom: none;
+}
+
+.course-assignment-due {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* The small rounded label that shows an assignment's status. */
+.status-pill {
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: var(--hover);
+    font-size: 13px;
+    white-space: nowrap;
 }
