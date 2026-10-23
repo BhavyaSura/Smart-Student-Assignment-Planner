@@ -2,12 +2,13 @@ from datetime import datetime, timedelta
 
 from models import Assignment, User
 
+from zoneinfo import ZoneInfo
 
 def suggested_greeting(user_id):
     user = User.query.get(user_id)
 
     # Choose greeting based on the current time.
-    current_hour = datetime.now().hour
+    current_hour = datetime.now(ZoneInfo("America/New_York")).hour
 
     if current_hour < 12:
         greeting_text = "Good morning"
