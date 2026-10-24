@@ -2,9 +2,10 @@ from datetime import datetime, timedelta
 
 from models import Assignment
 
+from zoneinfo import ZoneInfo
 
 def suggested_summary_cards(user_id):
-    today = datetime.now().date()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     seven_days_from_now = today + timedelta(days=7)
 
     assignments = Assignment.query.filter_by(user_id=user_id).all()
