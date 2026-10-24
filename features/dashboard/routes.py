@@ -6,8 +6,8 @@ Each dashboard section gets its information from its own small file.
 from flask import render_template, session
 
 from . import dashboard_bp
-from .suggested_greeting import suggested_greeting
-from .suggested_summary_cards import suggested_summary_cards
+from .greeting import suggested_greeting
+from .summary_cards import suggested_summary_cards
 from .suggested_schedule_preview import suggested_schedule_preview
 from .suggested_course_cards import suggested_course_cards
 from .suggested_mini_calendar import suggested_mini_calendar

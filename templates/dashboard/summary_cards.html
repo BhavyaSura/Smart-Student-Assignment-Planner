@@ -1,0 +1,27 @@
+{# SSAP-20 - Dashboard Assignment Summary Cards #}
+
+<div class="summary-row">
+
+    <div class="summary-card">
+        <span class="summary-label">Total Assignments</span>
+        <span class="summary-number">{{ summary_cards.total }}</span>
+    </div>
+
+    <div class="summary-card">
+        <span class="summary-label">Completed</span>
+        <span class="summary-number">{{ summary_cards.completed }}</span>
+    </div>
+
+    <div class="summary-card">
+        <span class="summary-label">Due Within 7 Days</span>
+        <span class="summary-number">
+            {{ summary_cards.due_within_7_days }}
+        </span>
+    </div>
+
+    <div class="summary-card">
+        <span class="summary-label">Overdue</span>
+        <span class="summary-number">{{ summary_cards.overdue }}</span>
+    </div>
+
+</div>

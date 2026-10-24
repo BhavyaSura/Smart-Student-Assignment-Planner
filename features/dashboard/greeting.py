@@ -26,7 +26,7 @@ def suggested_greeting(user_id):
         display_name = display_name.replace(".", " ").replace("_", " ")
         display_name = display_name.title()
 
-    today = datetime.now().date()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     seven_days_from_now = today + timedelta(days=7)
 
     assignments = Assignment.query.filter_by(user_id=user_id).all()
