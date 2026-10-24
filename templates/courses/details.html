@@ -1,0 +1,66 @@
+{#
+  templates/courses/details.html -- Courses: the details page for ONE
+  course. Opens when a course card is clicked. Shows the course info,
+  its progress, and the assignments that belong to it. (SSAP-10)
+#}
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{% endblock %}
+
+{% block content %}
+<p><a href="{{ url_for('courses.courses') }}">&larr; Back to My Courses</a></p>
+
+<!-- The header box. Its cover image matches the course's card. -->
+<div class="course-header course-theme-{{ art }}">
+    <div class="course-header-cover" aria-hidden="true"></div>
+    <div class="course-header-body">
+        <h2>{{ course.name }}</h2>
+        <p class="course-info">
+            {% if course.code %}<span><strong>Code:</strong> {{ course.code }}</span>{% endif %}
+            {% if course.instructor %}<span><strong>Instructor:</strong> {{ course.instructor }}</span>{% endif %}
+        </p>
+
+    <div class="course-bar course-bar-large"
+         role="progressbar"
+         aria-label="{{ course.name }} completion"
+         aria-valuenow="{{ progress.percent }}"
+         aria-valuemin="0"
+         aria-valuemax="100">
+        <div class="course-bar-fill" style="width: {{ progress.percent }}%;"></div>
+    </div>
+    <p class="course-card-count">
+        {{ progress.percent }}% completed
+        ({{ progress.completed }} of {{ progress.total }} assignments)
+    </p>
+    </div>
+</div>
+
+<div class="action-bar">
+    <a class="button-link" href="{{ url_for('assignments.add_assignment') }}">Add assignment</a>
+</div>
+
+<h3 class="course-section-title">Assignments</h3>
+
+{% if assignments %}
+    <ul class="course-assignments">
+        {% for assignment in assignments %}
+        <li class="course-assignment">
+            <div>
+                <a href="{{ url_for('assignments.assignment_details', assignment_id=assignment.id) }}">
+                    {{ assignment.title }}
+                </a>
+                <span class="course-assignment-due">
+                    Due: {{ assignment.due_date or 'Not recorded' }}
+                </span>
+            </div>
+            <span class="status-pill">{{ assignment.status }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <!-- Empty state: this course has no assignments yet. -->
+    <p>No assignments for this course yet.</p>
+{% endif %}
+{% endblock %}
