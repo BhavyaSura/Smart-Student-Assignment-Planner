@@ -39,6 +39,8 @@
 
 <div class="action-bar">
     <a class="button-link" href="{{ url_for('assignments.add_assignment') }}">Add assignment</a>
+    <!-- Opens the "Are you sure?" page. Nothing is deleted yet. -->
+    <a class="button-link button-secondary button-danger-outline" href="{{ url_for('courses.confirm_delete_course', course_id=course.id) }}">Delete course</a>
 </div>
 
 <h3 class="course-section-title">Assignments</h3>

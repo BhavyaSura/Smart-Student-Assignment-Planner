@@ -15,10 +15,14 @@
             {% endfor %}
         </div>
     {% else %}
-        <!-- Empty state: the student has no courses yet. -->
-        <a class="placeholder placeholder-card" href="{{ url_for('courses.new_course') }}">
-            <span class="placeholder-title">No courses yet</span>
-            <span class="placeholder-note">Add your first course</span>
-        </a>
+        <!-- Empty state: the student has no courses yet. A plain card (not
+             the dashed "coming soon" box) so it doesn't look unfinished. -->
+        <div class="courses-empty-card">
+            <p>You haven't added any courses yet.</p>
+            <!-- A round "+" button. aria-label and title still say what it
+                 does, for screen readers and when you hover over it. -->
+            <a class="button-plus" href="{{ url_for('courses.new_course') }}"
+               aria-label="Add a course" title="Add a course">+</a>
+        </div>
     {% endif %}
 </section>
