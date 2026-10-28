@@ -1,45 +1,109 @@
-/* ------------------------------------------------------------------
-   theme.css -- the colors and basic text style for the WHOLE app.
+/* ---------------------------------------------------------
+   theme.css
+   Shared colors and basic text styling for the whole app.
+   SSAP-27 adds Light / Dark Mode.
+--------------------------------------------------------- */
 
-   Every color in the app comes from the list below. To change how the
-   app looks, change a value here -- nothing else needs editing.
-   Feature CSS files should use these names too, like
-   color: var(--text);
-   ------------------------------------------------------------------ */
+
+/* =========================
+   LIGHT MODE
+========================= */
+
 :root {
-    --text: #202124;          /* main text */
-    --text-muted: #5f6368;    /* smaller, quieter text */
-    --page-bg: #f8f9fa;       /* page background */
-    --surface: #ffffff;       /* cards, sidebar, form fields */
-    --border: #dadce0;        /* thin lines around things */
-    --accent: #1a73e8;        /* buttons and links */
-    --accent-dark: #1557b0;   /* buttons when hovered */
-    --accent-light: #e8f0fe;  /* highlight behind the active menu link */
-    --accent-text: #1967d2;   /* text on the light highlight */
-    --hover: #f1f3f4;         /* light gray when hovering a link */
+    --text: #202124;
+    --text-muted: #5f6368;
+
+    --page-bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #dadce0;
+
+    --accent: #1a73e8;
+    --accent-dark: #1557b0;
+    --accent-light: #e8f0fe;
+    --accent-text: #1967d2;
+
+    --hover: #f1f3f4;
+
     --success-bg: #e6f4ea;
     --success-text: #137333;
+
     --error-bg: #fce8e6;
     --error-text: #c5221f;
+
     --warning-bg: #fef7e0;
     --warning-text: #b06000;
-    --radius: 8px;            /* how round the corners are */
+
+    --radius: 8px;
 }
 
-/* Start every element with no extra spacing, so pages look the same
-   in every browser. */
+
+/* =========================
+   DARK MODE
+========================= */
+
+html[data-theme="dark"] {
+    --text: #f3f4f6;
+    --text-muted: #aeb4c0;
+
+    --page-bg: #12151c;
+    --surface: #1c212b;
+    --border: #343b48;
+
+    --accent: #8b9cff;
+    --accent-dark: #aeb8ff;
+    --accent-light: #30384e;
+    --accent-text: #c7d0ff;
+
+    --hover: #252b36;
+
+    --success-bg: #173d2b;
+    --success-text: #8fe0b4;
+
+    --error-bg: #4a2024;
+    --error-text: #ffb5bc;
+
+    --warning-bg: #463817;
+    --warning-text: #ffd77d;
+}
+
+
+/* =========================
+   BASIC RESET
+========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* =========================
+   PAGE
+========================= */
+
 body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
     color: var(--text);
     background: var(--page-bg);
     line-height: 1.5;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
+
+
+/* =========================
+   HEADINGS
+========================= */
 
 h1 {
     margin-bottom: 24px;
@@ -57,11 +121,75 @@ p {
     margin-bottom: 12px;
 }
 
+
+/* =========================
+   LINKS
+========================= */
+
 a {
     color: var(--accent);
 }
 
-/* Show a clear outline when using the keyboard. */
+
+/* =========================
+   FORMS
+========================= */
+
+input,
+select,
+textarea {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+
+/* =========================
+   LIGHT / DARK MODE BUTTON
+========================= */
+
+.theme-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+    margin-top: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--hover);
+}
+
+.theme-toggle-icon {
+    width: 24px;
+    text-align: center;
+}
+
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
 a:focus-visible,
 button:focus-visible {
     outline: 3px solid var(--accent);
