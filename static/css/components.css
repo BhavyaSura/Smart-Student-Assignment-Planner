@@ -260,11 +260,44 @@ form button:hover {
 .course-theme-4 { --course-cover: url("../img/covers/cover-4.jpg"); --course-color: #6f98de; } /* blue mist */
 .course-theme-5 { --course-cover: url("../img/covers/cover-5.jpg"); --course-color: #ec9675; } /* peach glow */
 
-/* A dashed box that is also a link (like "No courses yet" on the Dashboard). */
-a.placeholder {
+/* The Dashboard's "no courses yet" card: a message and a button. */
+.courses-empty-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+    color: var(--text-muted);
+}
+
+.courses-empty-card p {
+    margin-bottom: 0;
+}
+
+/* A round button with just a "+" in it. */
+.button-plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 24px;
+    line-height: 1;
     text-decoration: none;
 }
 
-a.placeholder:hover {
-    background: var(--hover);
+.button-plus:hover {
+    background: var(--accent-dark);
+}
+
+.button-plus:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
 }
