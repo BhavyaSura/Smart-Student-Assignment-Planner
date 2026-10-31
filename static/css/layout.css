@@ -1,47 +1,73 @@
-/* ------------------------------------------------------------------
+/* ============================================================
    layout.css -- how every page is arranged.
 
    Signed in:  sidebar menu on the left, the page on the right.
    Signed out: the app name beside the sign-in / create-account form.
-   Only change this file if you are changing the whole page frame.
-   ------------------------------------------------------------------ */
 
-/* ----- Signed in: sidebar + page ----- */
+   Only change this file if you are changing the whole page frame.
+   ============================================================ */
+
+
+/* ===== Signed in: sidebar + page ===== */
+
 .planner-layout {
     display: flex;
     min-height: 100vh;
 }
 
+
+/* Sidebar */
+
 .sidebar {
     width: 256px;
     flex-shrink: 0;
+
     padding: 20px 12px;
+
     background: var(--surface);
+
     border-right: 1px solid var(--border);
 }
 
-/* The app name at the top of the sidebar. */
+
+/* The app name at the top of the sidebar */
+
 .brand {
     display: flex;
     align-items: center;
     gap: 12px;
+
     padding: 0 12px;
     margin-bottom: 24px;
 }
+
+
+/* SSAP logo */
 
 .brand-mark {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 40px;
     height: 40px;
+
     flex-shrink: 0;
+
     background: var(--accent);
-    color: white;
+
+    /*
+       SSAP-27:
+       Use the theme-aware text color instead of hard-coded white.
+    */
+    color: var(--on-accent);
+
     border-radius: 10px;
+
     font-size: 22px;
     font-weight: 600;
 }
+
 
 .brand-text {
     display: flex;
@@ -49,11 +75,13 @@
     min-width: 0;
 }
 
+
 .brand-name {
     font-size: 18px;
     font-weight: 600;
     line-height: 1.2;
 }
+
 
 .brand-full {
     font-size: 12px;
@@ -61,156 +89,226 @@
     color: var(--text-muted);
 }
 
-/* The menu buttons. */
+
+/* ===== Sidebar navigation ===== */
+
 .sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
+
 .sidebar-nav a {
     display: flex;
     align-items: center;
+
     gap: 16px;
+
     padding: 10px 16px;
+
     color: var(--text);
+
     text-decoration: none;
+
     border-radius: 24px;
+
     font-size: 14px;
 }
+
 
 .sidebar-nav a:hover {
     background: var(--hover);
 }
 
-/* Highlight the page the student is viewing. */
+
+/* Highlight the page the student is viewing */
+
 .sidebar-nav a.active {
     background: var(--accent-light);
     color: var(--accent-text);
     font-weight: 600;
 }
 
-/* A thin line above Sign out to set it apart. */
+
+/* A thin line above Sign out to set it apart */
+
 .sidebar-nav a.nav-bottom {
     margin-top: 16px;
+
     border-top: 1px solid var(--border);
     border-radius: 0 0 24px 24px;
+
     padding-top: 14px;
 }
 
-/* The little picture next to each menu button. */
+
+/* The little picture next to each menu button */
+
 .nav-icon {
     width: 20px;
     height: 20px;
+
     flex-shrink: 0;
+
     fill: currentColor;
 }
 
-/* Give each page room for its content. */
+
+/* Give each page room for its content */
+
 .page-content {
     flex: 1;
     min-width: 0;
+
     padding: 32px 40px;
 }
 
-/* ----- Signed out: app name beside the form ----- */
+
+/* ============================================================
+   SIGNED OUT
+   App name beside the sign-in / create-account form
+   ============================================================ */
+
 .account-layout {
     display: flex;
+
     max-width: 900px;
     min-height: 560px;
+
     margin: 40px auto;
+
     background: var(--surface);
+
     border: 1px solid var(--border);
     border-radius: 12px;
+
     overflow: hidden;
 }
+
 
 .account-brand {
     width: 40%;
     flex-shrink: 0;
+
     padding: 60px 30px;
+
     background: var(--accent-light);
+
     text-align: center;
+
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
 }
 
+
 .brand-mark-large {
     width: 72px;
     height: 72px;
+
     margin-bottom: 20px;
+
     border-radius: 18px;
+
     font-size: 40px;
 }
+
 
 .account-brand h1 {
     font-size: 28px;
     line-height: 1.25;
 }
 
+
 .account-brand p {
     color: var(--text-muted);
     font-size: 16px;
 }
 
+
 .account-layout .page-content {
     display: flex;
     flex-direction: column;
+
     justify-content: center;
+
     padding: 48px;
 }
 
-/* ----- Very narrow windows: menu on top, links wrap ----- */
+
+/* ============================================================
+   VERY NARROW WINDOWS
+   Menu moves to the top and links wrap.
+   ============================================================ */
+
 @media (max-width: 700px) {
+
     .planner-layout {
         flex-direction: column;
     }
 
+
     .account-layout {
         flex-direction: column;
+
         margin: 12px;
+
         min-height: auto;
     }
 
+
     .sidebar {
         width: 100%;
+
         padding: 16px;
+
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
+
 
     .account-brand {
         width: 100%;
         padding: 24px;
     }
 
+
     .brand {
         margin-bottom: 12px;
     }
 
+
     .sidebar-nav {
         flex-direction: row;
         flex-wrap: wrap;
+
         gap: 4px;
     }
+
 
     .sidebar-nav a {
         padding: 8px 14px;
     }
 
+
     .sidebar-nav a.nav-bottom {
         margin-top: 0;
+
         border-top: none;
         border-radius: 24px;
+
         padding-top: 8px;
     }
+
 
     .page-content,
     .account-layout .page-content {
         padding: 24px 16px;
     }
+
 
     .account-brand h1 {
         font-size: 24px;
