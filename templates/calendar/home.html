@@ -1,11 +1,77 @@
-{# SSAP-19: replace the dashed box with the interactive calendar. #}
 {% extends "base.html" %}
 
-{% block content %}
-<h2>Calendar</h2>
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+{% endblock %}
 
-<div class="placeholder placeholder-tall">
-    <span class="placeholder-title">Interactive calendar</span>
-    <span class="placeholder-note">Coming soon (SSAP-19)</span>
+{% block content %}
+<section class="calendar-page">
+    <div class="calendar-header">
+        <div>
+            <h2>Calendar</h2>
+            <p>View your assignments and upcoming deadlines.</p>
+        </div>
+
+        <div class="calendar-navigation">
+            <a href="{{ url_for('calendar.calendar', month=previous_month) }}"
+               class="calendar-nav-button" aria-label="Previous month">&#10094;</a>
+
+            <h3>{{ month_name }} {{ year }}</h3>
+
+            <a href="{{ url_for('calendar.calendar', month=next_month) }}"
+               class="calendar-nav-button" aria-label="Next month">&#10095;</a>
+        </div>
+    </div>
+
+    <div class="calendar-grid">
+        {% for day_name in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %}
+            <div class="calendar-weekday">{{ day_name }}</div>
+        {% endfor %}
+
+        {% for week in calendar_days %}
+            {% for day in week %}
+                {% if day == 0 %}
+                    <div class="calendar-day empty-day"></div>
+                {% else %}
+                    <button type="button"
+                            class="calendar-day calendar-date-button {% if today.year == year and today.month == month and today.day == day %}today{% endif %}"
+                            data-day="{{ day }}"
+                            data-month="{{ month }}"
+                            data-year="{{ year }}"
+                            data-assignments='{{ assignments_by_day.get(day, []) | map(attribute="title") | list | tojson }}'>
+                        <span class="calendar-date">{{ day }}</span>
+
+                        {% if day in assignments_by_day %}
+                            <div class="calendar-assignments">
+                                {% for assignment in assignments_by_day[day] %}
+                                    <div class="calendar-assignment">
+                                        {{ assignment.title }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </button>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="calendar-legend">
+        <span class="calendar-dot"></span>
+        Assignment due date
+    </div>
+</section>
+
+<div class="calendar-modal" id="calendarModal" aria-hidden="true">
+    <div class="calendar-modal-content" role="dialog"
+         aria-modal="true" aria-labelledby="modalDate">
+        <button type="button" class="calendar-modal-close"
+                id="closeCalendarModal" aria-label="Close">&times;</button>
+
+        <h3 id="modalDate"></h3>
+        <div id="modalAssignments"></div>
+    </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/calendar.js') }}" defer></script>
 {% endblock %}
