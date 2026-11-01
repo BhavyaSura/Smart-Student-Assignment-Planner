@@ -6,11 +6,9 @@ templates/assignments/delete.html -- Assignments: pick assignments to delete.
 {% block content %}
 
 <h2>Delete Assignments</h2>
-
-<a href="{{ url_for('assignments.upcoming_assignments') }}">
-<button type="button">Back to Upcoming Assignments</button>
+<a href="{{ url_for('assignments.upcoming_assignments') }}" class="button-link button-secondary">
+    Back to Upcoming Assignments
 </a>
-
 {% if assignments %}
 
 {% for assignment in assignments %}
