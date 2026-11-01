@@ -1,5 +1,5 @@
 {#
-  templates/assignments/delete.html -- Assignments: pick assignments to delete.
+templates/assignments/delete.html -- Assignments: pick assignments to delete.
 #}
 {% extends "base.html" %}
 
@@ -7,29 +7,32 @@
 
 <h2>Delete Assignments</h2>
 
+<a href="{{ url_for('assignments.upcoming_assignments') }}">
+<button type="button">Back to Upcoming Assignments</button>
+</a>
+
 {% if assignments %}
 
-    {% for assignment in assignments %}
+{% for assignment in assignments %}
+<div>
+<span>{{ assignment.title }}</span>
 
-        <div>
-            <span>{{ assignment.title }}</span>
+<form
+method="POST"
+action="{{ url_for(
+'assignments.delete_assignment',
+assignment_id=assignment.id
+) }}"
+>
+<button type="submit">Delete</button>
+</form>
+</div>
 
-            <form
-                method="POST"
-                action="{{ url_for(
-                    'assignments.delete_assignment',
-                    assignment_id=assignment.id
-                ) }}"
-            >
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-
-    {% endfor %}
+{% endfor %}
 
 {% else %}
 
-    <p>No assignments found.</p>
+<p>No assignments found.</p>
 
 {% endif %}
 
