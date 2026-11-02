@@ -1,10 +1,11 @@
-/* ------------------------------------------------------------------
+/* ---------------------------------------------------------
    dashboard.css -- styles that ONLY the Dashboard page uses.
    Loaded by templates/dashboard/home.html.
-   ------------------------------------------------------------------ */
+--------------------------------------------------------- */
 
-/* The page: a wide column on the left, a narrow column on the right
-   (the mini calendar and the upcoming list). */
+
+/* The page: a wide column on the left, a narrow column
+   on the right (the mini calendar and the upcoming list). */
 .dashboard-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
@@ -12,6 +13,8 @@
     align-items: stretch;
 }
 
+
+/* Main and side dashboard columns */
 .dashboard-main,
 .dashboard-side {
     display: flex;
@@ -20,8 +23,9 @@
     min-width: 0;
 }
 
-/* The last box in each column grows to fill the rest of the window, so
-   the whole dashboard fits on one screen without scrolling. */
+
+/* The last box in each column grows to fill the rest
+   of the window so the dashboard fits on one screen. */
 .dashboard-main > section:last-child,
 .dashboard-side > section:last-child {
     flex: 1;
@@ -29,18 +33,22 @@
     flex-direction: column;
 }
 
+
 .dashboard-main > section:last-child .placeholder,
 .dashboard-side > section:last-child .placeholder {
     flex: 1;
 }
 
+
+/* Keep the dashboard tall enough on desktop screens */
 @media (min-width: 701px) {
     .dashboard-layout {
         min-height: calc(100vh - 64px);
     }
 }
 
-/* A title above a dashboard section (like "Courses"). */
+
+/* A title above a dashboard section, like "Courses" */
 .section-header {
     display: flex;
     align-items: center;
@@ -49,13 +57,16 @@
     margin-bottom: 8px;
 }
 
+
 .section-title {
     font-size: 18px;
     font-weight: 600;
     white-space: nowrap;
 }
 
-/* Rows of boxes: the four summary cards and the four course cards. */
+
+/* Rows of boxes:
+   the four summary cards and the four course cards */
 .summary-row,
 .card-ribbon {
     display: grid;
@@ -63,41 +74,58 @@
     gap: 16px;
 }
 
-/* ----- Sizes for the dashed boxes on the dashboard ----- */
-/* A summary card, and the greeting. */
+
+/* ---------------------------------------------------------
+   Placeholder sizes
+--------------------------------------------------------- */
+
+
+/* A summary card and the greeting */
 .placeholder-short {
     min-height: 76px;
     padding: 12px;
 }
 
+
 .placeholder-short .placeholder-title {
     font-size: 14px;
 }
 
-/* Left-aligned text, for the greeting. */
+
+/* Left-aligned text for the greeting */
 .placeholder-left {
     align-items: flex-start;
     text-align: left;
 }
 
-/* One course card. */
+
+/* One course card */
 .placeholder-card {
     min-height: 110px;
     padding: 12px;
 }
 
-/* The weekly schedule. */
+
+/* Weekly schedule */
 .placeholder-wide {
     min-height: 140px;
 }
 
-/* The small calendar. */
+
+/* Mini calendar */
 .placeholder-calendar {
     min-height: 200px;
 }
 
-/* ----- Very narrow windows: one column ----- */
+
+/* ---------------------------------------------------------
+   Responsive layout
+--------------------------------------------------------- */
+
+
+/* Very narrow windows */
 @media (max-width: 700px) {
+
     .dashboard-layout {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -108,27 +136,43 @@
     }
 }
 
-/* SSAP-20 - Dashboard Assignment Summary Cards */
+
+/* ---------------------------------------------------------
+   SSAP-20 -- Dashboard Assignment Summary Cards
+   Updated for SSAP-27 Light / Dark Mode
+--------------------------------------------------------- */
 
 .summary-card {
     min-height: 90px;
     padding: 16px;
-    border: 1px solid #d9dce6;
+
+    border: 1px solid var(--border);
     border-radius: 12px;
-    background: #ffffff;
+
+    background: var(--surface);
+    color: var(--text);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 6px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
+
 
 .summary-label {
     font-size: 14px;
-    color: #5f6368;
+    color: var(--text-muted);
     font-weight: 500;
 }
+
 
 .summary-number {
     font-size: 26px;
     font-weight: 700;
+    color: var(--text);
 }
