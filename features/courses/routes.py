@@ -1,20 +1,49 @@
 """
-features/courses/routes.py -- Courses: the page of course squares, plus the form that adds a course.
+features/courses/routes.py -- Courses: the page of course cards, the form that
+adds a course, and the page that shows one course's details.
 """
 # SSAP-5 - Course Feature
 # Allows users to view and add courses to the planner.
+# SSAP-10 - Course cards with progress, plus a course details page.
 
 from flask import render_template, request, redirect, url_for, session
 from models import db, Course
 from . import courses_bp
+from .progress import course_cards, course_progress, NUMBER_OF_ARTS
 
 
 @courses_bp.route('/courses')
 def courses():
-    # Get every course this student has saved so far.
-    all_courses = Course.query.filter_by(user_id=session['user_id']).all()
-    # Show the courses page and hand it the list of courses.
-    return render_template('courses/courses.html', courses=all_courses)
+    # Get every course this student has saved, with its progress and cover art.
+    cards = course_cards(session['user_id'])
+    # Show the courses page and hand it the list of cards.
+    return render_template('courses/courses.html', cards=cards)
+
+
+@courses_bp.route('/courses/<int:course_id>')
+def course_details(course_id):
+    # Clicking a course card opens this page.
+    # Filtering by user_id means a student can only open their OWN
+    # course. Anyone else gets a "404 Not Found" page.
+    course = Course.query.filter_by(
+        id=course_id,
+        user_id=session['user_id']
+    ).first_or_404()
+
+    # Show this course's assignments, earliest due date first.
+    # Assignments with no due date go at the end.
+    assignments = sorted(
+        course.assignments,
+        key=lambda assignment: assignment.due_date or '9999-12-31'
+    )
+
+    return render_template(
+        'courses/details.html',
+        course=course,
+        assignments=assignments,
+        progress=course_progress(course),
+        art=course.id % NUMBER_OF_ARTS
+    )
 
 
 @courses_bp.route('/courses/new')
