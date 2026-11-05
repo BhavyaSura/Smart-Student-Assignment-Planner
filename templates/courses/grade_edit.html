@@ -1,0 +1,41 @@
+{#
+  templates/courses/grade_edit.html -- Courses: edit ONE grade item.
+  Opens when you click a grade item's name. This is also where you add
+  the score once an item is graded. (SSAP-30)
+#}
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{% endblock %}
+
+{% block content %}
+<p><a href="{{ url_for('courses.course_details', course_id=course.id) }}#grades">&larr; Back to {{ course.name }}</a></p>
+
+<h2>Edit {{ item.name }}</h2>
+
+{% if error %}
+<p class="error-message">{{ error }}</p>
+{% endif %}
+
+<form method="POST" action="{{ url_for('courses.edit_grade_item', course_id=course.id, item_id=item.id) }}" class="course-form">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="{{ item.name }}" required>
+
+    <label for="weight">Weight % (how much of the final grade)</label>
+    <input type="number" id="weight" name="weight" min="0.1" max="100" step="any"
+           value="{{ '%g'|format(item.weight) }}" required>
+
+    <label for="score">Score % (leave empty if it isn't graded yet)</label>
+    <input type="number" id="score" name="score" min="0" max="100" step="any"
+           value="{% if item.score is not none %}{{ '%g'|format(item.score) }}{% endif %}">
+
+    <button type="submit">Save</button>
+</form>
+
+<!-- Deleting is its own small form, so it can't happen by accident
+     when you press Save. -->
+<form method="POST" action="{{ url_for('courses.delete_grade_item', course_id=course.id, item_id=item.id) }}">
+    <button type="submit" class="button-danger">Delete grade item</button>
+</form>
+{% endblock %}

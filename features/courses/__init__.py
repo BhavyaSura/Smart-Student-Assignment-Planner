@@ -30,4 +30,7 @@ NAV = {
 
 # 3. Load the page files so their routes attach to the Blueprint above.
 #    (This line must stay BELOW the Blueprint line.)
-from . import routes, delete  # noqa: E402,F401
+from . import routes, delete, grades  # noqa: E402,F401
+
+# 4. Load this feature's own table (GradeItem, SSAP-30) so app.py creates it.
+from . import models  # noqa: E402,F401
