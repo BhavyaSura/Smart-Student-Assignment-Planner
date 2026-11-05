@@ -5,11 +5,15 @@ adds a course, and the page that shows one course's details.
 # SSAP-5 - Course Feature
 # Allows users to view and add courses to the planner.
 # SSAP-10 - Course cards with progress, plus a course details page.
+# SSAP-30 / SSAP-32 - Grades and the grade needed calculator on the details page.
 
 from flask import render_template, request, redirect, url_for, session
 from models import db, Course
 from . import courses_bp
 from .progress import course_cards, course_progress, NUMBER_OF_ARTS
+# SSAP-30 / SSAP-32 - Grade tracking and the "What grade do I need?" calculator.
+from .grade_math import (grade_summary, grade_needed,
+                         TARGET_CHOICES, DEFAULT_TARGET)
 
 
 @courses_bp.route('/courses')
@@ -37,12 +41,29 @@ def course_details(course_id):
         key=lambda assignment: assignment.due_date or '9999-12-31'
     )
 
+    # SSAP-30: the grade items, in the order they were added.
+    grade_items = sorted(course.grade_items, key=lambda item: item.id)
+    grades = grade_summary(grade_items)
+
+    # SSAP-32: the "To get:" dropdown sends the target in the address,
+    # like /courses/3?target=95. Anything unexpected falls back to 90.
+    target = request.args.get('target', DEFAULT_TARGET, type=int)
+    if target not in TARGET_CHOICES:
+        target = DEFAULT_TARGET
+
     return render_template(
         'courses/details.html',
         course=course,
         assignments=assignments,
         progress=course_progress(course),
-        art=course.id % NUMBER_OF_ARTS
+        art=course.id % NUMBER_OF_ARTS,
+        grade_items=grade_items,
+        grades=grades,
+        needed=grade_needed(grades, target),
+        target=target,
+        target_choices=TARGET_CHOICES,
+        # Set by add_grade_item() in grades.py when the form had a problem.
+        grade_error=request.args.get('grade_error')
     )
 
 

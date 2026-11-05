@@ -169,3 +169,368 @@ form button.button-danger {
 form button.button-danger:hover {
     background: #a50e0e;
 }
+
+/* ==================================================================
+   SSAP-30 / SSAP-32 -- Grades on the course details page.
+   Template: templates/courses/grades_section.html
+   Only theme.css color names are used, so light AND dark mode both work.
+   ================================================================== */
+.grades {
+    margin-bottom: 28px;
+}
+
+/* "CSCI 3300 grades" title with the icon square. */
+.grades-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.grades-heading h3 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.grades-heading p {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
+.grades-heading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-light);
+    fill: var(--accent-text);
+}
+
+.grades-heading-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+/* ----- The three stat cards ----- */
+.grade-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.grade-stat {
+    position: relative;            /* so the icon circle can sit in the corner */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 18px 20px;
+    border-radius: 14px;
+}
+
+.grade-stat-label {
+    font-size: 15px;
+}
+
+/* The big number, like 88.9% */
+.grade-stat-number {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.grade-stat-letter {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.grade-stat-note {
+    font-size: 14px;
+}
+
+/* The circle with the icon, in the top-right corner. */
+.grade-stat-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+}
+
+.grade-stat-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* The three tints. Each one sets the card color and its text color. */
+.grade-stat-green {
+    background: var(--success-bg);
+    color: var(--success-text);
+    fill: var(--success-text);
+}
+
+.grade-stat-blue {
+    background: var(--accent-light);
+    color: var(--accent-text);
+    fill: var(--accent-text);
+}
+
+.grade-stat-amber {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+    fill: var(--warning-text);
+}
+
+/* The labels and notes are the normal text color, the numbers are tinted. */
+.grade-stat-label,
+.grade-stat-note,
+.grade-stat-list {
+    color: var(--text);
+}
+
+/* Completion's progress bar. */
+.grade-stat-bar {
+    display: block;
+    height: 8px;
+    margin-top: 10px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--surface);
+}
+
+.grade-stat-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    background: var(--accent);
+}
+
+/* The short list of ungraded items. */
+.grade-stat-list {
+    margin-top: 4px;
+    padding-left: 18px;
+    font-size: 14px;
+}
+
+/* ----- The two panels: calculator and grade items ----- */
+/* "auto-fit" makes one panel fill the row, and two panels sit side by
+   side (each at least 320px wide, otherwise they stack). */
+.grade-panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+.grade-panel {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.grade-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.grade-panel-icon {
+    width: 22px;
+    height: 22px;
+    fill: var(--text-muted);
+}
+
+.grade-hint,
+.grade-empty {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ----- SSAP-32: "What grade do I need?" ----- */
+/* "To get: [90%]" on one line, not stacked like other forms. */
+.target-form {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.target-form label {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.target-form select {
+    width: auto;
+    min-width: 110px;
+}
+
+.needed-box {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.needed-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    text-align: left;
+}
+
+/* The big needed number, like 91.3% */
+.needed-number {
+    margin: 10px 0 2px;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.needed-note {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
+.needed-empty {
+    margin-bottom: 0;
+    color: var(--text-muted);
+}
+
+/* The rounded badge: On track / Challenging / Not possible. */
+.needed-badge {
+    padding: 2px 12px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* The colors for each level. */
+.needed-badge-success,
+.needed-number-success {
+    color: var(--success-text);
+}
+
+.needed-badge-warning,
+.needed-number-warning {
+    color: var(--warning-text);
+}
+
+.needed-badge-danger,
+.needed-number-danger {
+    color: var(--error-text);
+}
+
+.needed-badge-success { background: var(--success-bg); }
+.needed-badge-warning { background: var(--warning-bg); }
+.needed-badge-danger  { background: var(--error-bg); }
+
+/* ----- SSAP-30: the grade items list ----- */
+.grade-items {
+    list-style: none;
+}
+
+/* Each row: name on the left, then weight and score in fixed columns. */
+.grade-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px 48px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.grade-item-name {
+    color: var(--text);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.grade-item-name:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.grade-item-weight {
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.grade-item-score {
+    text-align: right;
+    font-weight: 600;
+}
+
+/* Not graded yet: grayed out. */
+.grade-item-ungraded .grade-item-name,
+.grade-item-ungraded .grade-item-score {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ----- The "Add grade item" form ----- */
+.grade-add-form {
+    gap: 10px;
+    margin: 16px 0 0;
+}
+
+.grade-add-form .grade-hint {
+    margin-top: 0;
+}
+
+.grade-add-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+}
+
+.grade-add-fields label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+/* The outlined, full-width "+ Add grade item" button. */
+form button.grade-add-button {
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+form button.grade-add-button:hover {
+    background: var(--hover);
+}
+
+/* ----- Narrow windows: stack everything ----- */
+@media (max-width: 900px) {
+    .grade-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .grade-add-fields {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .grade-add-name {
+        grid-column: 1 / -1;     /* the Name box takes the whole first row */
+    }
+}

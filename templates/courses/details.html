@@ -1,7 +1,8 @@
 {#
   templates/courses/details.html -- Courses: the details page for ONE
   course. Opens when a course card is clicked. Shows the course info,
-  its progress, and the assignments that belong to it. (SSAP-10)
+  its progress, its grades (SSAP-30 / SSAP-32), and the assignments that
+  belong to it. (SSAP-10)
 #}
 {% extends "base.html" %}
 
@@ -42,6 +43,9 @@
     <!-- Opens the "Are you sure?" page. Nothing is deleted yet. -->
     <a class="button-link button-secondary button-danger-outline" href="{{ url_for('courses.confirm_delete_course', course_id=course.id) }}">Delete course</a>
 </div>
+
+<!-- SSAP-30 / SSAP-32: grade cards, grade items, and the calculator. -->
+{% include "courses/grades_section.html" %}
 
 <h3 class="course-section-title">Assignments</h3>
 
