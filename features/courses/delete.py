@@ -36,6 +36,10 @@ def delete_course(course_id):
     for assignment in course.assignments:
         db.session.delete(assignment)
 
+    # Same for its grade items (SSAP-30).
+    for grade_item in course.grade_items:
+        db.session.delete(grade_item)
+
     db.session.delete(course)
     db.session.commit()
 
