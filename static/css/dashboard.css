@@ -1,11 +1,13 @@
-/* ---------------------------------------------------------
-   dashboard.css -- styles that ONLY the Dashboard page uses.
-   Loaded by templates/dashboard/home.html.
---------------------------------------------------------- */
+/* =========================================================
+   dashboard.css
+   Styles used only by the Dashboard page.
+   ========================================================= */
 
 
-/* The page: a wide column on the left, a narrow column
-   on the right (the mini calendar and the upcoming list). */
+/* =========================================================
+   DASHBOARD LAYOUT
+   ========================================================= */
+
 .dashboard-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
@@ -13,8 +15,6 @@
     align-items: stretch;
 }
 
-
-/* Main and side dashboard columns */
 .dashboard-main,
 .dashboard-side {
     display: flex;
@@ -23,24 +23,6 @@
     min-width: 0;
 }
 
-
-/* The last box in each column grows to fill the rest
-   of the window so the dashboard fits on one screen. */
-.dashboard-main > section:last-child,
-.dashboard-side > section:last-child {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.dashboard-main > section:last-child .placeholder,
-.dashboard-side > section:last-child .placeholder {
-    flex: 1;
-}
-
-
-/* Keep the dashboard tall enough on desktop screens */
 @media (min-width: 701px) {
     .dashboard-layout {
         min-height: calc(100vh - 64px);
@@ -48,7 +30,10 @@
 }
 
 
-/* A title above a dashboard section, like "Courses" */
+/* =========================================================
+   SECTION HEADERS
+   ========================================================= */
+
 .section-header {
     display: flex;
     align-items: center;
@@ -57,7 +42,6 @@
     margin-bottom: 8px;
 }
 
-
 .section-title {
     font-size: 18px;
     font-weight: 600;
@@ -65,8 +49,10 @@
 }
 
 
-/* Rows of boxes:
-   the four summary cards and the four course cards */
+/* =========================================================
+   CARD ROWS
+   ========================================================= */
+
 .summary-row,
 .card-ribbon {
     display: grid;
@@ -75,72 +61,41 @@
 }
 
 
-/* ---------------------------------------------------------
-   Placeholder sizes
---------------------------------------------------------- */
+/* =========================================================
+   PLACEHOLDERS
+   ========================================================= */
 
-
-/* A summary card and the greeting */
 .placeholder-short {
     min-height: 76px;
     padding: 12px;
 }
 
-
 .placeholder-short .placeholder-title {
     font-size: 14px;
 }
 
-
-/* Left-aligned text for the greeting */
 .placeholder-left {
     align-items: flex-start;
     text-align: left;
 }
 
-
-/* One course card */
 .placeholder-card {
     min-height: 110px;
     padding: 12px;
 }
 
-
-/* Weekly schedule */
 .placeholder-wide {
     min-height: 140px;
 }
 
-
-/* Mini calendar */
 .placeholder-calendar {
     min-height: 200px;
 }
 
 
-/* ---------------------------------------------------------
-   Responsive layout
---------------------------------------------------------- */
-
-
-/* Very narrow windows */
-@media (max-width: 700px) {
-
-    .dashboard-layout {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .summary-row,
-    .card-ribbon {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-/* ---------------------------------------------------------
-   SSAP-20 -- Dashboard Assignment Summary Cards
-   Updated for SSAP-27 Light / Dark Mode
---------------------------------------------------------- */
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
 
 .summary-card {
     min-height: 90px;
@@ -156,13 +111,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-
-    transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease,
-        color 0.25s ease;
 }
-
 
 .summary-label {
     font-size: 14px;
@@ -170,9 +119,213 @@
     font-weight: 500;
 }
 
-
 .summary-number {
     font-size: 26px;
     font-weight: 700;
     color: var(--text);
+}
+
+
+/* =========================================================
+   SSAP-28 — CUSTOM DASHBOARD BACKGROUND
+   ========================================================= */
+
+.dashboard-background-picker {
+    width: 100%;
+    min-height: 100%;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    transition:
+        background-color 0.25s ease;
+}
+
+
+/* =========================================================
+   CUSTOMIZE DASHBOARD PANEL
+   ========================================================= */
+
+.dashboard-customizer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 16px 18px;
+    margin-bottom: 18px;
+
+    /*
+       Semi-transparent so the selected dashboard
+       background shows through the control panel.
+    */
+    background: rgba(255, 255, 255, 0.35);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.dashboard-customizer h2 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+}
+
+.dashboard-customizer p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BACKGROUND OPTION BUTTONS
+   ========================================================= */
+
+.background-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.background-options input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.background-options label {
+    display: inline-block;
+
+    padding: 9px 14px;
+
+    background: rgba(255, 255, 255, 0.65);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.background-options label:hover {
+    transform: translateY(-1px);
+}
+
+.background-options input:checked + label {
+    border: 2px solid var(--accent);
+}
+
+
+/* =========================================================
+   INNER DASHBOARD AREA
+   ========================================================= */
+
+.dashboard-background-area {
+    padding: 0;
+    background: transparent;
+}
+
+
+/* =========================================================
+   LIGHT MODE BACKGROUNDS
+   ========================================================= */
+
+.dashboard-background-picker:has(#bg-default:checked) {
+    background: transparent;
+}
+
+.dashboard-background-picker:has(#bg-blue:checked) {
+    background: #dbeafe;
+}
+
+.dashboard-background-picker:has(#bg-lavender:checked) {
+    background: #ede9fe;
+}
+
+.dashboard-background-picker:has(#bg-sage:checked) {
+    background: #dcfce7;
+}
+
+.dashboard-background-picker:has(#bg-beige:checked) {
+    background: #fef3c7;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+html[data-theme="dark"]
+.dashboard-customizer {
+    background: rgba(30, 41, 59, 0.45);
+}
+
+html[data-theme="dark"]
+.background-options label {
+    background: rgba(30, 41, 59, 0.70);
+}
+
+html[data-theme="dark"]
+.dashboard-background-picker:has(#bg-default:checked) {
+    background: transparent;
+}
+
+html[data-theme="dark"]
+.dashboard-background-picker:has(#bg-blue:checked) {
+    background: #172554;
+}
+
+html[data-theme="dark"]
+.dashboard-background-picker:has(#bg-lavender:checked) {
+    background: #3b0764;
+}
+
+html[data-theme="dark"]
+.dashboard-background-picker:has(#bg-sage:checked) {
+    background: #14532d;
+}
+
+html[data-theme="dark"]
+.dashboard-background-picker:has(#bg-beige:checked) {
+    background: #78350f;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-row,
+    .card-ribbon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-background-picker {
+        padding: 12px;
+    }
+
+    .dashboard-customizer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .background-options {
+        width: 100%;
+    }
 }
