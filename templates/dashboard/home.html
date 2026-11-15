@@ -1,175 +1,67 @@
 {#
     templates/dashboard/home.html
     Dashboard page layout.
-
-    SSAP-28 — Custom Dashboard Background
 #}
 
 {% extends "base.html" %}
 
+
 {% block extra_css %}
+
 <link
     rel="stylesheet"
     href="{{ url_for('static', filename='css/dashboard.css') }}"
 >
+
 {% endblock %}
+
+
 
 {% block content %}
 
-<div class="dashboard-background-picker">
 
-    <div class="dashboard-customizer">
+<div class="dashboard-layout">
 
-        <div>
-            <h2>Customize Dashboard</h2>
-            <p>Choose a background style for your dashboard.</p>
-        </div>
 
-        <div class="background-options">
+    <!-- Main dashboard column -->
 
-            <input
-                type="radio"
-                name="dashboard-bg"
-                id="bg-default"
-                value="default"
-            >
-            <label for="bg-default">Default</label>
+    <div class="dashboard-main">
 
-            <input
-                type="radio"
-                name="dashboard-bg"
-                id="bg-blue"
-                value="blue"
-            >
-            <label for="bg-blue">Soft Blue</label>
 
-            <input
-                type="radio"
-                name="dashboard-bg"
-                id="bg-lavender"
-                value="lavender"
-            >
-            <label for="bg-lavender">Lavender</label>
+        {% include "dashboard/greeting.html" %}
 
-            <input
-                type="radio"
-                name="dashboard-bg"
-                id="bg-sage"
-                value="sage"
-            >
-            <label for="bg-sage">Sage</label>
 
-            <input
-                type="radio"
-                name="dashboard-bg"
-                id="bg-beige"
-                value="beige"
-            >
-            <label for="bg-beige">Warm Beige</label>
+        {% include "dashboard/summary_cards.html" %}
 
-        </div>
+
+        {% include "dashboard/suggested_course_cards.html" %}
+
+
+        {% include "dashboard/suggested_schedule.html" %}
+
 
     </div>
 
 
-    <div class="dashboard-background-area">
 
-        <div class="dashboard-layout">
+    <!-- Right dashboard column -->
 
-            <div class="dashboard-main">
-
-                {% include "dashboard/greeting.html" %}
-
-                {% include "dashboard/summary_cards.html" %}
-
-                {% include "dashboard/suggested_course_cards.html" %}
-
-                {% include "dashboard/suggested_schedule.html" %}
-
-            </div>
+    <div class="dashboard-side">
 
 
-            <div class="dashboard-side">
+        {% include "shared/due_soon_alert.html" %}
 
-                {% include "shared/due_soon_alert.html" %}
 
-                {% include "dashboard/suggested_mini_calendar.html" %}
+        {% include "dashboard/suggested_mini_calendar.html" %}
 
-                {% include "dashboard/suggested_upcoming_preview.html" %}
 
-            </div>
+        {% include "dashboard/suggested_upcoming_preview.html" %}
 
-        </div>
 
     </div>
+
 
 </div>
 
-
-<script>
-function saveDashboardBackground(value) {
-    localStorage.setItem(
-        "ssap-dashboard-background",
-        value
-    );
-}
-
-
-function restoreDashboardBackground() {
-
-    let saved =
-        localStorage.getItem(
-            "ssap-dashboard-background"
-        );
-
-    if (
-        saved !== "blue" &&
-        saved !== "lavender" &&
-        saved !== "sage" &&
-        saved !== "beige" &&
-        saved !== "default"
-    ) {
-        saved = "default";
-    }
-
-    const radio =
-        document.getElementById(
-            "bg-" + saved
-        );
-
-    if (radio) {
-        radio.checked = true;
-    }
-}
-
-
-document.querySelectorAll(
-    'input[name="dashboard-bg"]'
-).forEach(function (radio) {
-
-    radio.addEventListener(
-        "change",
-        function () {
-
-            if (this.checked) {
-                saveDashboardBackground(
-                    this.value
-                );
-            }
-
-        }
-    );
-
-});
-
-
-restoreDashboardBackground();
-
-
-window.addEventListener(
-    "pageshow",
-    restoreDashboardBackground
-);
-</script>
 
 {% endblock %}
