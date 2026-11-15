@@ -47,7 +47,7 @@
 
 .calendar-nav-button:hover {
     background: var(--accent);
-    color: white;
+    color: var(--on-accent);
 }
 
 .calendar-grid {
@@ -64,7 +64,7 @@
     padding: 14px 6px;
     text-align: center;
     font-weight: 600;
-    background: var(--surface-alt);
+    background: var(--hover);
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 }
@@ -78,7 +78,7 @@
 }
 
 .empty-day {
-    background: var(--surface-alt);
+    background: var(--hover);
     opacity: 1;
 }
 
@@ -93,7 +93,7 @@
 
 .calendar-day.today .calendar-date {
     background: var(--accent);
-    color: white;
+    color: var(--on-accent);
     border-radius: 50%;
 }
 
@@ -108,7 +108,7 @@
     padding: 5px 7px;
     border-radius: 5px;
     background: var(--accent);
-    color: white;
+    color: var(--on-accent);
     font-size: 12px;
     overflow-wrap: anywhere;
 }
@@ -172,7 +172,7 @@
 } 
 
 .calendar-date-button:hover {
-    background: var(--surface-alt);
+    background: var(--hover);
 }
 
 .calendar-modal {

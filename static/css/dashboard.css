@@ -176,3 +176,30 @@
     font-weight: 700;
     color: var(--text);
 }
+
+/* ---------------------------------------------------------
+   SSAP-12 -- Upcoming Assignments Preview
+--------------------------------------------------------- */
+
+.upcoming-preview-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.upcoming-preview-item {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+}
+
+.upcoming-preview-item p {
+    margin: 4px 0 0;
+    color: var(--text-muted);
+}
