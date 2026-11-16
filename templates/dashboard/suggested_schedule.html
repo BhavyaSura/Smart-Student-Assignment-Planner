@@ -24,10 +24,23 @@
                 </div>
             {% endfor %}
         </div>
-    {% else %}
-        <div class="schedule-empty">
-            <p>Nothing scheduled for the next 7 days!</p>
-            <p>You're all caught up.</p>
-        </div>
-    {% endif %}
+    
+{% else %}
+    <div class="schedule-empty">
+        <div class="schedule-empty-icon">✓</div>
+
+        <h4>Your schedule is clear!</h4>
+
+        <p>
+            No upcoming assignments in the next 7 days.
+            Enjoy your free time or plan ahead!
+        </p>
+
+        <a href="{{ url_for('calendar.calendar') }}"
+           class="schedule-empty-button">
+            Open Calendar
+        </a>
+    </div>
+{% endif %}
+
 </section>
