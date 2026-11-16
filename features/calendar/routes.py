@@ -4,6 +4,7 @@ features/calendar/routes.py -- Interactive monthly calendar with filters.
 
 import calendar as month_calendar
 from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 from flask import render_template, request, session
 
@@ -13,7 +14,7 @@ from . import calendar_bp
 
 @calendar_bp.route('/calendar')
 def calendar():
-    today = date.today()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     month_value = request.args.get('month', today.strftime('%Y-%m'))
 
     try:

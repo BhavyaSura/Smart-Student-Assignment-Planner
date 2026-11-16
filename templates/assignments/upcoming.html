@@ -1,74 +1,211 @@
 {#
-  templates/assignments/upcoming.html -- Assignments: the home page. A list of upcoming assignments with
-  buttons to add or delete.
+  templates/assignments/upcoming.html
+  Assignments: Upcoming Assignments page.
+
+  SSAP-34:
+  Colored assignment status badges.
 #}
+
 {% extends "base.html" %}
+
 
 {% block content %}
 
+
 <h2>Upcoming Assignments</h2>
 
+
 <!-- SSAP-13: warning for assignments due in the next 3 days. -->
+
 {% include "shared/due_soon_alert.html" %}
 
-<!-- Links to the other pages in the Assignments feature. -->
+
+
+<!-- Assignment actions -->
+
 <div class="action-bar">
-    <a class="button-link" href="{{ url_for('assignments.add_assignment') }}">Add assignment</a>
-    <a class="button-link button-secondary" href="{{ url_for('assignments.delete_assignments') }}">Delete assignments</a>
+
+    <a
+        class="button-link"
+        href="{{ url_for('assignments.add_assignment') }}"
+    >
+        Add assignment
+    </a>
+
+
+    <a
+        class="button-link button-secondary"
+        href="{{ url_for('assignments.delete_assignments') }}"
+    >
+        Delete assignments
+    </a>
+
 </div>
+
+
 
 {% if assignments %}
 
+
     {% for assignment in assignments %}
+
 
         <div class="assignment-item">
 
-            <h3>{{ assignment.title }}</h3>
+
+            <h3>
+                {{ assignment.title }}
+            </h3>
+
+
 
             <p>
-                <strong>Course:</strong>
+
+                <strong>
+                    Course:
+                </strong>
+
                 {% if assignment.course %}
+
                     {{ assignment.course.name }}
+
                 {% else %}
+
                     Not recorded
+
                 {% endif %}
+
             </p>
 
+
+
             <p>
-                <strong>Due Date:</strong>
+
+                <strong>
+                    Due Date:
+                </strong>
+
                 {% if assignment.due_date %}
+
                     {{ assignment.due_date }}
+
                 {% else %}
+
                     Not recorded
+
                 {% endif %}
+
             </p>
 
+
+
             <p>
-                <strong>Priority:</strong>
+
+                <strong>
+                    Priority:
+                </strong>
+
                 {% if assignment.priority %}
+
                     {{ assignment.priority }}
+
                 {% else %}
+
                     Not recorded
+
                 {% endif %}
+
             </p>
 
+
+
             <p>
-                <strong>Estimated Completion Time:</strong>
+
+                <strong>
+                    Estimated Completion Time:
+                </strong>
+
                 {% if assignment.estimated_time %}
+
                     {{ assignment.estimated_time }}
+
                 {% else %}
+
                     Not recorded
+
                 {% endif %}
+
             </p>
 
+
+
+            {% set status_value =
+                assignment.status or "Not Started"
+            %}
+
+
             <p>
-                <strong>Status:</strong>
-                {% if assignment.status %}
-                    {{ assignment.status }}
+
+                <strong>
+                    Status:
+                </strong>
+
+
+                {% if status_value == "Completed" %}
+
+                    <span
+                        style="
+                            display: inline-block;
+                            padding: 4px 10px;
+                            border-radius: 999px;
+                            background: #dcfce7;
+                            color: #166534;
+                            font-size: 12px;
+                            font-weight: 600;
+                        "
+                    >
+                        {{ status_value }}
+                    </span>
+
+
+                {% elif status_value == "In Progress" %}
+
+                    <span
+                        style="
+                            display: inline-block;
+                            padding: 4px 10px;
+                            border-radius: 999px;
+                            background: #fef3c7;
+                            color: #92400e;
+                            font-size: 12px;
+                            font-weight: 600;
+                        "
+                    >
+                        {{ status_value }}
+                    </span>
+
+
                 {% else %}
-                    Not Started
+
+                    <span
+                        style="
+                            display: inline-block;
+                            padding: 4px 10px;
+                            border-radius: 999px;
+                            background: #dbeafe;
+                            color: #1d4ed8;
+                            font-size: 12px;
+                            font-weight: 600;
+                        "
+                    >
+                        {{ status_value }}
+                    </span>
+
                 {% endif %}
+
             </p>
+
+
 
             <a href="{{ url_for(
                 'assignments.assignment_details',
@@ -77,16 +214,25 @@
                 Edit Assignment
             </a>
 
+
             <hr>
+
 
         </div>
 
+
     {% endfor %}
+
 
 {% else %}
 
-    <p>No upcoming assignments.</p>
+
+    <p>
+        No upcoming assignments.
+    </p>
+
 
 {% endif %}
+
 
 {% endblock %}

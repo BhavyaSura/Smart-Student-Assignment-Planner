@@ -60,8 +60,10 @@
 <p>You haven't added any assignments yet.</p>
 {% endif %}
 
-<a href="{{ url_for('assignments.upcoming_assignments') }}">
-    View Upcoming Assignments
-</a>
+<div class="progress-actions">
+    <a href="{{ url_for('assignments.upcoming_assignments') }}" class="button-link">
+        View Upcoming Assignments
+    </a>
+</div>
 
 {% endblock %}
