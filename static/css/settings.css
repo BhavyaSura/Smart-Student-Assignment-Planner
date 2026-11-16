@@ -1,0 +1,198 @@
+
+/* SSAP-33: SETTINGS PAGE */
+
+.settings-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.settings-page h2 {
+    margin: 0 0 8px;
+}
+
+.settings-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* CARDS */
+
+.settings-page .settings-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.settings-page .settings-section h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+}
+
+/* FORMS */
+
+.settings-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+
+.settings-page label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* TEXT INPUTS */
+
+.settings-page input[type="text"],
+.settings-page select {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+}
+
+/* CHECKBOX ROWS */
+
+.settings-page .settings-checkbox-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    cursor: pointer;
+}
+
+.settings-page .settings-checkbox-row input[type="checkbox"] {
+    appearance: auto !important;
+    -webkit-appearance: checkbox !important;
+
+    display: inline-block !important;
+    position: static !important;
+
+    width: 18px !important;
+    height: 18px !important;
+
+    min-width: 18px !important;
+    max-width: 18px !important;
+    min-height: 18px !important;
+    max-height: 18px !important;
+
+    flex: 0 0 18px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    box-shadow: none !important;
+
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.settings-page .settings-checkbox-row span {
+    display: inline !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* OPTIONS */
+
+.settings-option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.settings-option p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.settings-page .settings-section > p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* BUTTONS */
+
+.settings-page .settings-button {
+    align-self: flex-start;
+    width: auto;
+    padding: 11px 20px;
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--accent);
+    color: var(--on-accent);
+
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.settings-page .settings-button:hover {
+    background: var(--accent-dark);
+}
+
+/* RESET DATA */
+
+.settings-page .settings-danger {
+    border-color: #efb3b3;
+}
+
+.settings-page .settings-danger h3 {
+    color: #dc2626;
+}
+
+.settings-page .settings-reset-button {
+    background: #dc2626;
+    color: white;
+}
+
+.settings-page .settings-reset-button:hover {
+    background: #b91c1c;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .settings-page {
+        padding: 16px 0;
+    }
+
+    .settings-page .settings-section {
+        padding: 18px;
+    }
+
+    .settings-page .settings-button {
+        width: 100%;
+        align-self: stretch;
+    }
+
+}

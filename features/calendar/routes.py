@@ -1,19 +1,20 @@
 """
-features/calendar/routes.py -- Interactive monthly calendar.
+features/calendar/routes.py -- Interactive monthly calendar with filters.
 """
 
 import calendar as month_calendar
 from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 from flask import render_template, request, session
 
-from models import Assignment
+from models import Assignment, Course
 from . import calendar_bp
 
 
 @calendar_bp.route('/calendar')
 def calendar():
-    today = date.today()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     month_value = request.args.get('month', today.strftime('%Y-%m'))
 
     try:
@@ -31,20 +32,67 @@ def calendar():
         month_calendar.monthrange(year, month)[1]
     )
 
-    assignments = Assignment.query.filter_by(
-        user_id=session['user_id']
+    user_id = session['user_id']
+
+    # Only show courses belonging to the signed-in student.
+    courses = Course.query.filter_by(
+        user_id=user_id
+    ).order_by(Course.name.asc()).all()
+
+    # Read the selected filters.
+    selected_course = request.args.get('course', '').strip()
+    selected_status = request.args.get('status', '').strip()
+
+    valid_statuses = ['Not Started', 'In Progress', 'Completed']
+
+    if selected_status not in valid_statuses:
+        selected_status = ''
+
+    # Start with this student's assignments in the selected month.
+    assignments_query = Assignment.query.filter_by(
+        user_id=user_id
     ).filter(
         Assignment.due_date >= first_day.isoformat(),
-        Assignment.due_date <= last_day.isoformat(),
-        Assignment.status != 'Completed'
-    ).order_by(Assignment.due_date.asc()).all()
+        Assignment.due_date <= last_day.isoformat()
+    )
+
+    # Apply the course filter only if it belongs to this student.
+    if selected_course:
+        course = Course.query.filter_by(
+            id=selected_course,
+            user_id=user_id
+        ).first()
+
+        if course:
+            assignments_query = assignments_query.filter_by(
+                course_id=course.id
+            )
+        else:
+            selected_course = ''
+
+    # Apply the selected status.
+    if selected_status:
+        assignments_query = assignments_query.filter_by(
+            status=selected_status
+        )
+    else:
+        # Preserve the existing default behavior.
+        assignments_query = assignments_query.filter(
+            Assignment.status != 'Completed'
+        )
+
+    assignments = assignments_query.order_by(
+        Assignment.due_date.asc()
+    ).all()
 
     assignments_by_day = {}
 
     for assignment in assignments:
         try:
             due_date = date.fromisoformat(assignment.due_date)
-            assignments_by_day.setdefault(due_date.day, []).append(assignment)
+            assignments_by_day.setdefault(
+                due_date.day, []
+            ).append(assignment)
         except (ValueError, TypeError):
             continue
 
@@ -70,5 +118,8 @@ def calendar():
         assignments_by_day=assignments_by_day,
         previous_month=previous_month,
         next_month=next_month,
-        today=today
+        today=today,
+        courses=courses,
+        selected_course=selected_course,
+        selected_status=selected_status
     )

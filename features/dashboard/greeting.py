@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from models import Assignment, User
 
 from zoneinfo import ZoneInfo
-
+from features.settings.models import UserSettings
 def suggested_greeting(user_id):
     user = User.query.get(user_id)
 
@@ -26,6 +26,11 @@ def suggested_greeting(user_id):
         display_name = display_name.replace(".", " ").replace("_", " ")
         display_name = display_name.title()
 
+# Use the preferred display name from Settings when available.
+    user_settings = UserSettings.query.filter_by(user_id=user_id).first()
+
+    if user_settings and user_settings.display_name:
+        display_name = user_settings.display_name
     today = datetime.now(ZoneInfo("America/New_York")).date()
     seven_days_from_now = today + timedelta(days=7)
 

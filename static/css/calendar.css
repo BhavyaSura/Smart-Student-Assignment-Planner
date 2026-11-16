@@ -563,3 +563,194 @@ html[data-theme="dark"]
     }
 
 }
+
+
+/* SSAP-31: Calendar filters */
+
+.calendar-filters {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.calendar-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 190px;
+}
+
+.calendar-filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.calendar-filter-group select {
+    width: 100%;
+    height: 36px;
+    padding: 6px 9px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+}
+
+.calendar-filter-button,
+.calendar-clear-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 13px;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.calendar-filter-button {
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.calendar-filter-button:hover {
+    opacity: 0.9;
+}
+
+.calendar-clear-button {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.calendar-clear-button:hover {
+    background: var(--hover);
+}
+
+/* SSAP-31: Calendar layout improvements */
+
+/* Keep filters aligned in one compact row */
+.calendar-page .calendar-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 16px;
+}
+
+/* Prevent global form styles from stretching controls */
+.calendar-page .calendar-filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 190px;
+    width: 190px;
+    gap: 6px;
+    margin: 0;
+}
+
+.calendar-page .calendar-filter-group select {
+    display: block;
+    width: 100%;
+    height: 38px;
+    margin: 0;
+}
+
+.calendar-page .calendar-filter-button,
+.calendar-page .calendar-clear-button {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 110px;
+    height: 38px;
+    margin: 0;
+    padding: 0 14px;
+}
+
+/* Force a consistent seven-column calendar */
+.calendar-page .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Prevent inherited widths and margins */
+.calendar-page .calendar-weekday,
+.calendar-page .calendar-day {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
+    grid-column: auto;
+}
+
+/* Compact, aligned calendar cells */
+.calendar-page .calendar-day {
+    min-height: 100px;
+    padding: 8px;
+}
+
+.calendar-page .calendar-date-button {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    text-align: left;
+    border-radius: 0;
+    font-family: inherit;
+}
+
+/* Keep assignment titles inside their cells */
+.calendar-page .calendar-assignment {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive layout */
+@media (max-width: 700px) {
+    .calendar-page .calendar-filters {
+        gap: 10px;
+    }
+
+    .calendar-page .calendar-filter-group {
+        flex: 1 1 160px;
+        width: auto;
+    }
+
+    .calendar-page .calendar-day,
+    .calendar-page .calendar-date-button {
+        min-height: 70px;
+        padding: 4px;
+    }
+
+    .calendar-page .calendar-weekday {
+        padding: 10px 2px;
+        font-size: 11px;
+    }
+
+    .calendar-page .calendar-assignment {
+        font-size: 10px;
+        padding: 3px;
+    }
+}
