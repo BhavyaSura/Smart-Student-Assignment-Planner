@@ -1,32 +1,72 @@
 {#
     base.html -- the frame around EVERY page.
-    It draws the sidebar menu (when signed in) or the app name beside the
-    form (when signed out). Every other page "extends" this file and only
-    fills in the {% block content %} area.
+
+    SSAP-27:
+    Light / Dark Mode
+
+    SSAP-28:
+    Custom planner background color
 #}
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Smart Student Assignment Planner</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <!--
-        SSAP-27:
-        Apply the saved theme BEFORE the page is displayed.
-        This prevents the brief white flash when dark mode is selected.
-    -->
+    <title>
+        Smart Student Assignment Planner
+    </title>
+
+
+    <!-- =====================================================
+         RESTORE SAVED SETTINGS BEFORE CSS LOADS
+         ===================================================== -->
+
     <script>
+
+        /* Light / Dark mode */
+
         document.documentElement.setAttribute(
             "data-theme",
             localStorage.getItem("ssap-theme") || "light"
         );
+
+
+        /* Custom planner color */
+
+        const savedPlannerColor =
+            localStorage.getItem(
+                "ssap-custom-background-color"
+            );
+
+
+        if (savedPlannerColor) {
+
+            document.documentElement.style.setProperty(
+                "--ssap-custom-color",
+                savedPlannerColor
+            );
+
+            document.documentElement.classList.add(
+                "has-custom-background"
+            );
+
+        }
+
     </script>
 
-    <!-- Styles every page needs -->
+
+    <!-- =====================================================
+         GLOBAL STYLES
+         ===================================================== -->
+
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/theme.css') }}"
@@ -42,15 +82,20 @@
         href="{{ url_for('static', filename='css/components.css') }}"
     >
 
-    <!-- Individual features may add their own styles -->
+
     {% block extra_css %}
     {% endblock %}
 
 </head>
 
+
 <body>
 
-    <!-- Small SVG icon helper -->
+
+    <!-- =====================================================
+         SVG ICON HELPER
+         ===================================================== -->
+
     {% macro icon(path) %}
 
         <svg
@@ -59,18 +104,29 @@
             aria-hidden="true"
             focusable="false"
         >
+
             <path d="{{ path }}"></path>
+
         </svg>
 
     {% endmacro %}
 
 
-    <!-- Logged-in layout -->
+
+    <!-- =====================================================
+         LOGGED-IN LAYOUT
+         ===================================================== -->
+
     {% if session.get('user_id') %}
+
 
         <div class="planner-layout">
 
+
             <aside class="sidebar">
+
+
+                <!-- Brand -->
 
                 <div class="brand">
 
@@ -80,6 +136,7 @@
                     >
                         S
                     </span>
+
 
                     <div class="brand-text">
 
@@ -96,10 +153,14 @@
                 </div>
 
 
+
+                <!-- Navigation -->
+
                 <nav
                     class="sidebar-nav"
                     aria-label="Planner navigation"
                 >
+
 
                     {% for item in nav_items %}
 
@@ -121,7 +182,12 @@
                     {% endfor %}
 
 
-                    <!-- SSAP-27: Light / Dark Mode -->
+
+                    <!-- =================================================
+                         SSAP-27
+                         LIGHT / DARK MODE
+                         ================================================= -->
+
                     <button
                         type="button"
                         class="theme-toggle"
@@ -143,7 +209,58 @@
                     </button>
 
 
-                    <!-- Sign out -->
+
+                    <!-- =================================================
+                         SSAP-28
+                         PLANNER COLOR
+                         ================================================= -->
+
+                    <div class="planner-color-control">
+
+                        <div class="planner-color-main">
+
+                            <span
+                                class="planner-color-icon"
+                                aria-hidden="true"
+                            >
+                                🎨
+                            </span>
+
+                            <span class="planner-color-label">
+                                Planner Color
+                            </span>
+
+
+                            <div class="planner-color-wheel">
+
+                                <input
+                                    type="color"
+                                    id="planner-color-picker"
+                                    value="#8b5cf6"
+                                    aria-label="Choose planner background color"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="planner-color-reset"
+                            class="planner-color-reset"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SIGN OUT
+                         ================================================= -->
+
                     <a
                         href="{{ url_for('auth.logout') }}"
                         class="nav-bottom"
@@ -159,17 +276,26 @@
 
                     </a>
 
+
                 </nav>
+
 
             </aside>
 
 
-    <!-- Logged-out layout -->
+
+    <!-- =====================================================
+         LOGGED-OUT LAYOUT
+         ===================================================== -->
+
     {% else %}
+
 
         <div class="account-layout">
 
+
             <aside class="account-brand">
+
 
                 <span
                     class="brand-mark brand-mark-large"
@@ -178,10 +304,12 @@
                     S
                 </span>
 
+
                 <h1>
                     Smart Student<br>
                     Assignment Planner
                 </h1>
+
 
                 <p>
                     Plan smarter.<br>
@@ -189,12 +317,18 @@
                     Achieve more.
                 </p>
 
+
             </aside>
+
 
     {% endif %}
 
 
-            <!-- Each page inserts its content here -->
+
+            <!-- =================================================
+                 PAGE CONTENT
+                 ================================================= -->
+
             <main class="page-content">
 
                 {% block content %}
@@ -202,64 +336,316 @@
 
             </main>
 
+
         </div>
 
 
-    <!--
-        SSAP-27:
-        The theme itself was already applied in the <head>.
-        This script controls the button and saves new selections.
-    -->
+
+    <!-- =====================================================
+         THEME + PLANNER COLOR
+         ===================================================== -->
+
     <script>
 
+
         const themeToggle =
-            document.getElementById("theme-toggle");
+            document.getElementById(
+                "theme-toggle"
+            );
 
         const themeIcon =
-            document.getElementById("theme-icon");
+            document.getElementById(
+                "theme-icon"
+            );
 
         const themeLabel =
-            document.getElementById("theme-label");
+            document.getElementById(
+                "theme-label"
+            );
 
+        const plannerColorPicker =
+            document.getElementById(
+                "planner-color-picker"
+            );
+
+        const plannerColorReset =
+            document.getElementById(
+                "planner-color-reset"
+            );
+
+
+
+        /* =====================================================
+           HEX TO RGB
+           ===================================================== */
+
+        function hexToRgb(hex) {
+
+            hex = hex.replace("#", "");
+
+
+            if (hex.length === 3) {
+
+                hex =
+                    hex
+                        .split("")
+                        .map(
+                            character =>
+                                character + character
+                        )
+                        .join("");
+
+            }
+
+
+            const value =
+                parseInt(
+                    hex,
+                    16
+                );
+
+
+            return {
+
+                r: (value >> 16) & 255,
+
+                g: (value >> 8) & 255,
+
+                b: value & 255
+
+            };
+
+        }
+
+
+
+        /* =====================================================
+           BLEND COLORS
+           ===================================================== */
+
+        function blendColor(
+            customColor,
+            baseColor,
+            strength
+        ) {
+
+            const custom =
+                hexToRgb(customColor);
+
+            const base =
+                hexToRgb(baseColor);
+
+
+            const red =
+                Math.round(
+                    custom.r * strength +
+                    base.r * (1 - strength)
+                );
+
+            const green =
+                Math.round(
+                    custom.g * strength +
+                    base.g * (1 - strength)
+                );
+
+            const blue =
+                Math.round(
+                    custom.b * strength +
+                    base.b * (1 - strength)
+                );
+
+
+            return (
+                "rgb(" +
+                red +
+                ", " +
+                green +
+                ", " +
+                blue +
+                ")"
+            );
+
+        }
+
+
+
+        /* =====================================================
+           SSAP-28
+           APPLY PLANNER COLOR
+           ===================================================== */
+
+        window.applyPlannerBackground =
+            function () {
+
+
+                const pageContent =
+                    document.querySelector(
+                        ".planner-layout .page-content"
+                    );
+
+
+                if (!pageContent) {
+                    return;
+                }
+
+
+                const savedColor =
+                    localStorage.getItem(
+                        "ssap-custom-background-color"
+                    );
+
+
+
+                /* No saved color */
+
+                if (!savedColor) {
+
+                    document.documentElement.style.removeProperty(
+                        "--ssap-custom-color"
+                    );
+
+                    document.documentElement.classList.remove(
+                        "has-custom-background"
+                    );
+
+                    pageContent.style.removeProperty(
+                        "background-color"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* Make color available globally */
+
+                document.documentElement.style.setProperty(
+                    "--ssap-custom-color",
+                    savedColor
+                );
+
+
+                document.documentElement.classList.add(
+                    "has-custom-background"
+                );
+
+
+                if (plannerColorPicker) {
+
+                    plannerColorPicker.value =
+                        savedColor;
+
+                }
+
+
+
+                const currentTheme =
+                    document.documentElement.getAttribute(
+                        "data-theme"
+                    );
+
+
+                let finalColor;
+
+
+
+                if (currentTheme === "dark") {
+
+                    finalColor =
+                        blendColor(
+                            savedColor,
+                            "#111827",
+                            0.28
+                        );
+
+                } else {
+
+                    finalColor =
+                        blendColor(
+                            savedColor,
+                            "#f8fafc",
+                            0.32
+                        );
+
+                }
+
+
+
+                pageContent.style.setProperty(
+                    "background-color",
+                    finalColor,
+                    "important"
+                );
+
+            };
+
+
+
+        /* =====================================================
+           SSAP-27
+           APPLY THEME
+           ===================================================== */
 
         function applyTheme(theme) {
+
 
             document.documentElement.setAttribute(
                 "data-theme",
                 theme
             );
 
-            if (!themeToggle) {
-                return;
+
+            if (themeToggle) {
+
+
+                if (theme === "dark") {
+
+                    themeIcon.textContent =
+                        "☀️";
+
+                    themeLabel.textContent =
+                        "Light Mode";
+
+                } else {
+
+                    themeIcon.textContent =
+                        "🌙";
+
+                    themeLabel.textContent =
+                        "Dark Mode";
+
+                }
+
             }
 
 
-            if (theme === "dark") {
-
-                themeIcon.textContent = "☀️";
-                themeLabel.textContent = "Light Mode";
-
-            } else {
-
-                themeIcon.textContent = "🌙";
-                themeLabel.textContent = "Dark Mode";
-
-            }
+            window.applyPlannerBackground();
 
         }
 
 
+
+        /* Restore theme */
+
         const savedTheme =
-            localStorage.getItem("ssap-theme") || "light";
+            localStorage.getItem(
+                "ssap-theme"
+            ) || "light";
+
 
         applyTheme(savedTheme);
 
+
+
+        /* Theme button */
 
         if (themeToggle) {
 
             themeToggle.addEventListener(
                 "click",
                 function () {
+
 
                     const currentTheme =
                         document.documentElement.getAttribute(
@@ -286,7 +672,117 @@
 
         }
 
+
+
+        /* =====================================================
+           COLOR PICKER
+           ===================================================== */
+
+        if (plannerColorPicker) {
+
+
+            const savedColor =
+                localStorage.getItem(
+                    "ssap-custom-background-color"
+                );
+
+
+            if (savedColor) {
+
+                plannerColorPicker.value =
+                    savedColor;
+
+            }
+
+
+
+            plannerColorPicker.addEventListener(
+                "input",
+                function () {
+
+
+                    localStorage.setItem(
+                        "ssap-custom-background-color",
+                        this.value
+                    );
+
+
+                    window.applyPlannerBackground();
+
+                }
+            );
+
+
+            plannerColorPicker.addEventListener(
+                "change",
+                function () {
+
+
+                    localStorage.setItem(
+                        "ssap-custom-background-color",
+                        this.value
+                    );
+
+
+                    window.applyPlannerBackground();
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           RESET CUSTOM COLOR
+           ===================================================== */
+
+        if (plannerColorReset) {
+
+
+            plannerColorReset.addEventListener(
+                "click",
+                function () {
+
+
+                    localStorage.removeItem(
+                        "ssap-custom-background-color"
+                    );
+
+
+                    window.applyPlannerBackground();
+
+                }
+            );
+
+        }
+
+
+
+        /* Restore color */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                window.applyPlannerBackground();
+
+            }
+        );
+
+
+        window.addEventListener(
+            "pageshow",
+            function () {
+
+                window.applyPlannerBackground();
+
+            }
+        );
+
+
     </script>
+
 
 </body>
 
