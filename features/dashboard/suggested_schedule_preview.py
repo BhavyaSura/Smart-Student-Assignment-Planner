@@ -4,12 +4,16 @@ SSAP-24: Dashboard Schedule Widget.
 Shows upcoming assignments from the Calendar.
 """
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from zoneinfo import ZoneInfo
+
 from models import Assignment
 
 
 def suggested_schedule_preview(user_id):
-    today = date.today()
+    # Use Eastern time like the rest of the dashboard, so the
+    # schedule doesn't jump to tomorrow early on PythonAnywhere.
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     end_date = today + timedelta(days=6)
 
     assignments = Assignment.query.filter_by(
