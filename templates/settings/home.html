@@ -2,19 +2,106 @@
 
 {% block content %}
 <div class="settings-page">
+<h2>Settings</h2>
+<p>Manage your account and application preferences in one place.</p>
 
-    <h2>Settings</h2>
-    <p>Manage your account and application preferences in one place.</p>
+<section class="settings-section">
+<h3>Account Settings</h3>
 
-    <section class="settings-section">
-        <h3>Account Settings</h3>
-        <p>Account-related settings and information will be available here.</p>
-    </section>
+<form method="POST" action="{{ url_for('settings.settings') }}">
+<label for="display_name">Display Name</label>
 
-    <section class="settings-section">
-        <h3>App Preferences</h3>
-        <p>Customize your application preferences and experience here.</p>
-    </section>
+<input
+type="text"
+id="display_name"
+name="display_name"
+value="{{ user_settings.display_name or '' }}"
+maxlength="100"
+placeholder="Enter your preferred name"
+>
 
+<button type="submit">Save Display Name</button>
+</form>
+</section>
+
+
+<section class="settings-section">
+    <h3>App Preferences</h3>
+<div class="settings-theme">
+    <label for="settings-dark-mode">
+        <input type="checkbox" id="settings-dark-mode">
+        Dark Mode
+    </label>
+    <p>Switch between light and dark appearance.</p>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const darkModeCheckbox =
+            document.getElementById("settings-dark-mode");
+
+        function syncDarkMode() {
+            darkModeCheckbox.checked =
+                document.documentElement.getAttribute("data-theme") === "dark";
+        }
+
+        syncDarkMode();
+
+        darkModeCheckbox.addEventListener("change", function () {
+            const newTheme = darkModeCheckbox.checked ? "dark" : "light";
+
+            localStorage.setItem("ssap-theme", newTheme);
+            applyTheme(newTheme);
+        });
+
+        const sidebarThemeToggle =
+            document.getElementById("theme-toggle");
+
+        if (sidebarThemeToggle) {
+            sidebarThemeToggle.addEventListener("click", syncDarkMode);
+        }
+    });
+</script>
+
+    <form method="POST" action="{{ url_for('settings.settings') }}">
+        <input type="hidden" name="setting_type" value="hide_completed">
+
+        <label for="hide_completed">
+            <input
+                type="checkbox"
+                id="hide_completed"
+                name="hide_completed"
+                value="on"
+                {% if user_settings.hide_completed %}checked{% endif %}
+            >
+            Hide Completed Assignments
+        </label> 
+        <p>
+            When enabled, completed assignments will be hidden
+            from the Upcoming Assignments list.
+        </p>
+<label for="due_soon_days">Due Soon Reminder</label>
+
+<select id="due_soon_days" name="due_soon_days">
+    <option value="1"
+        {% if user_settings.due_soon_days == 1 %}selected{% endif %}>
+        1 Day
+    </option>
+
+    <option value="3"
+        {% if user_settings.due_soon_days == 3 %}selected{% endif %}>
+        3 Days
+    </option>
+
+    <option value="7"
+        {% if user_settings.due_soon_days == 7 %}selected{% endif %}>
+        7 Days
+    </option>
+</select>
+
+<p>Choose how many days ahead you want to see due-soon reminders.</p>
+        <button type="submit">Save Preferences</button>
+    </form>
+</section>
 </div>
 {% endblock %}

@@ -19,6 +19,8 @@ NAV = {
         'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm8 4a8 8 0 0 1-.1 1.2l2 1.6-2 3.5-2.4-1a8 8 0 0 1-2 1.2l-.4 2.5h-4l-.4-2.5a8 8 0 0 1-2-1.2l-2.4 1-2-3.5 2-1.6a8 8 0 0 1 0-2.4l-2-1.6 2-3.5 2.4 1a8 8 0 0 1 2-1.2l.4-2.5h4l.4 2.5a8 8 0 0 1 2 1.2l2.4-1 2 3.5-2 1.6A8 8 0 0 1 20 12z'
     ),
 }
+# Register the Settings database model.
+from . import models  # noqa: E402,F401
 
 # Load the Settings routes.
 from . import routes  # noqa: E402,F401
