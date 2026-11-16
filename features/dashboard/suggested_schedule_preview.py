@@ -1,8 +1,40 @@
-# SSAP-24: the schedule box on the dashboard. It shows what is coming
-# up, pulled from the Calendar page (SSAP-19).
+
+"""
+SSAP-24: Dashboard Schedule Widget.
+Shows upcoming assignments from the Calendar.
+"""
+
+from datetime import date, timedelta
+from models import Assignment
 
 
 def suggested_schedule_preview(user_id):
-    # Not built yet. When it is, return this student's next scheduled
-    # items here, then show them in templates/dashboard/suggested_schedule.html.
-    return None
+    today = date.today()
+    end_date = today + timedelta(days=6)
+
+    assignments = Assignment.query.filter_by(
+        user_id=user_id
+    ).filter(
+        Assignment.due_date >= today.isoformat(),
+        Assignment.due_date <= end_date.isoformat(),
+        Assignment.status != "Completed"
+    ).order_by(
+        Assignment.due_date.asc()
+    ).all()
+
+    schedule = []
+
+    for assignment in assignments:
+        try:
+            due_date = date.fromisoformat(assignment.due_date)
+        except (ValueError, TypeError):
+            continue
+
+        schedule.append({
+            "title": assignment.title,
+            "due_date": due_date,
+            "day": due_date.strftime("%A"),
+            "date_label": due_date.strftime("%b %d")
+        })
+
+    return schedule

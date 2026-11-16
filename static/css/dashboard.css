@@ -195,3 +195,81 @@
     }
 
 }
+
+/* SSAP-24: Dashboard Schedule Widget */
+
+.schedule-widget {
+    margin-top: 20px;
+}
+
+.schedule-widget .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.schedule-widget .section-header a {
+    color: #2563eb;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 10px;
+    background: var(--card-bg, transparent);
+}
+
+.schedule-date {
+    display: flex;
+    flex-direction: column;
+    min-width: 110px;
+    gap: 4px;
+}
+
+.schedule-date strong {
+    font-size: 14px;
+}
+
+.schedule-date span {
+    font-size: 13px;
+    color: var(--text-muted, #64748b);
+}
+
+.schedule-details strong {
+    font-size: 15px;
+}
+
+.schedule-empty {
+    padding: 28px;
+    text-align: center;
+    border: 1px dashed var(--border-color, #cbd5e1);
+    border-radius: 10px;
+    color: var(--text-muted, #64748b);
+}
+
+.schedule-empty p {
+    margin: 6px 0;
+}
+
+@media (max-width: 600px) {
+    .schedule-item {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .schedule-date {
+        min-width: 90px;
+    }
+}
