@@ -195,3 +195,289 @@
     }
 
 }
+
+/* =========================================================
+   SSAP-23
+   DASHBOARD MINI CALENDAR
+   ========================================================= */
+
+
+.mini-calendar-widget {
+    display: block;
+
+    padding: 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.mini-calendar-widget:hover {
+    border-color: var(--accent);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.mini-calendar-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+
+.mini-calendar-header > div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.mini-calendar-title {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: var(--text-muted);
+}
+
+
+.mini-calendar-month {
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+
+.mini-calendar-open {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+
+    background: var(--hover);
+
+    color: var(--text);
+
+    font-size: 16px;
+}
+
+
+
+/* =========================================================
+   WEEKDAY LABELS
+   ========================================================= */
+
+.mini-calendar-weekdays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    margin-bottom: 5px;
+}
+
+
+.mini-calendar-weekdays span {
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+
+/* =========================================================
+   DAYS
+   ========================================================= */
+
+.mini-calendar-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 3px;
+}
+
+
+.mini-calendar-day {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    color: var(--text);
+
+    font-size: 11px;
+}
+
+
+.mini-calendar-empty {
+    visibility: hidden;
+}
+
+
+.mini-calendar-number {
+    position: relative;
+
+    z-index: 1;
+}
+
+
+
+/* =========================================================
+   TODAY
+   ========================================================= */
+
+.mini-calendar-today {
+    background: var(--accent);
+
+    color: var(--on-accent);
+
+    font-weight: 700;
+}
+
+
+
+/* =========================================================
+   ASSIGNMENT DOT
+   ========================================================= */
+
+.mini-calendar-dot {
+    position: absolute;
+
+    bottom: 2px;
+    left: 50%;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    transform: translateX(-50%);
+}
+
+
+.mini-calendar-today
+.mini-calendar-dot {
+    background: var(--on-accent);
+}
+
+
+
+/* =========================================================
+   FOOTER / LEGEND
+   ========================================================= */
+
+.mini-calendar-footer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+.mini-calendar-legend-dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+}
+
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+   ========================================================= */
+
+.mini-calendar-widget:focus-visible {
+    outline:
+        2px solid var(--accent);
+
+    outline-offset: 3px;
+}
+
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .mini-calendar-widget {
+        padding: 14px;
+    }
+
+
+    .mini-calendar-day {
+        font-size: 12px;
+    }
+
+}
