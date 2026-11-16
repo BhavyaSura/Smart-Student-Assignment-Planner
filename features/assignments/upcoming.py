@@ -57,6 +57,9 @@ def upcoming_assignments():
         assignment for assignment in assignments
         if assignment.due_date
         and today <= assignment.due_date <= due_soon_limit
+        # Completed work never needs a reminder, even when
+        # "Hide Completed Assignments" is turned off.
+        and assignment.status != 'Completed'
     ]
 
     return render_template(
