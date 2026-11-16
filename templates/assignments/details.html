@@ -5,7 +5,14 @@
 
 {% block content %}
 
-<h2>Edit Assignment</h2>
+{% if back_course %}
+    <!-- Step 2 of adding from a course page. -->
+    <p class="step-label">Step 2 of 2 &middot; {{ back_course.name }}</p>
+    <h2>Add the details for {{ assignment.title }}</h2>
+    <p class="step-note">When you save, you'll go back to {{ back_course.name }}.</p>
+{% else %}
+    <h2>Edit Assignment</h2>
+{% endif %}
 
 {% if error %}
 <p class="error-message">{{ error }}</p>
@@ -107,7 +114,7 @@
     </select>
 
     <button type="submit">
-        Save Changes
+        {% if back_course %}Save and go back to {{ back_course.name }}{% else %}Save Changes{% endif %}
     </button>
 
 </form>

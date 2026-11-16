@@ -17,7 +17,8 @@ Example (the numbers from our mockup):
     current grade = 4890 / 55 = 88.9%  -> B
 """
 
-# The choices in the "To get:" dropdown.
+# Quick suggestions for the "To get:" box. You can also type any
+# target from 1 to 100 yourself.
 TARGET_CHOICES = [80, 90, 95, 100]
 DEFAULT_TARGET = 90
 

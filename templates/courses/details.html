@@ -11,7 +11,10 @@
 {% endblock %}
 
 {% block content %}
-<p><a href="{{ url_for('courses.courses') }}">&larr; Back to My Courses</a></p>
+<!-- A real button (not just a text link) back to the Courses page. -->
+<div class="back-bar">
+    <a class="button-link button-secondary" href="{{ url_for('courses.courses') }}">&larr; Back to My Courses</a>
+</div>
 
 <!-- The header box. Its cover image matches the course's card. -->
 <div class="course-header course-theme-{{ art }}">
@@ -39,7 +42,9 @@
 </div>
 
 <div class="action-bar">
-    <a class="button-link" href="{{ url_for('assignments.add_assignment') }}">Add assignment</a>
+    <!-- course_id tells the Add Assignment page which course this is for,
+         so it can bring you back here when you're done. -->
+    <a class="button-link" href="{{ url_for('assignments.add_assignment', course_id=course.id) }}">Add assignment</a>
     <!-- Opens the "Are you sure?" page. Nothing is deleted yet. -->
     <a class="button-link button-secondary button-danger-outline" href="{{ url_for('courses.confirm_delete_course', course_id=course.id) }}">Delete course</a>
 </div>

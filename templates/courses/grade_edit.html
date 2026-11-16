@@ -10,7 +10,9 @@
 {% endblock %}
 
 {% block content %}
-<p><a href="{{ url_for('courses.course_details', course_id=course.id) }}#grades">&larr; Back to {{ course.name }}</a></p>
+<div class="back-bar">
+    <a class="button-link button-secondary" href="{{ url_for('courses.course_details', course_id=course.id) }}#grades">&larr; Back to {{ course.name }}</a>
+</div>
 
 <h2>Edit {{ item.name }}</h2>
 
