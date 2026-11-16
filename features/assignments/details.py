@@ -21,6 +21,17 @@ def assignment_details(assignment_id):
         user_id=session['user_id']
     ).all()
 
+    # Step 2 of adding from a course page: the address has ?from_course=3.
+    # We look the course up (only the student's own) so we can send them
+    # back to it after saving. None means "go to the assignments list".
+    back_course = None
+    from_course = request.args.get('from_course', type=int)
+    if from_course is not None:
+        back_course = Course.query.filter_by(
+            id=from_course,
+            user_id=session['user_id']
+        ).first()
+
     if request.method == 'POST':
 
         title = request.form.get('title', '').strip()
@@ -42,6 +53,7 @@ def assignment_details(assignment_id):
                 'assignments/details.html',
                 assignment=assignment,
                 courses=courses,
+                back_course=back_course,
                 error='Please fill out every field.'
             )
 
@@ -55,6 +67,7 @@ def assignment_details(assignment_id):
                 'assignments/details.html',
                 assignment=assignment,
                 courses=courses,
+                back_course=back_course,
                 error='Please choose a valid course.'
             )
 
@@ -67,6 +80,12 @@ def assignment_details(assignment_id):
 
         db.session.commit()
 
+        # Came from a course page? Go back there. Otherwise, the list.
+        if back_course:
+            return redirect(
+                url_for('courses.course_details', course_id=back_course.id)
+            )
+
         return redirect(
             url_for('assignments.upcoming_assignments')
         )
@@ -74,5 +93,6 @@ def assignment_details(assignment_id):
     return render_template(
         'assignments/details.html',
         assignment=assignment,
-        courses=courses
+        courses=courses,
+        back_course=back_course
     )

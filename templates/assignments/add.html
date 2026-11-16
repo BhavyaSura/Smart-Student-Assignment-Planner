@@ -5,13 +5,28 @@
 
 {% block content %}
 
-<h2>Add New Assignment</h2>
+{% if course %}
+    <!-- Opened from a course page: show where we are in the 2 steps. -->
+    <div class="back-bar">
+        <a class="button-link button-secondary" href="{{ url_for('courses.course_details', course_id=course.id) }}">&larr; Back to {{ course.name }}</a>
+    </div>
+    <p class="step-label">Step 1 of 2 &middot; {{ course.name }}</p>
+    <h2>Name your assignment</h2>
+    <p class="step-note">Next, you'll add the due date, priority, and the other details.</p>
+{% else %}
+    <h2>Add New Assignment</h2>
+{% endif %}
 
 {% if error %}
     <p class="error-message">{{ error }}</p>
 {% endif %}
 
 <form method="POST">
+    {% if course %}
+        <!-- Hidden box: sends the course id along with the form. -->
+        <input type="hidden" name="course_id" value="{{ course.id }}">
+    {% endif %}
+
     <label for="title">Assignment Name:</label>
 
     <input
@@ -21,7 +36,7 @@
         required
     >
 
-    <button type="submit">Add Assignment</button>
+    <button type="submit">{% if course %}Next: add details &rarr;{% else %}Add Assignment{% endif %}</button>
 </form>
 
 {% endblock %}

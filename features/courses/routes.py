@@ -45,11 +45,18 @@ def course_details(course_id):
     grade_items = sorted(course.grade_items, key=lambda item: item.id)
     grades = grade_summary(grade_items)
 
-    # SSAP-32: the "To get:" dropdown sends the target in the address,
-    # like /courses/3?target=95. Anything unexpected falls back to 90.
-    target = request.args.get('target', DEFAULT_TARGET, type=int)
-    if target not in TARGET_CHOICES:
-        target = DEFAULT_TARGET
+    # SSAP-32: the "To get:" box sends the target in the address,
+    # like /courses/3?target=87.5. No target in the address means 90.
+    target_error = None
+    target = DEFAULT_TARGET
+    if 'target' in request.args:
+        # type=float turns the text into a number, or gives None if it
+        # isn't one (like "abc").
+        typed = request.args.get('target', type=float)
+        if typed is None or typed <= 0 or typed > 100:
+            target_error = 'Enter a target between 1 and 100.'
+        else:
+            target = typed
 
     return render_template(
         'courses/details.html',
@@ -62,6 +69,7 @@ def course_details(course_id):
         needed=grade_needed(grades, target),
         target=target,
         target_choices=TARGET_CHOICES,
+        target_error=target_error,
         # Set by add_grade_item() in grades.py when the form had a problem.
         grade_error=request.args.get('grade_error')
     )

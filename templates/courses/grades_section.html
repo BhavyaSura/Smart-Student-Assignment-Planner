@@ -83,19 +83,29 @@
                 What grade do I need?
             </h4>
 
-            <!-- Picking a target reloads the page with ?target=95 in the
-                 address. The small bit of JavaScript submits the form as
-                 soon as you pick; the "Go" button is there in case
-                 JavaScript is off. #grades keeps the page scrolled here. -->
+            <!-- Type any target (like 87.5) and press Enter or Calculate.
+                 The list= part shows 80 / 90 / 95 / 100 as quick suggestions.
+                 The page reloads with ?target=87.5 in the address, and
+                 #grades keeps it scrolled down here. -->
             <form method="GET" action="{{ url_for('courses.course_details', course_id=course.id) }}#grades" class="target-form">
                 <label for="target">To get:</label>
-                <select id="target" name="target" onchange="this.form.submit()">
+                <span class="target-input">
+                    <input type="number" id="target" name="target"
+                           min="1" max="100" step="any" required
+                           value="{{ '%g'|format(target) }}" list="target-choices">
+                    <span aria-hidden="true">%</span>
+                </span>
+                <datalist id="target-choices">
                     {% for choice in target_choices %}
-                        <option value="{{ choice }}" {% if choice == target %}selected{% endif %}>{{ choice }}%</option>
+                        <option value="{{ choice }}">
                     {% endfor %}
-                </select>
-                <noscript><button type="submit">Go</button></noscript>
+                </datalist>
+                <button type="submit" class="target-button">Calculate</button>
             </form>
+
+            {% if target_error %}
+                <p class="error-message">{{ target_error }}</p>
+            {% endif %}
 
             <div class="needed-box">
                 {% if not grade_items %}

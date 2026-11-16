@@ -470,3 +470,29 @@ form button:hover {
         flex-direction: column;
     }
 }
+/* ----- Step-by-step pages (adding an assignment from a course) ----- */
+/* The small "Step 1 of 2" line above the page title. */
+.step-label {
+    margin-bottom: 4px;
+    color: var(--accent-text);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+/* The gray sentence under the title that says what happens next. */
+.step-note {
+    color: var(--text-muted);
+}
+
+/* ----- The "Back to ..." button at the top of a page ----- */
+.back-bar {
+    margin-bottom: 16px;
+}
+
+/* A smaller button than normal, so it doesn't compete with the page. */
+.back-bar .button-link {
+    padding: 5px 12px;
+    font-size: 13px;
+}

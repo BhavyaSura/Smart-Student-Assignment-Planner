@@ -363,6 +363,7 @@ form button.button-danger:hover {
 /* "To get: [90%]" on one line, not stacked like other forms. */
 .target-form {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
     margin-bottom: 14px;
@@ -373,9 +374,23 @@ form button.button-danger:hover {
     color: var(--text-muted);
 }
 
-.target-form select {
+/* The number box with a "%" after it. */
+.target-input {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* The shared "form input" rule in components.css makes every box full
+   width. An id (#target) is stronger than that rule, so this width wins. */
+#target {
+    width: 100px;
+}
+
+/* A smaller Calculate button that sits on the same line. */
+form button.target-button {
     width: auto;
-    min-width: 110px;
+    padding: 8px 16px;
 }
 
 .needed-box {
