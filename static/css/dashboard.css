@@ -1,180 +1,199 @@
-/* ---------------------------------------------------------
-   dashboard.css -- styles that ONLY the Dashboard page uses.
-   Loaded by templates/dashboard/home.html.
---------------------------------------------------------- */
+/* =========================================================
+   dashboard.css
+   Styles used only by the Dashboard page.
+   ========================================================= */
 
 
-/* The page: a wide column on the left, a narrow column
-   on the right (the mini calendar and the upcoming list). */
+/* =========================================================
+   DASHBOARD LAYOUT
+   ========================================================= */
+
 .dashboard-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 300px;
+
+    grid-template-columns:
+        minmax(0, 1fr) 300px;
+
     gap: 16px;
+
     align-items: stretch;
 }
 
 
-/* Main and side dashboard columns */
 .dashboard-main,
 .dashboard-side {
     display: flex;
+
     flex-direction: column;
+
     gap: 12px;
+
     min-width: 0;
 }
 
 
-/* The last box in each column grows to fill the rest
-   of the window so the dashboard fits on one screen. */
-.dashboard-main > section:last-child,
-.dashboard-side > section:last-child {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.dashboard-main > section:last-child .placeholder,
-.dashboard-side > section:last-child .placeholder {
-    flex: 1;
-}
-
-
-/* Keep the dashboard tall enough on desktop screens */
 @media (min-width: 701px) {
+
     .dashboard-layout {
-        min-height: calc(100vh - 64px);
+        min-height:
+            calc(100vh - 64px);
     }
+
 }
 
 
-/* A title above a dashboard section, like "Courses" */
+/* =========================================================
+   SECTION HEADERS
+   ========================================================= */
+
 .section-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 12px;
+
     margin-bottom: 8px;
 }
 
 
 .section-title {
     font-size: 18px;
+
     font-weight: 600;
+
     white-space: nowrap;
 }
 
 
-/* Rows of boxes:
-   the four summary cards and the four course cards */
+/* =========================================================
+   CARD ROWS
+   ========================================================= */
+
 .summary-row,
 .card-ribbon {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
     gap: 16px;
 }
 
 
-/* ---------------------------------------------------------
-   Placeholder sizes
---------------------------------------------------------- */
+/* =========================================================
+   PLACEHOLDERS
+   ========================================================= */
 
-
-/* A summary card and the greeting */
 .placeholder-short {
     min-height: 76px;
+
     padding: 12px;
 }
 
 
-.placeholder-short .placeholder-title {
+.placeholder-short
+.placeholder-title {
     font-size: 14px;
 }
 
 
-/* Left-aligned text for the greeting */
 .placeholder-left {
     align-items: flex-start;
+
     text-align: left;
 }
 
 
-/* One course card */
 .placeholder-card {
     min-height: 110px;
+
     padding: 12px;
 }
 
 
-/* Weekly schedule */
 .placeholder-wide {
     min-height: 140px;
 }
 
 
-/* Mini calendar */
 .placeholder-calendar {
     min-height: 200px;
 }
 
 
-/* ---------------------------------------------------------
-   Responsive layout
---------------------------------------------------------- */
-
-
-/* Very narrow windows */
-@media (max-width: 700px) {
-
-    .dashboard-layout {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .summary-row,
-    .card-ribbon {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-
-/* ---------------------------------------------------------
-   SSAP-20 -- Dashboard Assignment Summary Cards
-   Updated for SSAP-27 Light / Dark Mode
---------------------------------------------------------- */
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
 
 .summary-card {
     min-height: 90px;
+
     padding: 16px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
+
     border-radius: 12px;
 
     background: var(--surface);
+
     color: var(--text);
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
 
-    transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease,
-        color 0.25s ease;
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 6px;
 }
 
 
 .summary-label {
     font-size: 14px;
+
     color: var(--text-muted);
+
     font-weight: 500;
 }
 
 
 .summary-number {
     font-size: 26px;
+
     font-weight: 700;
+
     color: var(--text);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+
+    .summary-row,
+    .card-ribbon {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
 }
 
 /* ---------------------------------------------------------

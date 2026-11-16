@@ -1,0 +1,196 @@
+
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="settings-page">
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="success-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+    <h2>Settings</h2>
+    <p class="settings-subtitle">
+        Manage your account and application preferences in one place.
+    </p>
+
+    <!-- ACCOUNT SETTINGS -->
+    <section class="settings-section">
+
+        <h3>Account Settings</h3>
+
+        <form method="POST" action="{{ url_for('settings.settings') }}">
+
+            <input type="hidden" name="setting_type" value="display_name">
+
+            <label for="display_name">Display Name</label>
+
+            <input
+                type="text"
+                id="display_name"
+                name="display_name"
+                value="{{ user_settings.display_name or '' }}"
+                maxlength="100"
+                placeholder="Enter your preferred name"
+            >
+
+            <button type="submit" class="settings-button">
+                Save Display Name
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- APP PREFERENCES -->
+    <section class="settings-section">
+
+        <h3>App Preferences</h3>
+
+        <div class="settings-option">
+
+            <label class="settings-checkbox-row">
+                <input type="checkbox" id="settings-dark-mode">
+                <span>Dark Mode</span>
+            </label>
+
+            <p>Switch between light and dark appearance.</p>
+
+        </div>
+
+        <form method="POST" action="{{ url_for('settings.settings') }}">
+
+            <input
+                type="hidden"
+                name="setting_type"
+                value="hide_completed"
+            >
+
+            <div class="settings-option">
+
+                <label class="settings-checkbox-row">
+                    <input
+                        type="checkbox"
+                        id="hide_completed"
+                        name="hide_completed"
+                        value="on"
+                        {% if user_settings.hide_completed %}checked{% endif %}
+                    >
+                    <span>Hide Completed Assignments</span>
+                </label>
+
+                <p>
+                    When enabled, completed assignments will be hidden
+                    from the Upcoming Assignments list.
+                </p>
+
+            </div>
+
+            <div class="settings-option">
+
+                <label for="due_soon_days">
+                    Due Soon Reminder
+                </label>
+
+                <select id="due_soon_days" name="due_soon_days">
+                    <option value="1" {% if user_settings.due_soon_days == 1 %}selected{% endif %}>1 Day</option>
+                    <option value="3" {% if user_settings.due_soon_days == 3 %}selected{% endif %}>3 Days</option>
+                    <option value="7" {% if user_settings.due_soon_days == 7 %}selected{% endif %}>7 Days</option>
+                </select>
+
+                <p>
+                    Choose how many days ahead you want to see
+                    due-soon reminders.
+                </p>
+
+            </div>
+
+            <button type="submit" class="settings-button">
+                Save Preferences
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- RESET DATA -->
+    <section class="settings-section settings-danger">
+
+        <h3>Reset Data</h3>
+
+        <p>
+            Permanently delete your assignments, courses, and
+            associated grade records. Your account and settings
+            will remain unchanged.
+        </p>
+
+        <form
+            method="POST"
+            action="{{ url_for('settings.reset_data') }}"
+            onsubmit="return confirm('Are you sure? This will permanently delete your planner data.');"
+        >
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <label for="reset_confirmation">
+                Type RESET to confirm:
+            </label>
+
+            <input
+                type="text"
+                id="reset_confirmation"
+                name="reset_confirmation"
+                placeholder="RESET"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit" class="settings-button settings-reset-button">
+                Reset My Data
+            </button>
+
+        </form>
+
+    </section>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const checkbox = document.getElementById("settings-dark-mode");
+
+    if (!checkbox) return;
+
+    function syncTheme() {
+        checkbox.checked =
+            document.documentElement.getAttribute("data-theme") === "dark";
+    }
+
+    syncTheme();
+
+    checkbox.addEventListener("change", function () {
+        const theme = checkbox.checked ? "dark" : "light";
+
+        localStorage.setItem("ssap-theme", theme);
+        applyTheme(theme);
+    });
+
+    const sidebarToggle = document.getElementById("theme-toggle");
+
+    if (sidebarToggle) {
+        sidebarToggle.addEventListener("click", syncTheme);
+    }
+
+});
+</script>
+
+{% endblock %}

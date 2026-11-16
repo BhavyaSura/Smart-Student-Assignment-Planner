@@ -1,231 +1,565 @@
+/* ============================================================
+   calendar.css
+   Calendar page styling.
+
+   SSAP-28:
+   The calendar uses transparent surfaces so the student's
+   selected planner color shows through from page-content.
+   ============================================================ */
+
+
+/* ============================================================
+   CALENDAR PAGE
+   ============================================================ */
+
 .calendar-page {
     width: 100%;
 }
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
 
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     flex-wrap: wrap;
+
     gap: 20px;
+
     margin-bottom: 24px;
 }
+
 
 .calendar-header h2 {
     margin-bottom: 6px;
 }
 
+
 .calendar-header p {
-    color: var(--text-muted);
     margin: 0;
+
+    color: var(--text-muted);
 }
+
+
+/* ============================================================
+   MONTH NAVIGATION
+   ============================================================ */
 
 .calendar-navigation {
     display: flex;
     align-items: center;
+
     gap: 18px;
 }
 
+
 .calendar-navigation h3 {
     min-width: 160px;
-    text-align: center;
+
     margin: 0;
+
+    text-align: center;
 }
+
 
 .calendar-nav-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     width: 36px;
     height: 36px;
+
     border: 1px solid var(--border);
     border-radius: 8px;
+
     color: var(--text);
+
     text-decoration: none;
-    background: var(--surface);
+
+    background: rgba(255, 255, 255, 0.62);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 .calendar-nav-button:hover {
     background: var(--accent);
+
     color: var(--on-accent);
+
+    transform: translateY(-1px);
 }
+
+
+.calendar-nav-button:focus-visible {
+    outline: 2px solid var(--accent);
+
+    outline-offset: 2px;
+}
+
+
+/* ============================================================
+   CALENDAR GRID
+   ============================================================ */
 
 .calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
     border-top: 1px solid var(--border);
     border-left: 1px solid var(--border);
+
     border-radius: 8px;
+
     overflow: hidden;
-    background: var(--surface);
+
+    /*
+       Important:
+       transparent background lets the student's
+       custom planner color show underneath.
+    */
+
+    background: transparent;
 }
+
+
+/* ============================================================
+   WEEKDAY HEADER
+   ============================================================ */
 
 .calendar-weekday {
     padding: 14px 6px;
+
     text-align: center;
+
     font-weight: 600;
-    background: var(--hover);
+
+    /*
+       Light glass effect.
+       The custom page color shows underneath.
+    */
+
+    background:
+        rgba(255, 255, 255, 0.55);
+
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
+
+
+/* ============================================================
+   CALENDAR DAYS
+   ============================================================ */
 
 .calendar-day {
     min-height: 115px;
+
     padding: 10px;
+
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    background: var(--surface);
+
+    /*
+       Main day cells remain transparent enough
+       for the selected planner color to show.
+    */
+
+    background:
+        rgba(255, 255, 255, 0.40);
+
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    transition:
+        background-color 0.2s ease;
 }
 
+
+/* Empty days */
+
 .empty-day {
-    background: var(--hover);
+    background:
+        rgba(255, 255, 255, 0.24);
+
     opacity: 1;
 }
+
+
+/* ============================================================
+   DATE NUMBER
+   ============================================================ */
 
 .calendar-date {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     width: 28px;
     height: 28px;
+
     font-weight: 600;
 }
 
+
+/* Today */
+
 .calendar-day.today .calendar-date {
     background: var(--accent);
+
     color: var(--on-accent);
+
     border-radius: 50%;
 }
 
+
+/* ============================================================
+   ASSIGNMENTS
+   ============================================================ */
+
 .calendar-assignments {
-    margin-top: 8px;
     display: flex;
     flex-direction: column;
+
     gap: 5px;
+
+    margin-top: 8px;
 }
+
 
 .calendar-assignment {
     padding: 5px 7px;
+
     border-radius: 5px;
+
     background: var(--accent);
+
     color: var(--on-accent);
+
     font-size: 12px;
+
     overflow-wrap: anywhere;
 }
+
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
 
 .calendar-legend {
     display: flex;
     align-items: center;
+
     gap: 8px;
+
     margin-top: 18px;
+
     color: var(--text-muted);
+
     font-size: 13px;
 }
+
 
 .calendar-dot {
     width: 10px;
     height: 10px;
+
     border-radius: 50%;
+
     background: var(--accent);
 }
 
-@media (max-width: 700px) {
-    .calendar-day {
-        min-height: 80px;
-        padding: 5px;
-    }
 
-    .calendar-weekday {
-        font-size: 12px;
-        padding: 10px 2px;
-    }
+/* ============================================================
+   CLICKABLE DATE CELLS
+   ============================================================ */
 
-    .calendar-assignment {
-        font-size: 10px;
-        padding: 4px;
-    }
-
-    .calendar-header {
-        align-items: flex-start;
-    }
-
-    .calendar-navigation {
-        width: 100%;
-        justify-content: center;
-    }
-}
-/* Calendar date selection pop-up */
 .calendar-date-button {
     appearance: none;
     -webkit-appearance: none;
+
     display: block;
+
     width: 100%;
     min-height: 115px;
+
     box-sizing: border-box;
+
     font-family: inherit;
     font-size: inherit;
+
     text-align: left;
+
     cursor: pointer;
+
     color: inherit;
-    background: var(--surface);
+
+    /*
+       Same idea:
+       don't create a solid independent background.
+       Let the user's custom planner color show through.
+    */
+
+    background:
+        rgba(255, 255, 255, 0.40);
+
     border-radius: 0;
-} 
+
+    border-top: 0;
+    border-left: 0;
+
+    border-right:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+    transition:
+        background-color 0.2s ease;
+}
+
 
 .calendar-date-button:hover {
-    background: var(--hover);
+    background:
+        rgba(255, 255, 255, 0.62);
 }
+
+
+/* Keyboard accessibility */
+
+.calendar-date-button:focus-visible {
+    position: relative;
+
+    z-index: 2;
+
+    outline: 2px solid var(--accent);
+
+    outline-offset: -2px;
+}
+
+
+/* ============================================================
+   CALENDAR MODAL
+   ============================================================ */
 
 .calendar-modal {
     display: none;
+
     position: fixed;
+
     inset: 0;
+
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.45);
+
     align-items: center;
     justify-content: center;
+
     padding: 20px;
+
+    background:
+        rgba(0, 0, 0, 0.45);
 }
+
 
 .calendar-modal.show {
     display: flex;
 }
 
+
 .calendar-modal-content {
     position: relative;
+
     width: 100%;
     max-width: 400px;
+
     padding: 28px;
+
     border-radius: 12px;
+
     background: var(--surface);
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+
+    color: var(--text);
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.2);
 }
 
+
 .calendar-modal-content h3 {
-    margin: 0 30px 18px 0;
+    margin:
+        0 30px 18px 0;
 }
+
 
 .calendar-modal-content ul {
     padding-left: 22px;
+
     margin-bottom: 0;
 }
+
 
 .calendar-modal-content li {
     margin-bottom: 10px;
 }
 
+
 .calendar-modal-close {
     position: absolute;
+
     top: 12px;
     right: 16px;
+
     border: none;
+
     background: transparent;
+
     color: var(--text);
+
     font-size: 28px;
+
     cursor: pointer;
 }
+
+
+.calendar-modal-close:focus-visible {
+    outline: 2px solid var(--accent);
+
+    outline-offset: 2px;
+
+    border-radius: 4px;
+}
+
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+
+/*
+   Instead of calculating another color, dark mode uses
+   translucent dark layers.
+
+   The custom color already exists underneath on page-content.
+*/
+
+
+html[data-theme="dark"]
+.calendar-grid {
+    background: transparent;
+}
+
+
+html[data-theme="dark"]
+.calendar-weekday {
+    /*
+       Less opacity = more custom color visible.
+    */
+
+    background:
+        rgba(17, 24, 39, 0.48);
+}
+
+
+html[data-theme="dark"]
+.calendar-day {
+    /*
+       42% dark + custom background underneath.
+
+       Green becomes dark green.
+       Purple becomes dark purple.
+       Pink becomes dark rose.
+       Blue becomes dark blue.
+    */
+
+    background:
+        rgba(17, 24, 39, 0.42);
+}
+
+
+html[data-theme="dark"]
+.empty-day {
+    background:
+        rgba(17, 24, 39, 0.30);
+}
+
+
+html[data-theme="dark"]
 .calendar-date-button {
-    border-top: 0;
-    border-left: 0;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    background:
+        rgba(17, 24, 39, 0.42);
+}
+
+
+html[data-theme="dark"]
+.calendar-date-button:hover {
+    background:
+        rgba(17, 24, 39, 0.24);
+}
+
+
+html[data-theme="dark"]
+.calendar-nav-button {
+    background:
+        rgba(17, 24, 39, 0.55);
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+
+    .calendar-day {
+        min-height: 80px;
+
+        padding: 5px;
+    }
+
+
+    .calendar-date-button {
+        min-height: 80px;
+    }
+
+
+    .calendar-weekday {
+        padding: 10px 2px;
+
+        font-size: 12px;
+    }
+
+
+    .calendar-assignment {
+        padding: 4px;
+
+        font-size: 10px;
+    }
+
+
+    .calendar-header {
+        align-items: flex-start;
+    }
+
+
+    .calendar-navigation {
+        width: 100%;
+
+        justify-content: center;
+    }
+
 }
