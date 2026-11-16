@@ -1,9 +1,10 @@
 """
 features/settings/routes.py -- Settings home page.
 """
-
+from flask_wtf.csrf import validate_csrf, ValidationError
 from flask import render_template, session, request, redirect, url_for, flash
-from models import db
+from models import db, Assignment, Course
+from features.courses.models import GradeItem
 from . import settings_bp
 from .models import UserSettings
 
@@ -49,7 +50,7 @@ def settings():
             else:
                 flash('Please select a valid reminder window.')
 
-        elif setting_type is None:
+        elif setting_type in (None, 'display_name'):
             # Save the student's display name.
             display_name = request.form.get(
                 'display_name', ''
@@ -68,5 +69,46 @@ def settings():
         'settings/home.html',
         user_settings=user_settings
     )
+@settings_bp.route('/reset-data/', methods=['POST'])
+def reset_data():
+    # Only signed-in students can reset their data.
+    user_id = session.get('user_id')
 
+    if user_id is None:
+        return redirect(url_for('auth.login'))
+     # Verify that this request came from a valid Settings form.
+    try:
+        validate_csrf(request.form.get('csrf_token', ''))
+    except ValidationError:
+        flash('Security verification failed. Please try again.')
+        return redirect(url_for('settings.settings'))
+    
+    # Require explicit confirmation before deleting any data.
+    confirmation = request.form.get('reset_confirmation', '').strip()
+
+    if confirmation != 'RESET':
+        flash('Data was not deleted. Type RESET to confirm.')
+        return redirect(url_for('settings.settings'))
+    # Delete only records owned by this student.
+    try:
+        GradeItem.query.filter_by(user_id=user_id).delete(
+            synchronize_session=False
+        )
+
+        Assignment.query.filter_by(user_id=user_id).delete(
+            synchronize_session=False
+        )
+
+        Course.query.filter_by(user_id=user_id).delete(
+            synchronize_session=False
+        )
+
+        db.session.commit()
+        flash('Your assignments, courses, and grades have been reset.')
+
+    except Exception:
+        db.session.rollback()
+        flash('Unable to reset your data. No changes were saved.')
+
+    return redirect(url_for('settings.settings'))
 
