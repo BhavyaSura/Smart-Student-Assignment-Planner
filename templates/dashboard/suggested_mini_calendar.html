@@ -1,7 +1,162 @@
-{# SSAP-23: replace this dashed box with the small calendar. Days with an
-   assignment due get a small dot. The data comes from suggested_mini_calendar()
-   in features/dashboard/suggested_mini_calendar.py #}
-<div class="placeholder placeholder-calendar">
-    <span class="placeholder-title">Mini calendar</span>
-    <span class="placeholder-note">A small dot marks days with an assignment. Coming soon (SSAP-23)</span>
-</div>
+{#
+    templates/dashboard/suggested_mini_calendar.html
+
+    SSAP-23:
+    Dashboard Mini Calendar Widget
+#}
+
+
+{% if mini_calendar %}
+
+
+<a
+    href="{{ url_for('calendar.calendar') }}"
+    class="mini-calendar-widget"
+    aria-label="Open full calendar"
+>
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="mini-calendar-header">
+
+        <div>
+
+            <span class="mini-calendar-title">
+                Calendar
+            </span>
+
+            <span class="mini-calendar-month">
+                {{ mini_calendar.month_name }}
+                {{ mini_calendar.year }}
+            </span>
+
+        </div>
+
+
+        <span
+            class="mini-calendar-open"
+            aria-hidden="true"
+        >
+            →
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         WEEKDAY LABELS
+         ===================================================== -->
+
+    <div class="mini-calendar-weekdays">
+
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CALENDAR DAYS
+         ===================================================== -->
+
+    <div class="mini-calendar-grid">
+
+
+        {% for week in mini_calendar.weeks %}
+
+
+            {% for day in week %}
+
+
+                {% if day == 0 %}
+
+
+                    <span
+                        class="
+                            mini-calendar-day
+                            mini-calendar-empty
+                        "
+                        aria-hidden="true"
+                    >
+                    </span>
+
+
+                {% else %}
+
+
+                    <span
+                        class="
+                            mini-calendar-day
+
+                            {% if day == mini_calendar.today %}
+                                mini-calendar-today
+                            {% endif %}
+
+                            {% if day in mini_calendar.due_days %}
+                                has-assignment
+                            {% endif %}
+                        "
+                    >
+
+
+                        <span class="mini-calendar-number">
+                            {{ day }}
+                        </span>
+
+
+                        {% if day in mini_calendar.due_days %}
+
+                            <span
+                                class="mini-calendar-dot"
+                                aria-label="Assignment due"
+                            >
+                            </span>
+
+                        {% endif %}
+
+
+                    </span>
+
+
+                {% endif %}
+
+
+            {% endfor %}
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         LEGEND
+         ===================================================== -->
+
+    <div class="mini-calendar-footer">
+
+        <span class="mini-calendar-legend-dot"></span>
+
+        <span>
+            Assignment due
+        </span>
+
+    </div>
+
+
+</a>
+
+
+{% endif %}
