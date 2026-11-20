@@ -6,7 +6,7 @@ one place. Each student signs in to their own private planner, sees what's due t
 week at a glance, and can work out what grade they need to reach their goal in a
 course.
 
-**Live site:** https://jiovanyo.pythonanywhere.com
+**Live site:** https://miczi55.pythonanywhere.com
 
 ## Features
 
