@@ -516,3 +516,290 @@
     }
 
 }
+
+/* ============================================================
+   SIDEBAR POLISH
+   - Stays in place while the page scrolls.
+   - "Menu" and "Preferences" labels group the buttons.
+   - Preferences + Sign out are pinned to the bottom.
+   - Dark mode looks like an on/off switch.
+   Every color comes from theme.css, so dark mode and
+   Planner Color keep working.
+   ============================================================ */
+
+/* Hides text on screen but screen readers still read it */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+}
+
+.brand {
+    padding: 0 8px;
+    margin-bottom: 28px;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25);
+}
+
+/* Small grey section titles */
+.nav-section-label {
+    margin: 0 0 6px;
+    padding: 0 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.sidebar-nav {
+    flex: 1;
+    gap: 2px;
+}
+
+/* ----- Page links ----- */
+.sidebar-nav a {
+    position: relative;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    color: var(--text);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-nav a .nav-icon {
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+}
+
+.sidebar-nav a:hover .nav-icon {
+    color: var(--text);
+}
+
+/* Current page: tinted background, colored icon, and a
+   small bar on the left edge */
+.sidebar-nav a.active {
+    background: var(--accent-light);
+    color: var(--accent-text);
+    font-weight: 600;
+}
+
+.sidebar-nav a.active .nav-icon {
+    color: var(--accent-text);
+}
+
+.sidebar-nav a.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+}
+
+.sidebar-nav a:focus-visible,
+.sidebar-prefs button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ----- Bottom group ----- */
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-prefs {
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--page-bg);
+}
+
+/* Both preference rows share the same look */
+.sidebar .theme-toggle,
+.sidebar .planner-color-control {
+    width: 100%;
+    margin: 0;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.sidebar .theme-toggle {
+    cursor: pointer;
+}
+
+.sidebar .theme-toggle:hover {
+    background: var(--hover);
+}
+
+.sidebar-prefs .nav-icon {
+    color: var(--text-muted);
+}
+
+.pref-label {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+}
+
+/* On/off switch: the dot slides right in dark mode */
+.theme-switch {
+    position: relative;
+    width: 34px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.theme-switch::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+html[data-theme="dark"] .theme-switch {
+    background: var(--accent);
+}
+
+html[data-theme="dark"] .theme-switch::after {
+    transform: translateX(14px);
+}
+
+/* Planner color: Reset becomes a small text link next to the wheel */
+.sidebar .planner-color-wheel {
+    width: 22px;
+    height: 22px;
+    opacity: 1;
+}
+
+.sidebar .planner-color-reset {
+    align-self: center;
+    padding: 2px 4px;
+    border: none;
+    background: none;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.sidebar .planner-color-reset:hover {
+    color: var(--accent-text);
+    text-decoration: underline;
+}
+
+/* Reset only shows when a custom color is turned on */
+html:not(.has-custom-background) .sidebar .planner-color-reset {
+    visibility: hidden;
+}
+
+/* ----- Sign out ----- */
+.sidebar-nav .sidebar-bottom a.nav-bottom {
+    margin-top: 8px;
+    padding: 9px 12px;
+    border-top: none;
+    border-radius: 10px;
+    color: var(--text-muted);
+}
+
+.sidebar-nav .sidebar-bottom a.nav-bottom:hover {
+    background: var(--error-bg);
+    color: var(--error-text);
+}
+
+.sidebar-nav .sidebar-bottom a.nav-bottom:hover .nav-icon {
+    color: var(--error-text);
+}
+
+/* On a computer screen: keep the sidebar in view while scrolling */
+@media (min-width: 701px) {
+    .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        align-self: flex-start;
+    }
+}
+
+/* On a phone: the sidebar becomes a top bar, like before */
+@media (max-width: 700px) {
+
+    .nav-section-label {
+        display: none;
+    }
+
+    .sidebar-nav a.active::before {
+        display: none;
+    }
+
+    .sidebar-bottom {
+        width: 100%;
+        margin-top: 4px;
+        padding-top: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sidebar-prefs {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .sidebar-nav .sidebar-bottom a.nav-bottom {
+        margin-top: 0;
+    }
+}
+
+/* Keep "Planner color" on one line next to Reset and the wheel */
+.pref-label {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar .planner-color-control {
+    gap: 10px;
+}
+
+.sidebar .planner-color-reset {
+    padding: 2px 0;
+}
