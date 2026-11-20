@@ -31,6 +31,12 @@
                aria-label="Next month">
                 &#10095;
             </a>
+
+            {# Jump back to this month (keeps any filters) #}
+            <a href="{{ url_for('calendar.calendar', month=today.strftime('%Y-%m'), course=selected_course, status=selected_status) }}"
+               class="calendar-today-button">
+                Today
+            </a>
         </div>
     </div>
 
@@ -88,13 +94,22 @@
 
         <!-- Filter Buttons -->
         <button type="submit" class="calendar-filter-button">
-            Apply Filters
+            Apply
         </button>
 
+        {# Only show "Clear" when a filter is actually turned on #}
+
+        {% if selected_course or selected_status %}
+
         <a href="{{ url_for('calendar.calendar', month=year|string + '-' + '%02d'|format(month)) }}"
+
            class="calendar-clear-button">
-            Clear Filters
+
+            Clear
+
         </a>
+
+        {% endif %}
 
     </form>
 
@@ -110,7 +125,7 @@
         <div class="calendar-day empty-day"></div>
 {%- else %}
         <button type="button"
-                class="calendar-day calendar-date-button {% if today.year == year and today.month == month and today.day == day %}today{% endif %}"
+                class="calendar-day calendar-date-button {% if today.year == year and today.month == month and today.day == day %}today{% endif %} {% if [year, month, day] < [today.year, today.month, today.day] %}past-day{% endif %}"
                 data-day="{{ day }}"
                 data-month="{{ month }}"
                 data-year="{{ year }}"
@@ -121,7 +136,7 @@
             {% if day in assignments_by_day %}
             <div class="calendar-assignments">
                 {% for assignment in assignments_by_day[day] %}
-                <div class="calendar-assignment">
+                <div class="calendar-assignment chip-{{ (assignment.status or 'Not Started') | lower | replace(' ', '-') }}">
                     {{ assignment.title }}
                 </div>
                 {% endfor %}
@@ -131,12 +146,6 @@
 {%- endif %}
 {%- endfor %}
 {%- endfor %}
-    </div>
-
-    <!-- Calendar Legend -->
-    <div class="calendar-legend">
-        <span class="calendar-dot"></span>
-        Assignment due date
     </div>
 
 </section>

@@ -754,3 +754,161 @@ html[data-theme="dark"]
         padding: 3px;
     }
 }
+
+
+/* =========================================================
+   CALENDAR POLISH
+   - Day numbers always sit in the top-left corner.
+   - Lighter weekday labels, past days, and empty cells.
+   - Softer assignment chips, colored by status.
+   All colors come from theme.css.
+   ========================================================= */
+
+/* Header: "Today" button next to the arrows */
+.calendar-page .calendar-navigation {
+    gap: 8px;
+}
+
+.calendar-today-button {
+    margin-left: 4px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.calendar-today-button:hover {
+    background: var(--hover);
+}
+
+/* Filter bar: a little more compact */
+.calendar-page .calendar-filters {
+    align-items: flex-end;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+}
+
+.calendar-page .calendar-clear-button {
+    border: none;
+    background: none;
+    color: var(--accent-text);
+    padding: 8px 4px;
+}
+
+.calendar-page .calendar-clear-button:hover {
+    text-decoration: underline;
+}
+
+/* The grid */
+.calendar-page .calendar-grid {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+}
+
+/* Weekday labels: small, gray, no heavy box */
+.calendar-page .calendar-weekday {
+    padding: 10px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+}
+
+/* Every day: number in the top-left, chips underneath */
+.calendar-page .calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 6px;
+    min-height: 96px;
+    padding: 8px;
+    text-align: left;
+    background: var(--surface);
+}
+
+.calendar-page .calendar-date-button:hover {
+    background: var(--hover);
+}
+
+.calendar-page .calendar-date {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Today: filled circle */
+.calendar-page .calendar-day.today .calendar-date {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+/* Past days and days outside the month are lighter */
+.calendar-page .calendar-day.past-day .calendar-date {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.calendar-page .calendar-day.empty-day {
+    background: var(--page-bg);
+}
+
+/* Assignment chips: light background with a colored left edge */
+.calendar-page .calendar-assignments {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.calendar-page .calendar-assignment {
+    padding: 3px 8px;
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    background: var(--accent-light);
+    color: var(--accent-text);
+    font-size: 12px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.calendar-page .calendar-assignment.chip-in-progress {
+    border-left-color: var(--warning-text);
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.calendar-page .calendar-assignment.chip-completed {
+    border-left-color: var(--success-text);
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+@media (max-width: 700px) {
+
+    .calendar-page .calendar-day {
+        min-height: 64px;
+        padding: 4px;
+    }
+
+    .calendar-page .calendar-assignment {
+        padding: 2px 4px;
+        font-size: 10px;
+    }
+}
