@@ -1,46 +1,54 @@
-
 {# SSAP-24: Dashboard Schedule Widget #}
 
-<section class="schedule-widget">
+<section class="dash-card schedule-widget">
     <div class="section-header">
-        <h3 class="section-title">Weekly Schedule</h3>
+        <h3 class="section-title">This Week</h3>
         <a href="{{ url_for('calendar.calendar') }}">
-            View Calendar
+            View calendar →
         </a>
     </div>
 
     {% if schedule_preview %}
-        <div class="schedule-list">
+        <ul class="schedule-list">
             {% for item in schedule_preview %}
-                <div class="schedule-item">
+                {% set days = item.iso_date | days_until %}
+                <li class="schedule-item">
+
+                    {# Small date tile, like a page torn off a calendar #}
                     <div class="schedule-date">
-                        <strong>{{ item.day }}</strong>
-                        <span>{{ item.date_label }}</span>
+                        <span>{{ item.short_day }}</span>
+                        <strong>{{ item.day_number }}</strong>
                     </div>
 
                     <div class="schedule-details">
                         <strong>{{ item.title }}</strong>
+                        <span>
+                            {{ item.course or 'No course' }} · {{ item.status }}
+                        </span>
                     </div>
-                </div>
+
+                    <span class="due-chip{% if days is not none and days <= 2 %} due-chip-soon{% endif %}">
+                        {{ item.iso_date | friendly_date }}
+                    </span>
+
+                </li>
             {% endfor %}
+        </ul>
+
+    {% else %}
+        <div class="schedule-empty">
+            <span class="schedule-empty-icon" aria-hidden="true">✓</span>
+
+            <div>
+                <h4>Your week is clear!</h4>
+                <p>Nothing due in the next 7 days.</p>
+            </div>
+
+            <a href="{{ url_for('calendar.calendar') }}"
+               class="schedule-empty-button">
+                Plan ahead
+            </a>
         </div>
-    
-{% else %}
-    <div class="schedule-empty">
-        <div class="schedule-empty-icon">✓</div>
-
-        <h4>Your schedule is clear!</h4>
-
-        <p>
-            No upcoming assignments in the next 7 days.
-            Enjoy your free time or plan ahead!
-        </p>
-
-        <a href="{{ url_for('calendar.calendar') }}"
-           class="schedule-empty-button">
-            Open Calendar
-        </a>
-    </div>
-{% endif %}
+    {% endif %}
 
 </section>

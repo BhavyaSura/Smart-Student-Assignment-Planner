@@ -68,5 +68,7 @@ def suggested_greeting(user_id):
 
     return {
         "greeting": f"{greeting_text}, {display_name}!",
-        "message": assignment_message
+        "message": assignment_message,
+        # e.g. "Thursday, November 19" (shown above the greeting)
+        "date_label": f"{today.strftime('%A, %B')} {today.day}"
     }

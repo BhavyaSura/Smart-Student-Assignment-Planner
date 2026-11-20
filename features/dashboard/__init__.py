@@ -32,3 +32,5 @@ NAV = {
 # 3. Load the page files so their routes attach to the Blueprint above.
 #    (This line must stay BELOW the Blueprint line.)
 from . import routes  # noqa: E402,F401
+
+from . import friendly_dates  # noqa: E402,F401

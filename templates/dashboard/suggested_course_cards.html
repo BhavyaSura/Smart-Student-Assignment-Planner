@@ -13,6 +13,15 @@
             {% for card in course_cards.cards %}
                 {% include "courses/course_card.html" %}
             {% endfor %}
+
+            {# Fill the next empty spot with an "Add course" tile, so the
+               row lines up with the summary cards above it. #}
+            {% if course_cards.cards | length < 4 %}
+                <a class="course-add-tile" href="{{ url_for('courses.new_course') }}"
+                   aria-label="Add course" title="Add course">
+                    <span aria-hidden="true">+</span>
+                </a>
+            {% endif %}
         </div>
     {% else %}
         <!-- Empty state: the student has no courses yet. A plain card (not

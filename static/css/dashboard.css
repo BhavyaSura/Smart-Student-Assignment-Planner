@@ -657,3 +657,472 @@
     outline: 2px solid var(--accent);
     outline-offset: 3px;
 }
+
+
+/* =========================================================
+   DASHBOARD POLISH
+   Cleaner greeting, colored summary cards, compact lists and
+   friendly dates. Everything uses the theme colors, so it
+   works in light mode, dark mode and with Planner Color.
+   ========================================================= */
+
+/* ----- Greeting ----- */
+.dashboard-greeting {
+    margin-bottom: 4px;
+}
+
+.greeting-date {
+    margin: 0 0 2px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.dashboard-greeting h1 {
+    margin: 0;
+}
+
+.greeting-status {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.greeting-status p {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.status-pill {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.status-pill-overdue {
+    background: var(--error-bg);
+    color: var(--error-text);
+}
+
+/* ----- Section header links: same look everywhere ----- */
+.section-header a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent-text);
+    text-decoration: none;
+}
+
+.section-header a:hover {
+    text-decoration: underline;
+}
+
+/* ----- Summary cards ----- */
+.summary-card {
+    min-height: 0;
+    padding: 14px 16px;
+    gap: 2px;
+    justify-content: flex-start;
+}
+
+.summary-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent-text);
+}
+
+.summary-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.summary-done .summary-icon {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.summary-week .summary-icon {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.summary-overdue .summary-icon {
+    background: var(--hover);
+    color: var(--text-muted);
+}
+
+.summary-number {
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.summary-label {
+    font-size: 13px;
+}
+
+/* Overdue turns red only when something is actually late */
+.summary-overdue.is-alert {
+    border-color: var(--error-text);
+    background: var(--error-bg);
+}
+
+.summary-overdue.is-alert .summary-icon {
+    background: var(--error-text);
+    color: var(--surface);
+}
+
+.summary-overdue.is-alert .summary-number,
+.summary-overdue.is-alert .summary-label {
+    color: var(--error-text);
+}
+
+/* ----- Shared card look for boxes in the right column ----- */
+.dash-card {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.dash-empty {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ----- Date chips ("Tomorrow", "Saturday") ----- */
+.due-chip {
+    flex-shrink: 0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    background: var(--hover);
+    color: var(--text-muted);
+}
+
+.due-chip-soon {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+/* ----- Upcoming list: compact rows inside one card ----- */
+.upcoming-preview-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.upcoming-preview-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: none;
+}
+
+.upcoming-preview-item:first-child {
+    border-top: none;
+    padding-top: 4px;
+}
+
+.upcoming-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-text strong {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.upcoming-text span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ----- This Week list: compact rows with a date tile ----- */
+.schedule-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+.schedule-item {
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+}
+
+.schedule-date {
+    min-width: 0;
+    width: 44px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent-text);
+}
+
+.schedule-date span {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.schedule-date strong {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.schedule-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.schedule-details span {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ----- Empty "This Week": one short row instead of a big box ----- */
+.schedule-widget .schedule-empty {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-style: solid;
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.schedule-widget .schedule-empty-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 18px;
+}
+
+.schedule-widget .schedule-empty div {
+    flex: 1;
+}
+
+.schedule-widget .schedule-empty h4 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.schedule-widget .schedule-empty p {
+    margin: 2px 0 0;
+    font-size: 13px;
+}
+
+.schedule-widget .schedule-empty-button {
+    margin: 0;
+    padding: 7px 14px;
+    font-size: 13px;
+    background: var(--accent-light);
+    color: var(--accent-text);
+}
+
+/* ----- Due Soon box: a little tighter in the right column ----- */
+.dashboard-side .due-soon-alert {
+    margin-bottom: 0;
+    border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+    .schedule-widget .schedule-empty {
+        flex-wrap: wrap;
+    }
+}
+
+/* Keep the empty "This Week" row short (older rules stretched it) */
+.schedule-widget .schedule-empty {
+    flex: none;
+    min-height: 0;
+}
+
+.dashboard-greeting + .summary-row {
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   SYMMETRIC LAYOUT
+   - The greeting goes across the top.
+   - Both columns start on the same line and end on the same
+     line (the last box in each column stretches to the bottom).
+   - Every gap is the same size (20px).
+   ========================================================= */
+
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-page .dashboard-layout {
+    flex: 1;
+    min-height: 0;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.dashboard-main,
+.dashboard-side {
+    gap: 20px;
+}
+
+.summary-row,
+.card-ribbon {
+    gap: 20px;
+}
+
+.dashboard-greeting + .summary-row {
+    margin-top: 0;
+}
+
+/* "This Week" now sits in a card, just like "Upcoming" */
+.schedule-widget.dash-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.schedule-widget.dash-card .schedule-list {
+    gap: 0;
+}
+
+.schedule-widget.dash-card .schedule-item {
+    padding: 10px 0;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: none;
+}
+
+.schedule-widget.dash-card .schedule-item:first-child {
+    border-top: none;
+    padding-top: 4px;
+}
+
+.schedule-widget.dash-card .schedule-empty {
+    padding: 4px 0 0;
+    border: none;
+    background: none;
+}
+
+/* Round "+" button in the next empty course spot */
+.course-add-tile {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.course-add-tile span {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: var(--accent-light);
+    color: var(--accent-text);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.course-add-tile:hover span,
+.course-add-tile:focus-visible span {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+/* On a computer screen: fill the window and line up the bottoms */
+@media (min-width: 701px) {
+
+    .dashboard-page {
+        min-height: calc(100vh - 64px);
+    }
+
+    .dashboard-page .dashboard-layout {
+        min-height: 0;
+    }
+
+    .dashboard-main > :last-child,
+    .dashboard-side > :last-child {
+        flex: 1;
+    }
+}
+
+/* On a phone: one column, no stretching */
+@media (max-width: 700px) {
+
+    .dashboard-page .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Same 20px gap above "This Week" as everywhere else */
+.dashboard-main .schedule-widget {
+    margin-top: 0;
+}
+
+/* Empty messages sit in the middle of their card, with no
+   extra box or shadow around them */
+.schedule-widget.dash-card .schedule-empty {
+    box-shadow: none;
+}
+
+@media (min-width: 701px) {
+
+    .upcoming-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .schedule-widget.dash-card .schedule-empty,
+    .upcoming-card .dash-empty {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+.upcoming-card .dash-empty {
+    text-align: center;
+}

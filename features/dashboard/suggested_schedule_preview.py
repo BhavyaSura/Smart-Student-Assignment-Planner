@@ -38,7 +38,13 @@ def suggested_schedule_preview(user_id):
             "title": assignment.title,
             "due_date": due_date,
             "day": due_date.strftime("%A"),
-            "date_label": due_date.strftime("%b %d")
+            "date_label": due_date.strftime("%b %d"),
+            # Extra details for the polished schedule rows.
+            "short_day": due_date.strftime("%a"),       # e.g. "Fri"
+            "day_number": due_date.day,                 # e.g. 20
+            "iso_date": assignment.due_date,
+            "course": assignment.course.name if assignment.course else None,
+            "status": assignment.status or "Not Started"
         })
 
     return schedule
