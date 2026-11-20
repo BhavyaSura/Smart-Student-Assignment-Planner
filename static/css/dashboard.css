@@ -1126,3 +1126,41 @@
 .upcoming-card .dash-empty {
     text-align: center;
 }
+
+
+/* =========================================================
+   MINI CALENDAR: blue dot = due, green dot = completed
+   ========================================================= */
+
+/* Holds one or two dots, centered under the day number */
+.mini-calendar-dots {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    display: flex;
+    gap: 2px;
+    transform: translateX(-50%);
+}
+
+/* Inside the holder, the dots sit side by side */
+.mini-calendar-dots .mini-calendar-dot {
+    position: static;
+    transform: none;
+}
+
+.mini-calendar-dot-done,
+.mini-calendar-legend-done {
+    background: var(--success-text);
+}
+
+/* On today's filled circle both dots would be the same color,
+   so the completed dot becomes a hollow ring instead */
+.mini-calendar-today .mini-calendar-dot-done {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--on-accent);
+}
+
+/* Space between the two legend items */
+.mini-calendar-legend-done {
+    margin-left: 10px;
+}

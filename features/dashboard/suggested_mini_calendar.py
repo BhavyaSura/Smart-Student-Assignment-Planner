@@ -7,7 +7,8 @@ Dashboard Mini Calendar Widget.
 Shows:
 - the current month
 - today's date
-- a dot on days that have an assignment due
+- a blue dot on days with an assignment still to do
+- a green dot on days with a completed assignment
 - only assignments belonging to the signed-in student
 """
 
@@ -53,7 +54,12 @@ def suggested_mini_calendar(user_id):
     # Store the days that have at least one assignment.
     # Example:
     # {5, 12, 22}
+    # Two groups of days, so each can get its own color dot:
+    #   due_days       -> assignments still to do (blue dot)
+    #   completed_days -> assignments already done (green dot)
+    # A day can be in both.
     due_days = set()
+    completed_days = set()
 
     for assignment in assignments:
 
@@ -67,9 +73,13 @@ def suggested_mini_calendar(user_id):
                 "%Y-%m-%d"
             ).date()
 
-            due_days.add(
-                due_date.day
-            )
+            if assignment.status == "Completed":
+
+                completed_days.add(due_date.day)
+
+            else:
+
+                due_days.add(due_date.day)
 
         except ValueError:
             # Ignore an invalid date instead of
@@ -108,5 +118,8 @@ def suggested_mini_calendar(user_id):
 
         "due_days":
             due_days,
+
+        "completed_days":
+            completed_days,
 
     }

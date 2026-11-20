@@ -1,21 +1,27 @@
 # SSAP-12 (Bhavya): Upcoming Assignments Preview on the Dashboard.
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from models import Assignment
 
 
 def suggested_upcoming_preview(user_id):
-    today = datetime.now(ZoneInfo("America/New_York")).date().isoformat()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
 
-    # Get upcoming and incomplete assignments for this student.
+    # The "This Week" box already shows today + the next 6 days,
+    # so this box starts the day after that. That way the same
+    # assignment isn't listed twice on the dashboard.
+    after_this_week = (today + timedelta(days=7)).isoformat()
+
+    # Get later, incomplete assignments for this student
+    # (plus ones with no due date, which "This Week" never shows).
     assignments = (
         Assignment.query
         .filter_by(user_id=user_id)
         .filter(Assignment.status != "Completed")
         .filter(
-            (Assignment.due_date >= today)
+            (Assignment.due_date >= after_this_week)
             | (Assignment.due_date.is_(None))
             | (Assignment.due_date == "")
         )
