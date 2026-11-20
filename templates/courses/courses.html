@@ -1,6 +1,6 @@
 {#
   templates/courses/courses.html -- Courses: the home page. A grid of
-  course cards, starting with the dashed "Add a course" square.
+  course cards, ending with a round "+" button for adding a course.
   (SSAP-5 - Course Feature, SSAP-10 - Course cards)
 #}
 {% extends "base.html" %}
@@ -10,24 +10,30 @@
 {% endblock %}
 
 {% block content %}
-<h2>My Courses</h2>
+<div class="page-header">
+    <h2>My Courses</h2>
+    {% if cards %}
+        <span class="page-count">{{ cards | length }} {{ 'course' if cards | length == 1 else 'courses' }}</span>
+    {% endif %}
+</div>
 
 <!-- Empty state: shown only when the student has no courses yet. -->
 {% if not cards %}
-<p class="courses-empty">You haven't added any courses yet. Click "Add a course" to get started.</p>
+<p class="courses-empty">You haven't added any courses yet. Click the + button to get started.</p>
 {% endif %}
 
 <div class="course-gallery">
-    <!-- The dashed square opens the form for adding a course. -->
-    <a class="tile tile-add" href="{{ url_for('courses.new_course') }}">
-        <span class="tile-plus" aria-hidden="true">+</span>
-        Add a course
-    </a>
 
     <!-- Each saved course is a card with an abstract cover image. Clicking it opens the
          course's details page. -->
     {% for card in cards %}
         {% include "courses/course_card.html" %}
     {% endfor %}
+
+    <!-- Round "+" button after the courses (same as the dashboard). -->
+    <a class="course-add-round" href="{{ url_for('courses.new_course') }}"
+       aria-label="Add a course" title="Add a course">
+        <span aria-hidden="true">+</span>
+    </a>
 </div>
 {% endblock %}
