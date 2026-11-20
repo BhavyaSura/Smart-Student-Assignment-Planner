@@ -107,3 +107,147 @@
         padding: 18px;
     }
 }
+
+
+/* =========================================================
+   PROGRESS POLISH
+   Count cards match the dashboard summary cards: a small
+   colored icon, the number, then the label.
+   ========================================================= */
+
+/* Title on the left, "View upcoming" on the right */
+.page-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.page-title-row h2 {
+    margin: 0;
+}
+
+.page-subtitle {
+    margin: 4px 0 0;
+    color: var(--text-muted);
+}
+
+.page-title-row .button-link {
+    padding: 7px 14px;
+    font-size: 14px;
+}
+
+.progress-summary {
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.progress-card {
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+    min-height: 0;
+    padding: 16px;
+    text-align: left;
+    border-radius: 12px;
+}
+
+.progress-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.progress-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.progress-not-started .progress-icon {
+    background: var(--accent-light);
+    color: var(--accent-text);
+}
+
+.progress-in-progress .progress-icon {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.progress-completed .progress-icon {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.progress-card .progress-number {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+.progress-card h3 {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Overall completion card */
+.overall-progress {
+    margin: 0;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.overall-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.overall-top h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.overall-count {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.overall-progress .overall-percent {
+    margin: 8px 0 0;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--success-text);
+}
+
+.progress-bar-container {
+    height: 10px;
+    margin: 12px 0 0;
+}
+
+.overall-empty {
+    margin: 12px 0 0;
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+
+    .page-title-row {
+        flex-direction: column;
+    }
+
+    .progress-summary {
+        grid-template-columns: 1fr;
+    }
+}

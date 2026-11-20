@@ -196,3 +196,127 @@
     }
 
 }
+
+
+/* =========================================================
+   SETTINGS POLISH
+   - Lined up on the left like every other page.
+   - Checkboxes look like on/off switches (same as the sidebar).
+   ========================================================= */
+
+.settings-page {
+    margin: 0;
+    padding: 0;
+    max-width: 720px;
+}
+
+.settings-page .settings-section {
+    padding: 20px 24px;
+    margin-bottom: 20px;
+}
+
+.settings-page .settings-section h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+/* One setting per row: text on the left, control on the right */
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+}
+
+/* No line above the first row in a card */
+.settings-section h3 + .settings-row {
+    border-top: none;
+    padding-top: 0;
+}
+
+.settings-row-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.settings-row p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.settings-page .settings-row select {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+/* On/off switch built from a normal checkbox */
+.switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 24px;
+}
+
+.settings-page .switch input[type="checkbox"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.switch-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.switch-track::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.switch input:checked + .switch-track {
+    background: var(--accent);
+}
+
+.switch input:checked + .switch-track::after {
+    transform: translateX(16px);
+}
+
+.switch input:focus-visible + .switch-track {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Smaller buttons that don't stretch */
+.settings-page .settings-button {
+    align-self: flex-start;
+    padding: 9px 18px;
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+
+    .settings-row {
+        align-items: flex-start;
+    }
+}

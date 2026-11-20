@@ -3,8 +3,13 @@
 #}
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
 {% block content %}
 <h2>Create Account</h2>
+<p class="auth-subtitle">It only takes a minute.</p>
 
 {% if error %}
 <p class="error-message">{{ error }}</p>
@@ -23,5 +28,5 @@
     <button type="submit">Create Account</button>
 </form>
 
-<p>Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></p>
+<p class="auth-switch">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></p>
 {% endblock %}
