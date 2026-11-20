@@ -1,8 +1,10 @@
 """
 features/dashboard/friendly_dates.py -- turns "2026-11-20" into words
-like "Tomorrow" or "Saturday" so the dashboard is easier to read.
+like "Tomorrow" or "Saturday" so dates are easier to read.
 
-Use it in any template:  {{ assignment.due_date | friendly_date }}
+Use them in any template:
+    {{ assignment.due_date | friendly_date }}   ->  "Tomorrow"
+    {{ assignment.due_date | short_date }}      ->  "Nov 21"
 """
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
@@ -43,3 +45,12 @@ def friendly_date(value):
     if 2 <= days <= 6:
         return due.strftime("%A")          # e.g. "Saturday"
     return f"{due.strftime('%b')} {due.day}"  # e.g. "Dec 3"
+
+
+@dashboard_bp.app_template_filter("short_date")
+def short_date(value):
+    # "2026-11-21" -> "Nov 21". Anything that isn't a date is shown as-is.
+    if _days_until(value) is None:
+        return value or ""
+    due = date.fromisoformat(str(value))
+    return f"{due.strftime('%b')} {due.day}"

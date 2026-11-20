@@ -1,0 +1,156 @@
+/* =========================================================
+   assignments.css
+   Styles for the Upcoming Assignments page.
+   All colors come from theme.css, so dark mode and
+   Planner Color keep working.
+   ========================================================= */
+
+/* One card holding every assignment */
+.assignment-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+/* One compact row per assignment */
+.assignment-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+}
+
+.assignment-row:first-child {
+    border-top: none;
+}
+
+.assignment-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.assignment-title {
+    font-size: 15px;
+    color: var(--text);
+}
+
+.assignment-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.assignment-side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Due date chip ("Tomorrow · Nov 21") */
+.date-chip {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    background: var(--hover);
+    color: var(--text-muted);
+}
+
+.date-chip-soon {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+/* Status badges (SSAP-34) */
+.status-badge {
+    min-width: 88px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.status-not-started {
+    background: var(--accent-light);
+    color: var(--accent-text);
+}
+
+.status-in-progress {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.status-completed {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+/* Small outlined Edit button instead of a blue underlined link */
+.edit-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--surface);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.edit-button svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.edit-button:hover {
+    background: var(--hover);
+    border-color: var(--text-muted);
+}
+
+.edit-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Nothing to show */
+.assignment-empty {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.assignment-empty p {
+    margin: 0;
+}
+
+/* On a phone: the right side moves under the title */
+@media (max-width: 700px) {
+
+    .assignment-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .assignment-side {
+        flex-wrap: wrap;
+    }
+}
