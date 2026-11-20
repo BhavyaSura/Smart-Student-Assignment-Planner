@@ -11,31 +11,56 @@
 
 {% block content %}
 
-<h2>Assignment Progress Overview</h2>
-
-<div class="progress-summary">
-    <div class="progress-card">
-        <h3>Not Started</h3>
-        <p>{{ not_started }}</p>
+<div class="page-title-row">
+    <div>
+        <h2>Progress</h2>
+        <p class="page-subtitle">How you're doing across all your assignments.</p>
     </div>
-
-    <div class="progress-card">
-        <h3>In Progress</h3>
-        <p>{{ in_progress }}</p>
-    </div>
-
-    <div class="progress-card">
-        <h3>Completed</h3>
-        <p>{{ completed }}</p>
-    </div>
+    <a href="{{ url_for('assignments.upcoming_assignments') }}" class="button-link button-secondary">
+        View upcoming &rarr;
+    </a>
 </div>
 
+<!-- Three count cards, same style as the dashboard summary cards -->
+<div class="progress-summary">
+
+    <div class="progress-card progress-not-started">
+        <span class="progress-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
+        </span>
+        <p class="progress-number">{{ not_started }}</p>
+        <h3>Not Started</h3>
+    </div>
+
+    <div class="progress-card progress-in-progress">
+        <span class="progress-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 0 1 0-16v16z"/></svg>
+        </span>
+        <p class="progress-number">{{ in_progress }}</p>
+        <h3>In Progress</h3>
+    </div>
+
+    <div class="progress-card progress-completed">
+        <span class="progress-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </span>
+        <p class="progress-number">{{ completed }}</p>
+        <h3>Completed</h3>
+    </div>
+
+</div>
+
+<!-- Overall completion -->
 <div class="overall-progress">
-    <h3>Overall Completion</h3>
-    <p>
-        <strong>{{ completion_percentage }}%</strong>
-        completed
-    </p>
+
+    <div class="overall-top">
+        <h3>Overall completion</h3>
+        <span class="overall-count">
+            {{ completed }} of {{ total_assignments }} assignments done
+        </span>
+    </div>
+
+    <p class="overall-percent">{{ completion_percentage }}%</p>
 
     <div
         class="progress-bar-container"
@@ -51,19 +76,10 @@
         ></div>
     </div>
 
-    <p>
-        {{ completed }} of {{ total_assignments }} assignments completed
-    </p>
-</div>
+    {% if total_assignments == 0 %}
+        <p class="overall-empty">You haven't added any assignments yet.</p>
+    {% endif %}
 
-{% if total_assignments == 0 %}
-<p>You haven't added any assignments yet.</p>
-{% endif %}
-
-<div class="progress-actions">
-    <a href="{{ url_for('assignments.upcoming_assignments') }}" class="button-link">
-        View Upcoming Assignments
-    </a>
 </div>
 
 {% endblock %}

@@ -1,0 +1,69 @@
+/* =========================================================
+   auth.css
+   Sign In and Create Account pages.
+   The card fits its content and sits in the middle of the
+   screen, instead of stretching to the full window height.
+   ========================================================= */
+
+.account-layout {
+    min-height: 0;
+    max-width: 860px;
+    margin: max(32px, calc((100vh - 540px) / 2)) auto 32px;
+    box-shadow: 0 8px 24px rgba(60, 64, 67, 0.08);
+}
+
+/* The global .page-content is 100vh tall; not here */
+.account-layout .page-content {
+    min-height: 0;
+    padding: 48px;
+}
+
+.account-brand {
+    padding: 48px 32px;
+    background:
+        linear-gradient(160deg, var(--accent-light), var(--surface));
+}
+
+.account-layout .page-content h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.auth-subtitle {
+    margin: 4px 0 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* "Need an account? Create one" */
+.auth-switch {
+    margin: 16px 0 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.auth-switch a {
+    font-weight: 600;
+    color: var(--accent-text);
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+
+    .account-layout {
+        margin: 12px;
+    }
+
+    .account-layout .page-content {
+        padding: 24px;
+    }
+}
+
+.account-layout .page-content form {
+    margin-bottom: 0;
+}

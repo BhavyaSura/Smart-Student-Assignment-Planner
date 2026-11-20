@@ -25,7 +25,7 @@
     <!-- ACCOUNT SETTINGS -->
     <section class="settings-section">
 
-        <h3>Account Settings</h3>
+        <h3>Account</h3>
 
         <form method="POST" action="{{ url_for('settings.settings') }}">
 
@@ -43,40 +43,43 @@
             >
 
             <button type="submit" class="settings-button">
-                Save Display Name
+                Save name
             </button>
 
         </form>
 
     </section>
 
-    <!-- APP PREFERENCES -->
+    <!-- APP PREFERENCES
+         On/off switch rows: text on the left, switch on the right.
+         Every input keeps the same id / name as before, so saving
+         works exactly the same. -->
+
     <section class="settings-section">
 
-        <h3>App Preferences</h3>
+        <h3>Preferences</h3>
 
-        <div class="settings-option">
-
-            <label class="settings-checkbox-row">
+        <div class="settings-row">
+            <div>
+                <label for="settings-dark-mode" class="settings-row-title">Dark mode</label>
+                <p>Switch between light and dark appearance.</p>
+            </div>
+            <span class="switch">
                 <input type="checkbox" id="settings-dark-mode">
-                <span>Dark Mode</span>
-            </label>
-
-            <p>Switch between light and dark appearance.</p>
-
+                <span class="switch-track" aria-hidden="true"></span>
+            </span>
         </div>
 
         <form method="POST" action="{{ url_for('settings.settings') }}">
 
-            <input
-                type="hidden"
-                name="setting_type"
-                value="hide_completed"
-            >
+            <input type="hidden" name="setting_type" value="hide_completed">
 
-            <div class="settings-option">
-
-                <label class="settings-checkbox-row">
+            <div class="settings-row">
+                <div>
+                    <label for="hide_completed" class="settings-row-title">Hide completed assignments</label>
+                    <p>Completed work won't show in the Upcoming Assignments list.</p>
+                </div>
+                <span class="switch">
                     <input
                         type="checkbox"
                         id="hide_completed"
@@ -84,42 +87,31 @@
                         value="on"
                         {% if user_settings.hide_completed %}checked{% endif %}
                     >
-                    <span>Hide Completed Assignments</span>
-                </label>
-
-                <p>
-                    When enabled, completed assignments will be hidden
-                    from the Upcoming Assignments list.
-                </p>
-
+                    <span class="switch-track" aria-hidden="true"></span>
+                </span>
             </div>
 
-            <div class="settings-option">
-
-                <label for="due_soon_days">
-                    Due Soon Reminder
-                </label>
-
+            <div class="settings-row">
+                <div>
+                    <label for="due_soon_days" class="settings-row-title">Due Soon reminder</label>
+                    <p>How many days ahead the Due Soon box looks.</p>
+                </div>
                 <select id="due_soon_days" name="due_soon_days">
-                    <option value="1" {% if user_settings.due_soon_days == 1 %}selected{% endif %}>1 Day</option>
-                    <option value="3" {% if user_settings.due_soon_days == 3 %}selected{% endif %}>3 Days</option>
-                    <option value="7" {% if user_settings.due_soon_days == 7 %}selected{% endif %}>7 Days</option>
+                    <option value="1" {% if user_settings.due_soon_days == 1 %}selected{% endif %}>1 day</option>
+                    <option value="3" {% if user_settings.due_soon_days == 3 %}selected{% endif %}>3 days</option>
+                    <option value="7" {% if user_settings.due_soon_days == 7 %}selected{% endif %}>7 days</option>
                 </select>
-
-                <p>
-                    Choose how many days ahead you want to see
-                    due-soon reminders.
-                </p>
-
             </div>
 
             <button type="submit" class="settings-button">
-                Save Preferences
+                Save preferences
             </button>
 
         </form>
 
     </section>
+
+
 
     <!-- RESET DATA -->
     <section class="settings-section settings-danger">
