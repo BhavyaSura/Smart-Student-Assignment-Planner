@@ -130,6 +130,9 @@
                         {% else %}
                             on the remaining {{ needed.remaining_weight|pct }}% of your grade
                         {% endif %}
+                        {% if needed.not_added_weight > 0 %}
+                            (includes {{ needed.not_added_weight|pct }}% you haven't added yet)
+                        {% endif %}
                     </p>
                 {% endif %}
             </div>
