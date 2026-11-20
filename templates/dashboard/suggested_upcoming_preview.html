@@ -1,32 +1,33 @@
 {# SSAP-12 (Bhavya): Upcoming assignments preview on the dashboard. #}
 
-<section>
+<section class="dash-card upcoming-card">
     <div class="section-header">
-        <h3 class="section-title">Upcoming Assignments</h3>
+        <h3 class="section-title">Upcoming</h3>
         <a href="{{ url_for('assignments.upcoming_assignments') }}">
-            View all
+            View all →
         </a>
     </div>
 
     {% if upcoming_preview %}
-        <div class="upcoming-preview-list">
+        <ul class="upcoming-preview-list">
             {% for assignment in upcoming_preview %}
-                <div class="upcoming-preview-item">
-                    <strong>{{ assignment.title }}</strong>
+                {% set days = assignment.due_date | days_until %}
+                <li class="upcoming-preview-item">
+                    <div class="upcoming-text">
+                        <strong>{{ assignment.title }}</strong>
+                        <span>
+                            {{ assignment.course.name if assignment.course else 'No course' }}
+                        </span>
+                    </div>
 
-                    <p>
-                        Course:
-                        {{ assignment.course.name if assignment.course else 'No course selected' }}
-                    </p>
-
-                    <p>
-                        Deadline:
-                        {{ assignment.due_date if assignment.due_date else 'No deadline set' }}
-                    </p>
-                </div>
+                    {# Orange chip when it's due in the next 2 days #}
+                    <span class="due-chip{% if days is not none and days <= 2 %} due-chip-soon{% endif %}">
+                        {{ assignment.due_date | friendly_date }}
+                    </span>
+                </li>
             {% endfor %}
-        </div>
+        </ul>
     {% else %}
-        <p>No upcoming assignments. You're all caught up!</p>
+        <p class="dash-empty">No upcoming assignments. You're all caught up!</p>
     {% endif %}
 </section>

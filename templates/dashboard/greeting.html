@@ -2,8 +2,23 @@
 
 <div class="dashboard-greeting">
 
+    <p class="greeting-date">{{ greeting.date_label }}</p>
+
     <h1>{{ greeting.greeting }}</h1>
 
-    <p>{{ greeting.message }}</p>
+    <div class="greeting-status">
+
+        <p>{{ greeting.message }}</p>
+
+        {# Overdue work is the most important thing to see first. #}
+        {% if summary_cards.overdue > 0 %}
+            <a class="status-pill status-pill-overdue"
+               href="{{ url_for('assignments.upcoming_assignments') }}">
+                {{ summary_cards.overdue }} overdue
+                {{ 'assignment' if summary_cards.overdue == 1 else 'assignments' }}
+            </a>
+        {% endif %}
+
+    </div>
 
 </div>

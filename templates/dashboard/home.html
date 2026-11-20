@@ -20,15 +20,21 @@
 {% block content %}
 
 
+<div class="dashboard-page">
+
+
+    <!-- Greeting goes across the top, so both columns below
+         start on the same line -->
+
+    {% include "dashboard/greeting.html" %}
+
+
 <div class="dashboard-layout">
 
 
     <!-- Main dashboard column -->
 
     <div class="dashboard-main">
-
-
-        {% include "dashboard/greeting.html" %}
 
 
         {% include "dashboard/summary_cards.html" %}
@@ -59,6 +65,9 @@
 
 
     </div>
+
+
+</div>
 
 
 </div>

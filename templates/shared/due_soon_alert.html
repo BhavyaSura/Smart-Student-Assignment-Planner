@@ -12,7 +12,7 @@
         {% for assignment in due_soon %}
         <li>
             <strong>{{ assignment.title }}</strong>
-            — Due {{ assignment.due_date }}
+            — {{ assignment.due_date | friendly_date }}
         </li>
         {% endfor %}
     </ul>
