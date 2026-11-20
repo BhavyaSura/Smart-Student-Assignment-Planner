@@ -70,6 +70,7 @@ def grade_summary(grade_items):
         'graded_count': len(graded),        # e.g. 3
         'total_count': len(grade_items),    # e.g. 5
         'ungraded': ungraded,               # the items still to be graded
+        'graded_weight': graded_weight,         # e.g. 55
         'remaining_weight': remaining_weight,   # e.g. 45
         'total_weight': total_weight,           # should be 100 when all items are added
         'points_earned': points_earned,         # e.g. 4890
@@ -77,13 +78,19 @@ def grade_summary(grade_items):
 
 
 def grade_needed(summary, target):
-    # Needed = (target x 100 - points earned) / remaining weight
+    # Needed = (target x 100 - points earned) / weight still to come
     # Example: (90 x 100 - 4890) / 45 = 91.3
-    remaining = summary['remaining_weight']
+    #
+    # "Weight still to come" is everything that isn't graded yet:
+    # the ungraded items PLUS any weight you haven't added as an item.
+    # Example: items only add up to 85% and 45% is graded, so
+    # 100 - 45 = 55% is still to come (40% ungraded + 15% not added).
+    # Before, that missing 15% counted as a zero.
+    remaining = 100 - summary['graded_weight']
 
     # Everything is graded, so there is nothing left to work toward.
     # (This also avoids dividing by zero.)
-    if remaining == 0:
+    if remaining <= 0:
         return {'all_graded': True}
 
     needed = (target * 100 - summary['points_earned']) / remaining
@@ -107,4 +114,7 @@ def grade_needed(summary, target):
         'badge': badge,
         'level': level,
         'remaining_weight': remaining,
+        # Weight you haven't added as a grade item yet (e.g. 15),
+        # so the page can say it's included.
+        'not_added_weight': max(100 - summary['total_weight'], 0),
     }
