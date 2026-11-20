@@ -65,7 +65,7 @@ course.
 ### Use the Live Site
 
 1. **Open the site**:
-   - Go to https://jiovanyo.pythonanywhere.com
+   - Go to https://miczi55.pythonanywhere.com      
 
 2. **Create an account**:
    - Click **Create one**, enter an email and a password, then sign in.
@@ -207,7 +207,7 @@ deploys updates.
 
 ### How It's Set Up
 
-- The repo is cloned to `/home/jiovanyo/Smart-Student-Assignment-Planner`.
+- The repo is cloned to `/home/Miczi55/Smart-Student-Assignment-Planner`.
 - The web app uses **Manual configuration** with **Python 3.12**.
 - The WSGI file (Web tab → *WSGI configuration file*) sets the `SECRET_KEY` and
   loads the app with `from app import app as application`. The secret key lives
