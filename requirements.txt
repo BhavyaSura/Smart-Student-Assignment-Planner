@@ -1,3 +1,17 @@
-flask
-flask-sqlalchemy
+# Packages the app needs. Install them with:
+#   pip install -r requirements.txt
+
+# Flask runs the website. "<4" keeps us on version 3, which the app
+# was built and tested with, so a future Flask 4 can't break installs.
+flask>=3.1,<4
+
+# Flask-SQLAlchemy saves data in the SQLite database (planner.db).
+flask-sqlalchemy>=3.1,<4
+
+# Flask-WTF protects the Settings "Reset Data" form (SSAP-33).
 Flask-WTF==1.3.0
+
+# Time zone data. The app shows dates in Eastern time
+# (ZoneInfo("America/New_York")). Windows doesn't include time zone
+# data, so without this the Dashboard, Upcoming and Calendar pages crash.
+tzdata

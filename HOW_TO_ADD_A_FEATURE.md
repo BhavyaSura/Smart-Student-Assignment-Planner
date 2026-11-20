@@ -15,18 +15,18 @@ Each button in the left menu is the "home" of one feature:
 | Assignments | `features/assignments/` | `templates/assignments/` |
 | Calendar    | `features/calendar/`  | `templates/calendar/`  |
 | Progress    | `features/progress/`  | `templates/progress/`  |
+| Settings    | `features/settings/`  | `templates/settings/`  |
 
 (`features/auth/` has the sign-in pages. It has no menu button.)
 
-Calendar (SSAP-19) starts as an empty page with a dashed "coming soon"
-box. To build it, open its folder and replace the dashed box -- the menu
-button already exists, so you do NOT need to create a new folder or add
-a button. (Progress, SSAP-9, is already built.)
+All of these pages are built now. To add to one, open its folder and
+add a new file -- the menu button already exists, so you do NOT need
+to create a new folder or add a button.
 
 The Dashboard is split into boxes. Each box has its own template file
-in `templates/dashboard/` (like `suggested_summary_cards.html`) and its own small
-Python file in `features/dashboard/` (like `suggested_summary_cards.py`). Replace
-the dashed box in your template and fill in your Python file.
+in `templates/dashboard/` (like `summary_cards.html`) and its own small
+Python file in `features/dashboard/` (like `summary_cards.py`). To add a new
+box, make one of each and include the template in `templates/dashboard/home.html`.
 
 ## Steps for a brand-new feature
 
