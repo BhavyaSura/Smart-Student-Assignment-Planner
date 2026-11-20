@@ -102,7 +102,7 @@
                                 mini-calendar-today
                             {% endif %}
 
-                            {% if day in mini_calendar.due_days %}
+                            {% if day in mini_calendar.due_days or day in mini_calendar.completed_days %}
                                 has-assignment
                             {% endif %}
                         "
@@ -114,13 +114,38 @@
                         </span>
 
 
-                        {% if day in mini_calendar.due_days %}
+                        {# Blue dot = still to do, green dot = completed.
 
-                            <span
-                                class="mini-calendar-dot"
-                                aria-label="Assignment due"
-                            >
+
+                           A day with both shows both dots side by side. #}
+
+
+                        {% if day in mini_calendar.due_days or day in mini_calendar.completed_days %}
+
+
+                            <span class="mini-calendar-dots">
+
+
+                                {% if day in mini_calendar.due_days %}
+
+
+                                    <span class="mini-calendar-dot" aria-label="Assignment due"></span>
+
+
+                                {% endif %}
+
+
+                                {% if day in mini_calendar.completed_days %}
+
+
+                                    <span class="mini-calendar-dot mini-calendar-dot-done" aria-label="Assignment completed"></span>
+
+
+                                {% endif %}
+
+
                             </span>
+
 
                         {% endif %}
 
@@ -148,10 +173,10 @@
     <div class="mini-calendar-footer">
 
         <span class="mini-calendar-legend-dot"></span>
+        <span>Due</span>
 
-        <span>
-            Assignment due
-        </span>
+        <span class="mini-calendar-legend-dot mini-calendar-legend-done"></span>
+        <span>Completed</span>
 
     </div>
 

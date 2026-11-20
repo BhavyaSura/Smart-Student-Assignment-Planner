@@ -1,4 +1,6 @@
-{# SSAP-12 (Bhavya): Upcoming assignments preview on the dashboard. #}
+{# SSAP-12 (Bhavya): Upcoming assignments preview on the dashboard.
+   Shows work due AFTER this week (and work with no due date), because
+   the "This Week" box already lists the next 7 days. #}
 
 <section class="dash-card upcoming-card">
     <div class="section-header">
@@ -28,6 +30,6 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p class="dash-empty">No upcoming assignments. You're all caught up!</p>
+        <p class="dash-empty">Nothing due after this week.</p>
     {% endif %}
 </section>
