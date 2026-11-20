@@ -1,6 +1,18 @@
+# Virtual environments (each person makes their own)
 .venv/
 venv/
+
+# Python cache files
 __pycache__/
 *.pyc
+
+# Local database and secrets -- never push these
 instance/
+*.db
 .env
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
