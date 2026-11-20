@@ -8,6 +8,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{# Same assignment rows as the Upcoming Assignments page #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/assignments.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -55,23 +57,57 @@
 <h3 class="course-section-title">Assignments</h3>
 
 {% if assignments %}
-    <ul class="course-assignments">
+    <!-- Same compact rows as the Upcoming Assignments page
+         (styles in static/css/assignments.css) -->
+    <ul class="assignment-list">
         {% for assignment in assignments %}
-        <li class="course-assignment">
-            <div>
-                <a href="{{ url_for('assignments.assignment_details', assignment_id=assignment.id) }}">
-                    {{ assignment.title }}
-                </a>
-                <span class="course-assignment-due">
-                    Due: {{ assignment.due_date or 'Not recorded' }}
-                </span>
-            </div>
-            <span class="status-pill">{{ assignment.status }}</span>
-        </li>
+            {% set status_value = assignment.status or "Not Started" %}
+            {% set days = assignment.due_date | days_until %}
+
+            <li class="assignment-row">
+                <div class="assignment-main">
+                    <strong class="assignment-title">{{ assignment.title }}</strong>
+                    {% if assignment.priority or assignment.estimated_time %}
+                        <span class="assignment-meta">
+                            {% if assignment.priority %}{{ assignment.priority }} priority{% endif %}
+                            {% if assignment.priority and assignment.estimated_time %} · {% endif %}
+                            {% if assignment.estimated_time %}{{ assignment.estimated_time }}{% endif %}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="assignment-side">
+                    {# Orange when it's due in the next 2 days (and not done yet) #}
+                    <span class="date-chip{% if days is not none and 0 <= days <= 2 and status_value != 'Completed' %} date-chip-soon{% endif %}">
+                        {% if assignment.due_date %}
+                            {{ assignment.due_date | friendly_date }}
+                            {% if days is not none and 0 <= days <= 6 %}
+                                · {{ assignment.due_date | short_date }}
+                            {% endif %}
+                        {% else %}
+                            No due date
+                        {% endif %}
+                    </span>
+
+                    <span class="status-badge status-{{ status_value | lower | replace(' ', '-') }}">
+                        {{ status_value }}
+                    </span>
+
+                    <a class="edit-button"
+                       href="{{ url_for('assignments.assignment_details', assignment_id=assignment.id) }}"
+                       aria-label="Edit {{ assignment.title }}"
+                       title="Edit assignment">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        Edit
+                    </a>
+                </div>
+            </li>
         {% endfor %}
     </ul>
 {% else %}
     <!-- Empty state: this course has no assignments yet. -->
-    <p>No assignments for this course yet.</p>
+    <div class="assignment-empty">
+        <p>No assignments for this course yet.</p>
+    </div>
 {% endif %}
 {% endblock %}

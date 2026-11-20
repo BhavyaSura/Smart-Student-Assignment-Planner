@@ -3,7 +3,19 @@
 #}
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/courses.css') }}">
+{% endblock %}
+
 {% block content %}
+
+<!-- Same back button as the course details page -->
+<div class="back-bar">
+    <a class="button-link button-secondary" href="{{ url_for('courses.courses') }}">&larr; Back to My Courses</a>
+</div>
+
+<!-- The form sits in a card instead of stretching across the page -->
+<div class="form-card">
 <h2>Add a Course</h2>
 
 {% if error %}
@@ -20,8 +32,11 @@
     <label for="instructor">Instructor</label>
     <input type="text" id="instructor" name="instructor" value="{{ instructor or '' }}">
 
-    <button type="submit">Add Course</button>
+    <div class="form-actions">
+        <button type="submit">Add Course</button>
+        <a class="button-link button-secondary" href="{{ url_for('courses.courses') }}">Cancel</a>
+    </div>
 </form>
 
-<p><a href="{{ url_for('courses.courses') }}">Back to My Courses</a></p>
+</div>
 {% endblock %}
