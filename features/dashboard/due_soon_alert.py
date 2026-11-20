@@ -5,7 +5,9 @@ Uses each student's preferred reminder window (1, 3, or 7 days).
 Only includes incomplete assignments.
 """
 
-from datetime import date, timedelta
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
 from models import Assignment
 from features.settings.models import UserSettings
 
@@ -23,9 +25,13 @@ def due_soon_alert(user_id):
         else 3
     )
 
-    today = date.today().isoformat()
+    # Use Eastern time, not the server's clock (PythonAnywhere uses UTC,
+    # which is already "tomorrow" after 7 pm here).
+    today_date = datetime.now(ZoneInfo("America/New_York")).date()
+
+    today = today_date.isoformat()
     due_soon_limit = (
-        date.today() + timedelta(days=reminder_days)
+        today_date + timedelta(days=reminder_days)
     ).isoformat()
 
     return Assignment.query.filter_by(
